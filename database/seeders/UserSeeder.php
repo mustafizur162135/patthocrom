@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
         $this->createPermissions($studentPermissions, 'student');
         $this->createPermissions($teacherPermissions, 'teacher');
 
-        // Create roles for each guard
+        // Create roles for each guards
         $adminRole = $this->createRole('admin');
         $studentRole = $this->createRole('student');
         $teacherRole = $this->createRole('teacher');
