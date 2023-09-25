@@ -24,6 +24,9 @@ class StudentController extends Controller
 
 
         // send response
-        return new UserResource(Auth::guard('student')->user());
+        
+        $user= new UserResource(Auth::guard('student')->user());
+
+        return response()->json($user);
     }
 }

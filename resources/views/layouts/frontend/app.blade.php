@@ -7,7 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ setting('site_title', 'LaraStarter') }}</title>
+    <title>PATTHOCROM</title>
+    {{-- <title>{{ setting('site_title', 'LaraStarter') }}</title> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

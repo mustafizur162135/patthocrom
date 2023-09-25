@@ -24,6 +24,10 @@ class TeacherController extends Controller
 
 
         // send response
-        return new UserResource(Auth::guard('teacher')->user());
+
+        $user= new UserResource(Auth::guard('teacher')->user());
+
+        return response()->json($user);
     }
 }
+

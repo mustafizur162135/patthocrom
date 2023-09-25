@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+
 
 class AdminDashboardController extends Controller
 {
@@ -19,6 +22,11 @@ class AdminDashboardController extends Controller
         // You can fetch data, perform actions, etc.
         // For example, you can return a view:
 
-        return view('backend.dashboard'); // Assuming you have a Blade view named 'dashboard' in 'resources/views/admin'
+
+        $adminUserData = Session::get('admin_user_data');
+    
+        return view('backend.dashboard', compact('adminUserData')); // Pass 'adminUserData' to the view
     }
+    
+
 }

@@ -7,9 +7,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | {{ setting('site_title', 'Patthokrom') }}</title>
+    {{-- <title>@yield('title') | {{ setting('site_title', 'Patthokrom') }}</title> --}}
+    <title>@yield('title') | {{ 'Patthokrom' }}</title>
 
-    <link rel="icon"  href="{{ setting('site_favicon') != null ? Storage::disk('public')->url(setting('site_favicon')) : '' }}"/>
+    {{-- <link rel="icon"  href="{{ setting('site_favicon') != null ? Storage::disk('public')->url(setting('site_favicon')) : '' }}"/> --}}
+    <link rel="icon"  href="#"/>
     <!-- Styles -->
     <link href="{{ asset('backend/css/backend.css') }}" rel="stylesheet">
     <link href="{{ asset('backend/css/app.css') }}" rel="stylesheet">

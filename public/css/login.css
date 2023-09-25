@@ -1,0 +1,190 @@
+
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #141e30, #243b55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    width: 400px;
+    padding: 40px;
+    background: rgba(0, 0, 0, .5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+    color: #fff;
+}
+
+.login-box h2 {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.login-box .user-box {
+    position: relative;
+}
+
+.login-box .user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.login-box .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.login-box .user-box input:focus~label,
+.login-box .user-box input:valid~label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.login-box button[type="submit"] {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
+}
+
+.login-box button[type="submit"]:hover {
+    background: #03e9f4;
+    color: #000;
+}
+
+.alert {
+    width: 400px;
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+}
+
+.alert.success {background-color: #4CAF50;}
+.alert.info {background-color: #2196F3;}
+.alert.warning {background-color: #ff9800;}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
+.register-box {
+    width: 400px;
+    padding: 40px;
+    background: rgba(0, 0, 0, .5);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+    color: #fff;
+    animation: animate 1s ease-in-out infinite alternate;
+    display: none; /* Hide the register box by default */
+}
+
+@keyframes animate {
+    0% {
+        background: rgba(0, 0, 0, .5);
+    }
+    100% {
+        background: rgba(0, 0, 0, .8);
+    }
+}
+
+.register-box h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    color: #03e9f4;
+}
+
+.register-box .user-box {
+    position: relative;
+}
+
+.register-box .user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #03e9f4;
+    outline: none;
+    background: transparent;
+}
+
+.register-box .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.register-box .user-box input:focus~label,
+.register-box .user-box input:valid~label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.register-box button[type="submit"] {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
+}
+
+.register-box button[type="submit"]:hover {
+    background: #03e9f4;
+    color: #000;
+}
+
