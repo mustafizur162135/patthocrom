@@ -6,7 +6,8 @@ use App\Http\Controllers\Api\{
     LoginController,
     RegisterController,
     StudentController,
-    TeacherController
+    TeacherController,
+    RolePermissionController
 };
 use App\Http\Resources\UserResource;
 
@@ -45,6 +46,9 @@ Route::middleware(['auth:sanctum', 'can:view-teacher-panel','abilities :admin'])
     return new UserResource($request->user());
 });
 
+// Role Permission Route
+Route::middleware(['auth:sanctum', 'can:view-admin-panel','abilities :admin'])->get('/role-permission', [RolePermissionController::class, 'index'])->name('api.role-permission.index');
+Route::middleware(['auth:sanctum', 'can:view-admin-panel','abilities :admin'])->post('/role-permission', [RolePermissionController::class, 'store'])->name('api.role-permission.store');
 
 Route::post('admin/login',[LoginController::class,'login'])->name('api.route');
 Route::post('admin/register',[RegisterController::class,'register']);
@@ -54,3 +58,4 @@ Route::post('student/register',[StudentController::class,'register']);
 
 Route::post('teacher/login',[TeacherController::class,'login']);
 Route::post('teacher/register',[TeacherController::class,'register']);
+

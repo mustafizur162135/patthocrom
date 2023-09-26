@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
     {
         // Define permissions for admin, student, and teacher guards
         $adminPermissions = [
-            'admin.users.list', 'admin.users.view', 'admin.users.create', 'admin.users.update', 'admin.users.delete'
+            'admin.users.list', 'admin.users.view', 'admin.users.create', 'admin.users.update', 'admin.users.delete', 'api.role-permission.index', 'api.role-permission.store'
         ];
 
         $studentPermissions = [

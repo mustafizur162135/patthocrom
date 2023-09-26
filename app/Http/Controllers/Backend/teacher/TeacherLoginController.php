@@ -44,6 +44,7 @@ class TeacherLoginController extends Controller
 
         if ($apiResponse->getStatusCode() === 200) {
             $userData = json_decode($apiResponse->getContent(), true);
+
             Session::put('teacher_user_data', $userData);
             return redirect()->route('teacher.dashboard');
         }
@@ -53,8 +54,9 @@ class TeacherLoginController extends Controller
 
 
 
-    public function teacherRegister(Request $request)
+    public function registerTeacher(Request $request)
     {
+
         $password = $request->input('password');
         $confirmPassword = $request->input('confirm_password');
 
@@ -70,6 +72,7 @@ class TeacherLoginController extends Controller
 
         try {
             $apiResponse = $this->registerApiController->registerTeacher($registerRequest);
+         
         } catch (HttpResponseException $e) {
             return back()->with('error', 'Registration failed. ');
         } catch (\Exception $e) {
@@ -77,6 +80,8 @@ class TeacherLoginController extends Controller
         }
 
         if ($apiResponse->getStatusCode() === 200) {
+            $userData = json_decode($apiResponse->getContent(), true);
+            Session::put('teacher_user_data', $userData);
             return redirect()->route('teacher.dashboard');
         }
 

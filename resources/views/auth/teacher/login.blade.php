@@ -42,7 +42,7 @@
                 <label>Password</label>
             </div>
             <div class="user-box">
-                <input type="password" name="password_confirmation" required>
+                <input type="password" name="confirm_password" required>
                 <label>Confirm Password</label>
             </div>
             <button class="submit-button" type="submit">Register</button>
