@@ -75,6 +75,13 @@ class AdminLoginController extends Controller
 
         return back()->with('error', 'Registration failed. Please check your credentials.');
     }
+
+    public function logout()
+    {
+        Session::forget('admin_user_data');
+        return redirect()->route('admin.login.form');
+    }
 }
+
 
 

@@ -38,6 +38,7 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/admin/dashboard', AdminDashboardController::class)->name('admin.dashboard');
     Route::post('register/admin', [RegisterController::class, 'registerAdmin'])->name('register.admin');
+    Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
 Route::group(['middleware' => ['auth:teacher']], function () {

@@ -34,7 +34,43 @@
     <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
             <ul class="vertical-nav-menu">
-                {{-- <x-backend-side-menu /> --}}
+                <div>
+                    <li class="app-sidebar__heading">Dashboard</li>
+                        <li>
+                            <a href="#" class="#">
+                                <i class="metismenu-icon"></i>
+                               Dashboard
+                            </a>
+                        </li>
+                    <li class="app-sidebar__heading">User</li>
+                        <li>
+                            <a href="#" class="#">
+                                <i class="metismenu-icon"></i>
+                               User
+                            </a>
+                        </li>
+                    <li class="app-sidebar__heading">Settings</li>
+                        <li>
+                            <a href="#" class="#">
+                                <i class="metismenu-icon"></i>
+                               Settings
+                            </a>
+                        </li>
+                    <li class="app-sidebar__heading">Help</li>
+                        <li>
+                            <a href="#" class="#">
+                                <i class="metismenu-icon"></i>
+                               Help
+                            </a>
+                        </li>
+                    <li class="app-sidebar__heading">Logout</li>
+                        <li>
+                            <a href="#" class="#">
+                                <i class="metismenu-icon"></i>
+                               Logout
+                            </a>
+                        </li>
+                </div>
             </ul>
         </div>
     </div>

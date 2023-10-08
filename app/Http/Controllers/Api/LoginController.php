@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Helpers\Helper;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Auth; // Import the Auth facade
 
 class LoginController extends Controller
@@ -27,5 +28,20 @@ class LoginController extends Controller
         return response()->json($user);
     
     }
+
+
+
+
+    public function logout(Request $request)
+        {
+            Auth::guard('admin')->logout();
+            return response()->json(['message' => 'Logout successful']);
+        }
+
+
 }
+
+
+
+
 
