@@ -57,8 +57,8 @@
                         <div class="widget-content-left">
                             <div class="btn-group">
                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                    {{-- <img width="42" class="rounded-circle" src="{{ Auth::user()->getFirstMediaUrl('avatar') != null ? Auth::user()->getFirstMediaUrl('avatar') : config('app.placeholder').'160' }}" --}}
-                                    alt="">
+                                   {{-- <img width="42" class="rounded-circle" src="{{ Auth::user()->getFirstMediaUrl('avatar') != null ? Auth::user()->getFirstMediaUrl('avatar') : config('app.placeholder').'160' }}" 
+                                    alt=""> --}}
                                     <img width="42" class="rounded-circle" src="#" alt="">
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>
@@ -69,11 +69,12 @@
                                     <a tabindex="0" class="dropdown-item" href="#">Settings</a>
                                     <div tabindex="-1" class="dropdown-divider"></div>
                                     <button type="button" tabindex="0" class="dropdown-item"
-                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
-                                    <form id="logout-form" action="#" method="POST" style="display: none;">
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
+                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                     </form>
+
                                 </div>
                             </div>
                         </div>

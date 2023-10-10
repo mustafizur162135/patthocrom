@@ -33,10 +33,12 @@ class LoginController extends Controller
 
 
     public function logout(Request $request)
-        {
-            Auth::guard('admin')->logout();
-            return response()->json(['message' => 'Logout successful']);
-        }
+    {
+        Auth::guard('admin')->logout();
+        
+        // Optionally, you can return a response indicating successful logout.
+        return response()->json(['message' => 'Logout successful']);
+    }
 
 
 }

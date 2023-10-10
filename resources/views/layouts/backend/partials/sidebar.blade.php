@@ -49,6 +49,12 @@
                                User
                             </a>
                         </li>
+                        <li>
+                            <a href="#" class="#">
+                                <i class="metismenu-icon"></i>
+                               Role
+                            </a>
+                        </li>
                     <li class="app-sidebar__heading">Settings</li>
                         <li>
                             <a href="#" class="#">

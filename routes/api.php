@@ -31,9 +31,26 @@ use App\Http\Resources\UserResource;
 //     return new UserResource($request->user());
 // });
 
-// Admin Route
-Route::middleware(['auth:sanctum', 'can:view-admin-panel','abilities :admin'])->get('/admin', function (Request $request) {
-    return new UserResource($request->user());
+// Admin Route Group
+Route::middleware(['auth:sanctum', 'can:view-admin-panel', 'abilities:admin'])->group(function () {
+    
+    // Admin Dashboard or Profile Route
+    Route::get('/admin', function (Request $request) {
+        return new UserResource($request->user());
+    });
+
+ 
+
+// Role Permission Route
+Route::get('/role-permission', [RolePermissionController::class, 'index'])->name('api.role-permission.index');
+Route::post('/role-permission-store', [RolePermissionController::class, 'store'])->name('api.role-permission.store');
+
+    
+    // Logout Route
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    
+    // Add other admin routes here if needed
+    
 });
 
 // Student Route
@@ -46,16 +63,13 @@ Route::middleware(['auth:sanctum', 'can:view-teacher-panel','abilities :admin'])
     return new UserResource($request->user());
 });
 
-// Role Permission Route
-Route::middleware(['auth:sanctum', 'can:view-admin-panel','abilities :admin'])->get('/role-permission', [RolePermissionController::class, 'index'])->name('api.role-permission.index');
-Route::middleware(['auth:sanctum', 'can:view-admin-panel','abilities :admin'])->post('/role-permission', [RolePermissionController::class, 'store'])->name('api.role-permission.store');
 
-Route::post('admin/login',[LoginController::class,'login'])->name('api.route');
-Route::post('admin/register',[RegisterController::class,'register']);
+Route::post('admin/login', [LoginController::class, 'login'])->name('admin.login');
+Route::post('admin/register', [RegisterController::class, 'register'])->name('admin.register');
 
-Route::post('student/login',[StudentController::class,'login']);
-Route::post('student/register',[StudentController::class,'register']);
+Route::post('student/login', [StudentController::class, 'login'])->name('student.login');
+Route::post('student/register', [StudentController::class, 'register'])->name('student.register');
 
-Route::post('teacher/login',[TeacherController::class,'login']);
-Route::post('teacher/register',[TeacherController::class,'register']);
+Route::post('teacher/login', [TeacherController::class, 'login'])->name('teacher.login');
+Route::post('teacher/register', [TeacherController::class, 'register'])->name('teacher.register');
 

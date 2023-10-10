@@ -5,7 +5,7 @@ use App\Http\Controllers\Backend\{
     AdminDashboardController,
     AdminLoginController
 };
-
+use App\Http\Controllers\Backend\role\RoleController;
 use App\Http\Controllers\Backend\teacher\{
     TeacherDashboardController,
     TeacherLoginController
@@ -35,17 +35,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth:admin']], function () {
+Route::group(['middleware' => ['auth.admin']], function () {
     Route::get('/admin/dashboard', AdminDashboardController::class)->name('admin.dashboard');
     Route::post('register/admin', [RegisterController::class, 'registerAdmin'])->name('register.admin');
+
+
+    Route::get('/role', [RoleController::class,'index'])->name('admin.role');
+
+
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
 
-Route::group(['middleware' => ['auth:teacher']], function () {
+Route::group(['middleware' => ['auth.teacher']], function () {
     Route::get('/teacher/dashboard', TeacherDashboardController::class)->name('teacher.dashboard');
 });
 
-Route::group(['middleware' => ['auth:student']], function () {
+Route::group(['middleware' => ['auth.student']], function () {
     Route::get('/student/dashboard', StudentDashboardController::class)->name('student.dashboard');
 });
 

@@ -9,14 +9,34 @@ use Spatie\Permission\Models\Role;
 
 class RolePermissionController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $roles = Role::with('permissions')->get();
-        return response()->json([
-            'message' => 'This is the index function for RolePermissionController',
-            'roles' => $roles
-        ]);
+        try {
+            $roles = Role::with('permissions')->get();
+    
+            if ($roles->isEmpty()) {
+                // Handle the case when there are no roles found.
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'No roles found.',
+                ], 404);
+            }
+    
+            return response()->json([
+                'status' => 200,
+                'message' => 'This is the index function for RolePermissionController',
+                'roles' => $roles
+            ]);
+        } catch (\Exception $e) {
+            // Handle any other unexpected errors.
+            return response()->json([
+                'status' => 500,
+                'message' => 'An error occurred while processing your request.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 
     public function store(Request $request)
     {
