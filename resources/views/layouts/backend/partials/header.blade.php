@@ -81,15 +81,15 @@
                         <div class="widget-content-left  ml-3 header-user-info">
                             <div class="widget-heading">
 
-                                {{ $adminUserData['name'] }}
+                                {{-- {{ $adminUserData['name'] }} --}}
 
                             </div>
                             <div class="widget-subheading">
-                                @if (isset($adminUserData['roles']) && is_array($adminUserData['roles']))
+                                {{-- @if (isset($adminUserData['roles']) && is_array($adminUserData['roles']))
                                     {{ implode(', ', $adminUserData['roles']) }}
                                 @else
                                     No roles assigned
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                     </div>

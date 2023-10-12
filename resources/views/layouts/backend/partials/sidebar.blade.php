@@ -50,7 +50,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="#">
+                            <a href="{{ url('role')}}" class="#">
                                 <i class="metismenu-icon"></i>
                                Role
                             </a>

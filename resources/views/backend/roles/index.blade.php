@@ -18,7 +18,7 @@
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('app.roles.create') }}" class="btn-shadow btn btn-info">
+                    <a href="{{ route('admin.roles.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-plus-circle fa-w-20"></i>
                         </span>
@@ -38,7 +38,6 @@
                             <th class="text-center">#</th>
                             <th class="text-center">Name</th>
                             <th class="text-center">Permissions</th>
-                            <th class="text-center">Created At</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
@@ -46,33 +45,35 @@
                         @foreach($roles as $key=>$role)
                             <tr>
                                 <td class="text-center text-muted">#{{ $key + 1 }}</td>
-                                <td class="text-center">{{ $role->name }}</td>
+                                <td class="text-center">{{ $role['name'] }}</td>
                                 <td class="text-center">
-                                    @if ($role->permissions_count > 0)
-                                        <span class="badge badge-info">{{ $role->permissions_count }}</span>
+                                    @if (is_array($role['permissions']) && count($role['permissions']) > 0)
+                                        @foreach($role['permissions'] as $permission)
+                                            <span class="badge badge-info">{{ $permission }}</span>
+                                        @endforeach
+                                    @elseif ($role['permissions'] > 0)
+                                        <span class="badge badge-info">{{ $role['permissions'] }}</span>
                                     @else
-                                        <span class="badge badge-danger">No permission found :(</span>
+                                        <span class="badge badge-danger">No permission found :</span>
                                     @endif
                                 </td>
-                                <td class="text-center">{{ $role->created_at->diffForHumans() }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-info btn-sm" href="{{ route('app.roles.edit',$role->id) }}"><i
+                                    <a class="btn btn-info btn-sm m-2" href="{{ route('admin.roles.edit',$role['id']) }}"><i
                                             class="fas fa-edit"></i>
-                                        <span>Edit</span>
+                                     
                                     </a>
-                                    @if ($role->deletable == true)
-                                        <button type="button" class="btn btn-danger btn-sm"
-                                                onclick="deleteData({{ $role->id }})">
-                                            <i class="fas fa-trash-alt"></i>
-                                            <span>Delete</span>
-                                        </button>
-                                        <form id="delete-form-{{ $role->id }}"
-                                              action="{{ route('app.roles.destroy',$role->id) }}" method="POST"
-                                              style="display: none;">
+                                 
+                                        <form id="delete-form-{{ $role['id'] }}"
+                                              action="{{ route('admin.roles.delete',$role['id']) }}" method="POST">
                                             @csrf()
                                             @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                    onclick="deleteData({{ $role['id'] }})">
+                                                <i class="fas fa-trash-alt"></i>
+                                               
+                                            </button>
                                         </form>
-                                    @endif
+                                   
                                 </td>
                             </tr>
                         @endforeach

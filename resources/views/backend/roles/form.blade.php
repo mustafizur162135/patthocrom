@@ -1,10 +1,22 @@
 @extends('layouts.backend.app')
 
-@section('title','Roles')
+@section('title', 'Roles')
 
 @section('content')
     <div class="app-page-title">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="page-title-wrapper">
+
             <div class="page-title-heading">
                 <div class="page-title-icon">
                     <i class="pe-7s-check icon-gradient bg-mean-fruit">
@@ -14,7 +26,7 @@
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('app.roles.index') }}" class="btn-shadow btn btn-danger">
+                    <a href="{{ route('admin.role') }}" class="btn-shadow btn btn-danger">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-arrow-circle-left fa-w-20"></i>
                         </span>
@@ -29,7 +41,7 @@
             <div class="main-card mb-3 card">
                 <!-- form start -->
                 <form id="roleFrom" role="form" method="POST"
-                      action="{{ isset($role) ? route('app.roles.update',$role->id) : route('app.roles.store') }}">
+                    action="{{ isset($role) ? route('admin.roles.update', $role->id) : route('admin.roles.store') }}">
                     @csrf
                     @if (isset($role))
                         @method('PUT')
@@ -37,68 +49,43 @@
                     <div class="card-body">
                         <h5 class="card-title">Manage Roles</h5>
 
-                        <x-forms.textbox label="Role Name"
-                                         name="name"
-                                         value="{{ $role->name ?? ''  }}"
-                                         placeholder="Enter role name"
-                                         field-attributes="required autofocus">
-                        </x-forms.textbox>
+                        <div class="form-group">
+                            <label for="name">Role Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                value="{{ $role->name ?? '' }}" placeholder="Enter role name" required autofocus>
+                        </div>
 
                         <div class="text-center">
                             <strong>Manage permissions for role</strong>
                             @error('permissions')
-                            <p class="p-2">
-                        <span class="text-danger" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                            </p>
+                                <p class="p-2">
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                </p>
                             @enderror
                         </div>
 
+
                         <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="select-all">
-                                <label class="custom-control-label" for="select-all">Select All</label>
-                            </div>
-                        </div>
-                        @forelse($modules->chunk(2) as $key => $chunks)
-                            <div class="form-row">
-                                @foreach($chunks as $key=>$module)
-                                    <div class="col">
-                                        <h5>Module: {{ $module->name }}</h5>
-                                        @foreach($module->permissions as $key=>$permission)
-                                            <div class="mb-3 ml-4">
-                                                <div class="custom-control custom-checkbox mb-2">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                           id="permission-{{ $permission->id }}"
-                                                           value="{{ $permission->id }}"
-                                                           name="permissions[]"
-                                                    @if(isset($role))
-                                                        @foreach($role->permissions as $rPermission)
-                                                        {{ $permission->id == $rPermission->id ? 'checked' : '' }}
-                                                        @endforeach
-                                                    @endif
-                                                    >
-                                                    <label class="custom-control-label"
-                                                           for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                            <label for="permissions">Permissions</label>
+                            <select multiple="multiple" class="form-control js-example-basic-multiple" id="permissions"
+                                name="permissions[]" required>
+                                @foreach ($permissions as $permission)
+                                    <option value="{{ $permission->id }}"
+                                        @if (isset($role)) @foreach ($role->permissions as $rPermission)
+                                            {{ $permission->id == $rPermission->id ? 'selected' : '' }}
+                                        @endforeach @endif>
+                                        {{ $permission->name }}</option>
                                 @endforeach
-                            </div>
-                        @empty
-                            <div class="row">
-                                <div class="col text-center">
-                                    <strong>No Module Found.</strong>
-                                </div>
-                            </div>
-                        @endforelse
+                            </select>
+                        </div>
 
                         <button type="button" class="btn btn-danger" onClick="resetForm('roleFrom')">
                             <i class="fas fa-redo"></i>
                             <span>Reset</span>
                         </button>
+
 
                         <button type="submit" class="btn btn-primary">
                             @isset($role)
@@ -118,19 +105,15 @@
 @endsection
 
 @push('js')
+    <script>
+        function resetForm(roleFrom) {
+            document.getElementById(roleFrom).reset();
+            $('.js-example-basic-multiple').val(null).trigger('change');
+        }
+    </script>
     <script type="text/javascript">
-        // Listen for click on toggle checkbox
-        $('#select-all').click(function (event) {
-            if (this.checked) {
-                // Iterate each checkbox
-                $(':checkbox').each(function () {
-                    this.checked = true;
-                });
-            } else {
-                $(':checkbox').each(function () {
-                    this.checked = false;
-                });
-            }
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
         });
     </script>
 @endpush

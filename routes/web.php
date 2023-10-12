@@ -40,8 +40,13 @@ Route::group(['middleware' => ['auth.admin']], function () {
     Route::post('register/admin', [RegisterController::class, 'registerAdmin'])->name('register.admin');
 
 
-    Route::get('/role', [RoleController::class,'index'])->name('admin.role');
-
+    Route::get('role', [RoleController::class, 'index'])->name('admin.role');
+    Route::get('role/create', [RoleController::class, 'create'])->name('admin.roles.create');
+    Route::get('role/{id}/edit', [RoleController::class, 'edit'])->name('admin.roles.edit');
+    Route::put('role/{id}/update', [RoleController::class, 'update'])->name('admin.roles.update');
+    Route::delete('role/{id}/delete', [RoleController::class, 'delete'])->name('admin.roles.delete');
+    Route::post('role/store', [RoleController::class, 'store'])->name('admin.roles.store');
+    
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RolePermissionRequest;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -36,22 +37,49 @@ class RolePermissionController extends Controller
             ], 500);
         }
     }
-    
 
-    public function store(Request $request)
+    public function create()
     {
         try {
-            $permission = Permission::findByName($request->permission);
-            $role = Role::create(['name' => $request->role]);
-            $role->givePermissionTo($permission);
+            $permissions = Permission::get();
+           
             return response()->json([
-                'message' => 'Role created and permission associated successfully',
-                'role' => $role,
-                'permission' => $permission
+                'status' => 200,
+                'message' => 'This is the create function for RolePermissionController',
+                'permissions' => $permissions
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Error creating role and associating permission',
+            'status' => 500,
+                'message' => 'An error occurred while processing your request.',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    
+
+    public function store(RolePermissionRequest $request)
+    {
+        try {
+             // Process Data
+        $role = Role::create(['name' => $request->role, 'guard_name' => 'admin']);
+
+        // $role = DB::table('roles')->where('name', $request->name)->first();
+        $permissions = $request->input('permissions');
+
+        if (!empty($permissions)) {
+            $role->syncPermissions($permissions);
+        }
+            return response()->json([
+                'message' => 'Role created and permission associated successfully',
+                'role' => $role,
+                'permission' => $permissions
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 500,
+                'message' => 'An error occurred while processing your request.',
                 'error' => $th->getMessage()
             ], 500);
         }
@@ -96,6 +124,32 @@ class RolePermissionController extends Controller
             return response()->json([
                 'message' => 'Error updating role and associating permission',
                 'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function edit($id)
+    {
+        try {
+            $role = Role::with('permissions')->find($id);
+            if (!$role) {
+                return response()->json([
+                    'message' => 'Role not found',
+                    'status' => 404
+                ], 404);
+            }
+            $permissions = Permission::all();
+            return response()->json([
+                'message' => 'Role found',
+                'role' => $role,
+                'permissions' => $permissions,
+                'status' => 200
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Error finding role',
+                'error' => $th->getMessage(),
+                'status' => 500
             ], 500);
         }
     }
