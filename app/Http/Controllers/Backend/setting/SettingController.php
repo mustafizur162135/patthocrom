@@ -9,6 +9,8 @@ use App\Models\Setting;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
+//use Image;
 
 class SettingController extends Controller
 {
@@ -181,6 +183,9 @@ class SettingController extends Controller
 //     return back()->with('success', 'Setting ' . ($operation === 'create' ? 'created' : 'updated') . ' successfully.');
 // }
 
+
+
+
 public function storeOrUpdate(Request $request)
 {
     $id = $request->input('id');
@@ -203,12 +208,17 @@ public function storeOrUpdate(Request $request)
     if ($operation === 'create') {
         $setting = new Setting($request->except('logo'));
 
-        // Handle logo upload
+        // Handle logo upload and resize
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo');
             $logoName = time() . '.' . $logo->getClientOriginalExtension();
             $destinationPath = public_path('images/');
             $logo->move($destinationPath, $logoName);
+
+            // Resize the image
+            $image = Image::make($destinationPath . $logoName);
+            $image->resize(200, 200); // Resize to the desired dimensions
+            $image->save(); // Save the resized image
             $setting->logo = $logoName;
         }
 
@@ -228,6 +238,11 @@ public function storeOrUpdate(Request $request)
             $logoName = time() . '.' . $logo->getClientOriginalExtension();
             $destinationPath = public_path('images/');
             $logo->move($destinationPath, $logoName);
+
+            // Resize the image
+            $image = Image::make($destinationPath . $logoName);
+            $image->resize(200, 200); // Resize to the desired dimensions
+            $image->save(); // Save the resized image
             $setting->logo = $logoName;
         }
 
@@ -239,6 +254,7 @@ public function storeOrUpdate(Request $request)
     // Redirect back with success or error messages
     return back()->with('success', 'Setting ' . ($operation === 'create' ? 'created' : 'updated') . ' successfully.');
 }
+
 
 
 
