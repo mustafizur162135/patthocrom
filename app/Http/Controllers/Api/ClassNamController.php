@@ -86,7 +86,7 @@ class ClassNamController extends Controller
         }
     }
     
-    public function show(Request $request, $id)
+    public function show(ClassNameRequest $request, $id)
     {
         $class = Classname::find($id);
         if (!$class) {

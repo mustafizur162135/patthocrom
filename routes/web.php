@@ -27,8 +27,7 @@ use App\Http\Controllers\Backend\student\{
     StudentDashboardController,
     StudentLoginController
 };
-
-
+use App\Http\Controllers\Backend\user\UserController;
 // Rest of your code...
 use Illuminate\Support\Facades\Route;
 
@@ -54,13 +53,23 @@ Route::group(['middleware' => ['auth.admin']], function () {
     Route::get('/admin/dashboard', AdminDashboardController::class)->name('admin.dashboard');
     Route::post('register/admin', [RegisterController::class, 'registerAdmin'])->name('register.admin');
 
-
+//role
     Route::get('role', [RoleController::class, 'index'])->name('admin.role');
     Route::get('role/create', [RoleController::class, 'create'])->name('admin.roles.create');
     Route::get('role/{id}/edit', [RoleController::class, 'edit'])->name('admin.roles.edit');
     Route::put('role/{id}/update', [RoleController::class, 'update'])->name('admin.roles.update');
     Route::delete('role/{id}/delete', [RoleController::class, 'delete'])->name('admin.roles.delete');
     Route::post('role/store', [RoleController::class, 'store'])->name('admin.roles.store');
+
+
+    //user
+
+    Route::get('user', [UserController::class, 'index'])->name('admin.user');
+    Route::get('user/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('user/{id}/update', [UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('user/{id}/delete', [UserController::class, 'delete'])->name('admin.users.delete');
+    Route::post('user/store', [UserController::class, 'store'])->name('admin.users.store');
 
 
 
@@ -81,6 +90,8 @@ Route::group(['middleware' => ['auth.admin']], function () {
      Route::put('subject/{id}/update', [SubjectController::class, 'update'])->name('admin.subject.update');
      Route::delete('subject/{id}/delete', [SubjectController::class, 'delete'])->name('admin.subject.delete');
      Route::post('subject/store', [SubjectController::class, 'store'])->name('admin.subject.store');
+
+     Route::resource('question_types', QuestionTypeController::class);
     
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');

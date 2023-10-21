@@ -36,38 +36,35 @@ class ClassnameController extends Controller
 
 
         $responseData = $className->getData();
-    if (property_exists($responseData, 'classes')) {
-        $classes = collect($responseData->classes);
+        if (property_exists($responseData, 'classes')) {
+            $classes = collect($responseData->classes);
 
-        $classes = collect($className->getData()->classes);
-        $status = $className->getData()->status;
-        $message = $className->getData()->message;
-        if ($status == 404) {
-            return back()->with('error', $message);
+            $classes = collect($className->getData()->classes);
+            $status = $className->getData()->status;
+            $message = $className->getData()->message;
+            if ($status == 404) {
+                return back()->with('error', $message);
+            }
+
+            // This is my api how to get value
+            $classes = $classes->map(function ($class) {
+                return [
+                    'id' => $class->id,
+                    'class_name' => $class->class_name,
+                    'class_code' => $class->class_code
+                ];
+            });
+
+            return view('backend.class.index', compact('classes'));
+        } else {
+            // Data doesn't exist or the property is not present.
+            echo "Data not found";
         }
-
-        // This is my api how to get value
-        $classes = $classes->map(function ($class) {
-            return [
-                'id' => $class->id,
-                'class_name' => $class->class_name,
-                'class_code' => $class->class_code
-            ];
-        });
-
-        return view('backend.class.index',compact('classes'));
-
-    } else {
-        // Data doesn't exist or the property is not present.
-        echo "Data not found";
-        
-    }
-       
-       
     }
 
-    public function create(){
-        
+    public function create()
+    {
+
         try {
             $className = $this->classNamApiController->create();
         } catch (HttpResponseException $e) {
@@ -83,7 +80,7 @@ class ClassnameController extends Controller
             return back()->with('error', 'Failed to retrieve className.');
         }
 
-         
+
         $status = $className->getData()->status;
         $message = $className->getData()->message;
         if ($status == 404) {
@@ -110,8 +107,7 @@ class ClassnameController extends Controller
             $apiResponse = $this->classNamApiController->store($class);
         } catch (HttpResponseException $e) {
             return back()->with('error', 'Failed to create className.');
-        } 
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return back()->with('error', 'Failed to create className.');
         } catch (\Throwable $th) {
             return back()->with('error', 'Failed to create className.');
@@ -132,7 +128,6 @@ class ClassnameController extends Controller
 
         try {
             $apiResponse = $this->classNamApiController->edit($id);
-           
         } catch (HttpResponseException $e) {
             return back()->with('error', 'Failed to retrieve className.');
         } catch (\Exception $e) {
@@ -145,8 +140,8 @@ class ClassnameController extends Controller
             return back()->with('error', 'Failed to retrieve className.');
         }
 
-         $class = $apiResponse->getData()->class;
-        
+        $class = $apiResponse->getData()->class;
+
         $status = $apiResponse->getData()->status;
         $message = $apiResponse->getData()->message;
         if ($status == 404) {
@@ -157,9 +152,9 @@ class ClassnameController extends Controller
         return view('backend.class.form', compact('class'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        
+
 
         $class = new ClassNameRequest([
             'class_name' => $request->input('class_name'),
@@ -169,7 +164,7 @@ class ClassnameController extends Controller
 
 
         try {
-            $apiResponse = $this->classNamApiController->update($class,$id);
+            $apiResponse = $this->classNamApiController->update($class, $id);
         } catch (HttpResponseException $e) {
             return back()->with('error', 'Failed to updateclassName.');
         } catch (\Exception $e) {
