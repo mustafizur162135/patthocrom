@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Backend\setting;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\SettingNamController;
 use App\Http\Requests\SettingRequest;
+use App\Models\Setting;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -147,133 +149,101 @@ class SettingController extends Controller
         }
     }
 
-    public function showForm(Request $request,$id = null)
+    public function showForm($id = null)
 {
+    // Check if an ID is provided and load the existing setting
     if ($id) {
-        try {
-            $apiResponse = $this->SettingNamApiController->edit($id);
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to retrieve setting data.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to retrieve setting data.');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Failed to retrieve setting data.');
-        }
-
-        if (!($apiResponse instanceof \Illuminate\Http\JsonResponse)) {
-            // Handle the case where $apiResponse is not an instance of JsonResponse
-            return back()->with('error', 'Failed to retrieve setting data.');
-        }
-
-        $setting = $apiResponse->getData()->setting;
-        $status = $apiResponse->getData()->status;
-        $message = $apiResponse->getData()->message;
-
-        if ($status == 404) {
-            return back()->with('error', $message);
-        } elseif ($status == 500) {
-            return back()->with('error', $message);
-        }
+        $setting = Setting::findOrFail($id);
     } else {
-        // Create a new Setting instance when no ID is provided.
-        //$setting = new Setting();
-
-        // return $request;
-        $setting = new SettingRequest([
-            'address' => $request->input('address'),
-            'contact_no' => $request->input('contact_no'),
-            'mail' => $request->input('mail'),
-            'about_us' => $request->input('about_us'),
-            'fb_link' => $request->input('fb_link'),
-            'youtube_link' => $request->input('youtube_link')
-        ]);
-
-        try {
-            $apiResponse = $this->SettingNamApiController->store($setting);
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to create settingName.');
-        } 
-        catch (\Exception $e) {
-            return back()->with('error', 'Failed to create settingName.');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Failed to create settingName.');
-        }
-
-
-        if ($apiResponse->getStatusCode() === 200) {
-            return back()->with('success', 'Class created successfully.');
-        } elseif ($apiResponse->getStatusCode() === 500) {
-            return back()->with('error', 'Failed to create settingName.');
-        } else {
-            return back()->with('error', 'Failed to create settingName.');
-        }
-
+        // No ID provided, create a new setting instance
+        $setting = new Setting();
     }
-    
 
     return view('backend.setting.form', compact('setting'));
 }
 
+// public function storeOrUpdate(Request $request)
+// {
+//     $id = $request->input('id');
+//     $operation = $id ? 'update' : 'create';
 
+//     // Validate the request data, if needed
 
-    
+//     // Create or update the setting based on the input data
+//     if ($operation === 'create') {
+//         Setting::create($request->all());
+//     } elseif ($operation === 'update') {
+//         $setting = Setting::findOrFail($id);
+//         $setting->update($request->all());
+//     }
+
+//     // Redirect back with success or error messages
+//     return back()->with('success', 'Setting ' . ($operation === 'create' ? 'created' : 'updated') . ' successfully.');
+// }
+
 public function storeOrUpdate(Request $request)
 {
     $id = $request->input('id');
     $operation = $id ? 'update' : 'create';
 
-    // Add validation logic here
+    // Validate the request data
+    $rules = [
+        'mail' => 'required',
+        'contact_no' => 'required',
+        'fb_link' => 'required',
+        'youtube_link' => 'required',
+        'address' => 'required',
+        'about_us' => 'required',
+        'logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Add logo validation rules
+    ];
 
+    $request->validate($rules);
+
+    // Create or update the setting based on the input data
     if ($operation === 'create') {
-        // Create a new setting
-        $setting = new SettingRequest([
-            'address' => $request->input('address'),
-            'contact_no' => $request->input('contact_no'),
-            'mail' => $request->input('mail'),
-            'about_us' => $request->input('about_us'),
-            'fb_link' => $request->input('fb_link'),
-            'youtube_link' => $request->input('youtube_link')
-        ]);
+        $setting = new Setting($request->except('logo'));
 
-        try {
-            $apiResponse = $this->SettingNamApiController->store($setting);
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to create setting.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to create setting.');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Failed to create setting.');
+        // Handle logo upload
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $logoName = time() . '.' . $logo->getClientOriginalExtension();
+            $destinationPath = public_path('images/');
+            $logo->move($destinationPath, $logoName);
+            $setting->logo = $logoName;
         }
+
+        $setting->save();
     } elseif ($operation === 'update') {
-        // Update an existing setting
-        $setting = new SettingRequest([
-            'address' => $request->input('address'),
-            'contact_no' => $request->input('contact_no'),
-            'mail' => $request->input('mail'),
-            'about_us' => $request->input('about_us'),
-            'fb_link' => $request->input('fb_link'),
-            'youtube_link' => $request->input('youtube_link')
-        ]);
+        $setting = Setting::findOrFail($id);
 
-        try {
-            $apiResponse = $this->SettingNamApiController->update($setting, $id);
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to update setting.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to update setting.');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Failed to update setting.');
+        // Handle logo update
+        if ($request->hasFile('logo')) {
+            // Delete the previous image
+            $previousImage = public_path('images/') . $setting->logo;
+            if (file_exists($previousImage)) {
+                unlink($previousImage);
+            }
+
+            $logo = $request->file('logo');
+            $logoName = time() . '.' . $logo->getClientOriginalExtension();
+            $destinationPath = public_path('images/');
+            $logo->move($destinationPath, $logoName);
+            $setting->logo = $logoName;
         }
+
+        // Update other fields
+        $setting->fill($request->except('logo'));
+        $setting->save();
     }
 
-    if ($apiResponse->getStatusCode() === 200) {
-        return back()->with('success', 'Setting ' . ($operation === 'create' ? 'created' : 'updated') . ' successfully.');
-    } elseif ($apiResponse->getStatusCode() === 500) {
-        return back()->with('error', 'Failed to ' . ($operation === 'create' ? 'create' : 'update') . ' setting.');
-    } else {
-        return back()->with('error', 'Failed to ' . ($operation === 'create' ? 'create' : 'update') . ' setting.');
-    }
+    // Redirect back with success or error messages
+    return back()->with('success', 'Setting ' . ($operation === 'create' ? 'created' : 'updated') . ' successfully.');
 }
+
+
+
+
+
 
 
 }

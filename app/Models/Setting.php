@@ -19,5 +19,6 @@ class Setting extends Model
         'banner_image',
         'fb_link',
         'youtube_link',
+        'logo',
     ];
 }

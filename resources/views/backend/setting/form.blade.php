@@ -28,7 +28,7 @@
         <div class="col-12">
             <div class="main-card mb-3 card">
                 <form id="classForm" role="form" method="POST"
-      action="{{ route('admin.setting.storeOrUpdate', isset($setting) ? ['id' => $setting->id] : []) }}">
+      action="{{ route('admin.setting.storeOrUpdate', isset($setting) ? ['id' => $setting->id] : []) }}" enctype="multipart/form-data">
     @csrf
     @if (isset($setting))
         @method('PUT')
@@ -66,6 +66,21 @@
                             <textarea class="form-control" cols="40" rows="5" id="about_us" name="about_us"
                                 placeholder="Enter About Us" required>{{ old('about_us', $setting->about_us ?? '') }}</textarea>
                         </div>
+
+                        @if ($errors->has('logo'))
+    <span class="text-danger">{{ $errors->first('logo') }}</span>
+@endif
+                        <div class="form-group">
+                            <label for="Logo">Logo</label>
+                            @if(isset($setting) && $setting->logo)
+                                <img src="{{ asset('images/' . $setting->logo) }}" alt="Old logo" class="mb-2" style="max-width: 100px;">
+                                <input type="file" class="form-control-file" id="logo" name="logo">
+                            @else
+                                <input type="file" class="form-control-file" id="logo" name="logo">
+                            @endif
+                        </div>
+                        
+
                         <button type="button" class="btn btn-danger" onclick="resetForm('settingForm')">
                             <i class="fas fa-redo"></i>
                             <span>Reset</span>
