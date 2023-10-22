@@ -22,7 +22,7 @@
                     <i class="pe-7s-check icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ isset($class) ? 'Edit' : 'Create New' }} Class</div>
+                <div>{{ isset($class) ? 'Edit' : 'Create New' }} Course</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
@@ -47,22 +47,22 @@
                         @method('PUT')
                     @endif
                     <div class="card-body">
-                        <h5 class="card-title">Manage Classes</h5>
+                        <h5 class="card-title">Manage Courses</h5>
 
                         <div class="form-group">
-                            <label for="name">Class Name</label>
+                            <label for="name">Course Name</label>
                             <input type="text" class="form-control" id="class_name" name="class_name"
                                 value="{{ $class->class_name ?? '' }}" placeholder="Enter class name" required autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="name">Class Code</label>
+                            <label for="name">Course Code</label>
                             <input type="text" class="form-control" id="class_code" name="class_code"
                                 value="{{ $class->class_code ?? '' }}" placeholder="Enter class Code" required autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="class_note">Class Note</label>
+                            <label for="class_note">Course Note</label>
                             <textarea class="form-control" cols="40" rows="5" id="class_note" name="class_note" placeholder="Enter Class Note" required>{{ $class->class_note ?? '' }}</textarea>
                         </div>
                         

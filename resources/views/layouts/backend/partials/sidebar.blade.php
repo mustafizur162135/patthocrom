@@ -55,11 +55,11 @@
                                Role
                             </a>
                         </li>
-                        <li class="app-sidebar__heading">Class</li>
+                        <li class="app-sidebar__heading">Course</li>
                         <li>
                             <a href="{{ route('admin.class') }}" class="#">
                                 <i class="metismenu-icon"></i>
-                               Class
+                               Course
                             </a>
                         </li>
                         <li class="app-sidebar__heading">Subject</li>
@@ -74,6 +74,13 @@
                         <a href="{{ url('admin/setting/form/1') }}" class="#">
                             <i class="metismenu-icon"></i>
                             Settings
+                        </a>
+                    </li>
+                    <li class="app-sidebar__heading">Slider</li>
+                    <li>
+                        <a href="{{ route('sliders.index') }}" class="#">
+                            <i class="metismenu-icon"></i>
+                            Slider
                         </a>
                     </li>
                     

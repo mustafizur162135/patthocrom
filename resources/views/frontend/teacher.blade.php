@@ -20,14 +20,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/1.png') }}" alt="1.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Kathelen Monero</h4>
                                 <p>Teacher</p>
                             </div>
@@ -39,14 +32,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                                
                                 <h4 class="text-thm5">Anna Richard</h4>
                                 <p>Teacher</p>
                             </div>
@@ -58,14 +44,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                                
                                 <h4 class="text-thm5">Ali Tufan</h4>
                                 <p>Teacher</p>
                             </div>
@@ -77,14 +56,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                                
                                 <h4 class="text-thm5">Jack Wilson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -96,14 +68,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Jessie Handerson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -115,14 +80,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/1.png') }}" alt="1.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Kathelen Monero</h4>
                                 <p>Teacher</p>
                             </div>
@@ -134,14 +92,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                                
                                 <h4 class="text-thm5">Anna Richard</h4>
                                 <p>Teacher</p>
                             </div>
@@ -153,14 +104,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Ali Tufan</h4>
                                 <p>Teacher</p>
                             </div>
@@ -172,14 +116,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                                
                                 <h4 class="text-thm5">Jack Wilson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -191,14 +128,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                                
                                 <h4 class="text-thm5">Jessie Handerson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -210,14 +140,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/1.png') }}" alt="1.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Kathelen Monero</h4>
                                 <p>Teacher</p>
                             </div>
@@ -229,14 +152,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Anna Richard</h4>
                                 <p>Teacher</p>
                             </div>
@@ -248,14 +164,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Ali Tufan</h4>
                                 <p>Teacher</p>
                             </div>
@@ -267,14 +176,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Jack Wilson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -286,14 +188,7 @@
                                 <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
                             </div>
                             <div class="details">
-                                <ul>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i></a></li>
-                                    <li class="list-inline-item"><a href="#">(5)</a></li>
-                                </ul>
+                               
                                 <h4 class="text-thm5">Jessie Handerson</h4>
                                 <p>Teacher</p>
                             </div>

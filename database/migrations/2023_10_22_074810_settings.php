@@ -21,10 +21,9 @@ return new class extends Migration
             $table->string('about_us')->nullable();
             $table->string('about_us_image')->nullable();
             $table->string('logo')->nullable();
-            $table->string('banner_image')->nullable();
+            $table->json('banner_image')->nullable();
             $table->string('fb_link')->nullable();
             $table->string('youtube_link')->nullable();
-            
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        //
     }
 };

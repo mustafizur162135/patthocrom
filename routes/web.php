@@ -12,7 +12,8 @@ use App\Http\Controllers\Frontend\{
 
 use App\Http\Controllers\Backend\{
     AdminDashboardController,
-    AdminLoginController
+    AdminLoginController,
+    SliderController
 };
 use App\Http\Controllers\Backend\role\RoleController;
 use App\Http\Controllers\Backend\class\ClassnameController;
@@ -86,7 +87,9 @@ Route::group(['middleware' => ['auth.admin']], function () {
 
     Route::match(['put', 'patch'], 'admin/setting/storeOrUpdate', [SettingController::class, 'storeOrUpdate'])->name('admin.setting.storeOrUpdate');
 
+    // slider
 
+    Route::resource('sliders', SliderController::class);
 
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');

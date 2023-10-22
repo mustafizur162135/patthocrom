@@ -68,16 +68,41 @@
                         </div>
 
                         @if ($errors->has('logo'))
-    <span class="text-danger">{{ $errors->first('logo') }}</span>
-@endif
+                            <span class="text-danger">{{ $errors->first('logo') }}</span>
+                        @endif
+
                         <div class="form-group">
                             <label for="Logo">Logo</label>
                             @if(isset($setting) && $setting->logo)
-                                <img src="{{ asset('images/' . $setting->logo) }}" alt="Old logo" class="mb-2" style="max-width: 100px;">
+                                <img src="{{ asset('images/setting/' . $setting->logo) }}" alt="Old logo" class="mb-2" style="max-width: 100px;">
                                 <input type="file" class="form-control-file" id="logo" name="logo">
                             @else
                                 <input type="file" class="form-control-file" id="logo" name="logo">
                             @endif
+                        </div>
+
+                        @if ($errors->has('banner_image'))
+                            <span class="text-danger">{{ $errors->first('banner_image') }}</span>
+                        @endif
+
+                        <div class="form-group">
+                            <label for="banner_image">Banner Image</label>
+                            @if(isset($setting) && $setting->banner_image)
+                                <img src="{{ asset('images/setting/banner/' . $setting->banner_image) }}" alt="Old banner image" class="mb-2" style="max-width: 100px;">
+                            @endif
+                            <input type="file" class="form-control-file" id="banner_image" name="banner_image">
+                        </div>
+
+                        @if ($errors->has('about_us_image'))
+                            <span class="text-danger">{{ $errors->first('banner_image') }}</span>
+                        @endif
+                        
+                        <div class="form-group">
+                            <label for="about_us_image">About Us Image</label>
+                            @if(isset($setting) && $setting->about_us_image)
+                                <img src="{{ asset('images/setting/' . $setting->about_us_image) }}" alt="Old about us image" class="mb-2" style="max-width: 100px;">
+                            @endif
+                            <input type="file" class="form-control-file" id="about_us_image" name="about_us_image">
                         </div>
                         
 

@@ -15,8 +15,12 @@
 <!-- Title -->
 <title>@yield('title') | {{ 'Patthokrom' }}</title>
 <!-- Favicon -->
-<link href="{{ asset('frontend/images/favicon.ico') }}" sizes="128x128" rel="shortcut icon" type="image/x-icon" />
-<link href="{{ asset('frontend/images/favicon.ico') }}" sizes="128x128" rel="shortcut icon" />
+@if ($setting && $setting->logo)
+    <link href="{{ asset('images/setting/' . $setting->logo) }}" sizes="128x128" rel="shortcut icon" type="image/x-icon" />
+@else
+    <link href="{{ asset('frontend/images/favicon.ico') }}" sizes="128x128" rel="shortcut icon" type="image/x-icon" />
+@endif
+
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +34,7 @@
 </head>
 <body>
 <div class="wrapper">
-	<div class="preloader"></div>
+	{{-- <div class="preloader"></div> --}}
 
     @include('layouts.frontend.partials.header')
 
@@ -41,45 +45,28 @@
 				<div class="col-lg-12">
 					<div class="main-banner-wrapper">
 					    <div class="banner-style-one owl-theme owl-carousel home11">
-					        <div class="slide slide-one home11" style="background-image: url({{ asset('frontend/images/home/1.jpg') }});">
-					            <div class="container">
-					                <div class="row">
-					                    <div class="col-lg-8 offset-lg-2 text-center">
-					                        <div class="banner-sub-title text-capitalize fw400">We Take Learning to</div>
-					                        <div class="banner-title text-capitalize fwb mb25">New Heights</div>
-					                        <div class="btn-block">
-					                            <a href="#" class="banner-btn bdrs3">FIND COURSES</a>
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
-					        </div>
-					        <div class="slide slide-one home11" style="background-image: url({{ asset('frontend/images/home/h2.jpg') }});">
-					            <div class="container">
-					                <div class="row">
-					                    <div class="col-lg-8 offset-lg-2 text-center">
-					                        <div class="banner-sub-title text-capitalize fw400">We Take Learning to</div>
-					                        <div class="banner-title text-capitalize fwb mb25">New Heights</div>
-					                        <div class="btn-block">
-					                            <a href="#" class="banner-btn bdrs3">FIND COURSES</a>
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
-					        </div>
-					        <div class="slide slide-one home11" style="background-image: url({{ asset('frontend/images/home/h3.jpg') }});">
-					            <div class="container">
-					                <div class="row">
-					                    <div class="col-lg-8 offset-lg-2 text-center">
-					                        <div class="banner-sub-title text-capitalize fw400">We Take Learning to</div>
-					                        <div class="banner-title text-capitalize fwb mb25">New Heights</div>
-					                        <div class="btn-block">
-					                            <a href="#" class="banner-btn bdrs3">FIND COURSES</a>
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
-					        </div>
+					       
+					        
+							
+								@if ($sliders->isEmpty())
+									<p>No sliders available</p>
+								@else
+									@foreach ($sliders as $slider)
+										<div class="slide slide-one home11" style="background-image: url({{ asset('images/sliders/' . $slider->slider_image) }});">
+											<div class="row">
+												<div class="col-lg-8 offset-lg-2 text-center">
+													<div class="banner-sub-title text-capitalize fw400">{{ $slider->slider_name }}</div>
+													<div class="banner-title text-capitalize fwb mb25">{{ $slider->slider_des }}</div>
+													<div class="btn-block">
+														<a href="#" class="banner-btn bdrs3">FIND COURSES</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									@endforeach
+								@endif
+							
+							
 					    </div>
 					    <div class="carousel-btn-block banner-carousel-btn">
 					        <span class="carousel-btn left-btn"><i class="flaticon-back left"></i></span>

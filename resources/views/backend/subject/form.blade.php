@@ -22,7 +22,7 @@
                     <i class="pe-7s-check icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ isset($subject) ? 'Edit' : 'Create New' }} Class</div>
+                <div>{{ isset($subject) ? 'Edit' : 'Create New' }} Subject</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
@@ -47,18 +47,18 @@
                         @method('PUT')
                     @endif
                     <div class="card-body">
-                        <h5 class="card-title">Manage subjects</h5>
+                        <h5 class="card-title">Manage Subjects</h5>
 
                         <div class="form-group">
-                            <label for="permissions">Class Name</label>
+                            <label for="permissions">Course Name</label>
                             <select class="form-control js-example-basic-multiple" id="class_id"
                                 name="class_id" required>
-                                <option value="">Select Class Name</option>
+                                <option value="">Select Course Name</option>
                                 @foreach ($classes as $class)
-        <option value="{{ $class->id }}" {{ isset($subject) && $subject->class_id == $class->id ? 'selected' : '' }}>
-            {{ $class->class_name }}
-        </option>
-    @endforeach
+                                    <option value="{{ $class->id }}" {{ isset($subject) && $subject->class_id == $class->id ? 'selected' : '' }}>
+                                        {{ $class->class_name }}
+                                    </option>
+                                @endforeach
                             </select>
 
                             

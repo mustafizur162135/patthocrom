@@ -29,18 +29,27 @@
 				<div class="col-sm-6 col-md-4 col-md-3 col-lg-4">
 					<div class="footer_contact_widget home11">
 						<h4>CONTACT</h4>
-						<p>329 Queensberry Street, North Melbourne VIC 3051, Australia.</p>
-						<p>123 456 7890</p>
-						<p>support@edumy.com</p>
+						@if ($setting)
+							<p>{{ $setting->address ?? 'Dhaka' }}</p>
+							<p>{{ $setting->contact_no ?? '123 456 7890' }}</p>
+							<p>{{ $setting->mail ?? 'patthokrombd@gmail.com' }}</p>
+						@else
+							<p>Dhaka.</p>
+							<p>123 456 7890</p>
+							<p>patthokrombd@gmail.com</p>
+						@endif
+
 					</div>
 					<div class="footer_social_widget home11 mt15 text-left">
 						<ul>
-							<li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
-							<li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
-							<li class="list-inline-item"><a href="#"><i class="fa fa-instagram"></i></a></li>
-							<li class="list-inline-item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-							<li class="list-inline-item"><a href="#"><i class="fa fa-dribbble"></i></a></li>
-							<li class="list-inline-item"><a href="#"><i class="fa fa-google"></i></a></li>
+							@if ($setting)
+								<li class="list-inline-item"><a href="{{ $setting->fb_link ?? '#' }}"><i class="fa fa-facebook"></i></a></li>
+								<li class="list-inline-item"><a href="{{ $setting->youtube_link ?? '#' }}"><i class="fa fa-youtube"></i></a></li>
+							@else
+								<li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li class="list-inline-item"><a href="#"><i class="fa fa-youtube"></i></a></li>
+							@endif
+
 						</ul>
 					</div>
 				</div>
