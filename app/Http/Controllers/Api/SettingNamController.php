@@ -3,51 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SubjectNameRequest;
+use App\Http\Requests\SettingRequest;
 use App\Models\Classname;
+use App\Models\Setting;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Mockery\Matcher\Subset;
 
-class SubjectNamController extends Controller
+class SettingNamController extends Controller
 {
-    public function index()
-    {
-        try {
-            $subjects = Subject::get();
     
-            if ($subjects->isEmpty()) {
-                // Handle the case when there are no roles found.
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'No subjects found.',
-                ], 404);
-            }
-    
-            return response()->json([
-                'status' => 200,
-                'message' => 'This is the index function for subjectNameController',
-                'subjects' => $subjects
-            ]);
-        } catch (\Exception $e) {
-            // Handle any other unexpected errors.
-            return response()->json([
-                'status' => 500,
-                'message' => 'An error occurred while processing your request.',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
 
     public function create()
     {
         try {
-            $classes = Classname::get();
+            //$classes = Classname::get();
            
             return response()->json([
                 'status' => 200,
-                'message' => 'This is the create function for SubjectNameController',
-                'classes' => $classes
+                'message' => 'This is the create function for SesstingNameController'
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -59,16 +33,17 @@ class SubjectNamController extends Controller
     }
 
     
-
-    public function store(SubjectNameRequest $request)
+    public function store(SettingRequest $request)
     {
         try {
              // Process Data
-        $subject = Subject::create([
-            'class_id' => $request->class_id, 
-            'sub_name' => $request->sub_name, 
-            'sub_code' => $request->sub_code, 
-            'sub_note' => $request->sub_note
+        $setting = Setting::create([
+            'address' => $request->input('address'),
+                'contact_no' => $request->input('contact_no'),
+                'mail' => $request->input('mail'),
+                'about_us' => $request->input('about_us'),
+                'fb_link' => $request->input('fb_link'),
+                'youtube_link' => $request->input('youtube_link')
         
         ]);
 
@@ -76,8 +51,8 @@ class SubjectNamController extends Controller
         
 
             return response()->json([
-                'message' => 'Subject created successfully',
-                'subject' => $subject
+                'message' => 'setting created successfully',
+                'setting' => $setting
             ]);
         } catch (\Throwable $th) {
             return response()->json([
@@ -87,6 +62,7 @@ class SubjectNamController extends Controller
             ], 500);
         }
     }
+    
     
     public function show(Request $request, $id)
     {
@@ -102,49 +78,52 @@ class SubjectNamController extends Controller
         ]);
     }
     
-    public function update(SubjectNameRequest $request, $id)
+    public function update(SettingRequest $request, $id)
     {
-        try {
+        // try {
             // Retrieve the class based on the provided $id
-            $subject = Subject::find($id);
+            $setting = Setting::find($id);
     
-            if (!$subject) {
+            if (!$setting) {
                 return response()->json([
-                    'message' => 'subject not found'
+                    'message' => 'Setting not found'
                 ], 404);
             }
     
-            // Update the subject attributes with data from the request
-            $subject->update([
-                'class_id' => $request->input('class_id'),
-                'sub_name' => $request->input('sub_name'),
-                'sub_code' => $request->input('sub_code'),
-                'sub_note' => $request->input('sub_note'),
+            // Update the setting attributes with data from the request
+            $setting->update([
+                'address' => $request->input('address'),
+                'contact_no' => $request->input('contact_no'),
+                'mail' => $request->input('mail'),
+                'about_us' => $request->input('about_us'),
+                'fb_link' => $request->input('fb_link'),
+                'youtube_link' => $request->input('youtube_link')
             ]);
     
+            
             // Save the changes to the database
-            $subject->save();
+            $setting->save();
     
             return response()->json([
-                'message' => 'subject updated successfully !!',
-                'subject' => $subject
+                'message' => 'Setting updated successfully !!',
+                'setting' => $setting
             ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'Error updating class name',
-                'error' => $th->getMessage()
-            ], 500);
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json([
+        //         'message' => 'Error updating class name',
+        //         'error' => $th->getMessage()
+        //     ], 500);
+        // }
     }
     
 
     public function edit($id)
     {
         try {
-            $subject = Subject::find($id);
-            if (!$subject) {
+            $setting = Setting::find($id);
+            if (!$setting) {
                 return response()->json([
-                    'message' => 'subject not found',
+                    'message' => 'setting not found',
                     'status' => 404
                 ], 404);
             }
@@ -152,9 +131,8 @@ class SubjectNamController extends Controller
             $classes = Classname::all();
     
             return response()->json([
-                'message' => 'subject found',
-                'subject' => $subject,
-                'classes' => $classes, // Include the "classes" data
+                'message' => 'setting found',
+                'setting' => $setting,
                 'status' => 200
             ], 200);
         } catch (\Throwable $th) {

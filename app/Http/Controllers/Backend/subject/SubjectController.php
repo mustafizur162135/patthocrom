@@ -191,4 +191,26 @@ class SubjectController extends Controller
             return back()->with('error', 'Failed to updateclassName.');
         }
     }
+
+    public function delete($id)
+    {
+        try {
+            $apiResponse = $this->SubjectNamApiController->delete($id);
+            
+            $responseData = $apiResponse->getData();
+            $status = $apiResponse->getStatusCode();
+    
+            if ($status === 200) {
+                return back()->with('success', $responseData->message);
+            } else {
+                return back()->with('error', $responseData->message);
+            }
+        } catch (HttpResponseException $e) {
+            return back()->with('error', 'Failed to delete subjectName.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to delete subjectName.');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Failed to delete subjectName.');
+        }
+    }
 }

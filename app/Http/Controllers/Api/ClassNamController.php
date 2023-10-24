@@ -86,7 +86,7 @@ class ClassNamController extends Controller
         }
     }
     
-    public function show(ClassNameRequest $request, $id)
+    public function show(Request $request, $id)
     {
         $class = Classname::find($id);
         if (!$class) {
@@ -160,26 +160,28 @@ class ClassNamController extends Controller
         }
     }
     
-    public function destroy(ClassNameRequest $request, $id)
+    public function delete($id)
     {
-        try {
+        // try {
             $class = Classname::find($id);
             if (!$class) {
                 return response()->json([
-                    'message' => 'class not found'
+                    'message' => 'Class not found'
                 ], 404);
             }
+    
+            $class->delete();
             
             return response()->json([
-                'message' => 'class revoked successfully',
-                'class' => $class
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'Error updating class and revoking permission',
-                'error' => $th->getMessage()
-            ], 500);
-        }
+                'message' => 'Class revoked successfully'
+            ], 200);
+        // } catch (\Throwable $th) {
+        //     return response()->json([
+        //         'message' => 'Error updating class and revoking permission',
+        //         'error' => $th->getMessage()
+        //     ], 500);
+        // }
     }
+    
 }
 

@@ -4,12 +4,11 @@
 // frontend part start
 
 use App\Http\Controllers\Frontend\{
-    HomeController
- };
- 
- // frontend part end
- 
- 
+   HomeController
+};
+
+// frontend part end
+
 
 use App\Http\Controllers\Backend\{
     AdminDashboardController,
@@ -18,6 +17,7 @@ use App\Http\Controllers\Backend\{
 use App\Http\Controllers\Backend\role\RoleController;
 use App\Http\Controllers\Backend\class\ClassnameController;
 use App\Http\Controllers\Backend\subject\SubjectController;
+use App\Http\Controllers\Backend\setting\SettingController;
 use App\Http\Controllers\Backend\teacher\{
     TeacherDashboardController,
     TeacherLoginController
@@ -27,7 +27,8 @@ use App\Http\Controllers\Backend\student\{
     StudentDashboardController,
     StudentLoginController
 };
-use App\Http\Controllers\Backend\user\UserController;
+
+
 // Rest of your code...
 use Illuminate\Support\Facades\Route;
 
@@ -44,8 +45,8 @@ use Illuminate\Support\Facades\Route;
 
 // Frontend part start
 
-Route::get('/', [HomeController::class, 'home'])->name('home');
-Route::get('/course', [HomeController::class, 'course'])->name('course');
+    Route::get('/', [HomeController::class, 'home'])->name('home');
+    Route::get('/course', [HomeController::class, 'course'])->name('course');
 
 // Frontend part end
 
@@ -53,7 +54,7 @@ Route::group(['middleware' => ['auth.admin']], function () {
     Route::get('/admin/dashboard', AdminDashboardController::class)->name('admin.dashboard');
     Route::post('register/admin', [RegisterController::class, 'registerAdmin'])->name('register.admin');
 
-//role
+// role
     Route::get('role', [RoleController::class, 'index'])->name('admin.role');
     Route::get('role/create', [RoleController::class, 'create'])->name('admin.roles.create');
     Route::get('role/{id}/edit', [RoleController::class, 'edit'])->name('admin.roles.edit');
@@ -61,38 +62,32 @@ Route::group(['middleware' => ['auth.admin']], function () {
     Route::delete('role/{id}/delete', [RoleController::class, 'delete'])->name('admin.roles.delete');
     Route::post('role/store', [RoleController::class, 'store'])->name('admin.roles.store');
 
+    // class
 
-    //user
+    Route::get('admin/class', [ClassnameController::class, 'index'])->name('admin.class');
+    Route::get('admin/class/create', [ClassnameController::class, 'create'])->name('admin.class.create');
+    Route::get('admin/class/{id}/edit', [ClassnameController::class, 'edit'])->name('admin.class.edit');
+    Route::put('admin/class/{id}/update', [ClassnameController::class, 'update'])->name('admin.class.update');
+    Route::delete('admin/class/{id}/delete', [ClassnameController::class, 'delete'])->name('admin.class.delete');
+    Route::post('admin/class/store', [ClassnameController::class, 'store'])->name('admin.class.store');
 
-    Route::get('user', [UserController::class, 'index'])->name('admin.user');
-    Route::get('user/create', [UserController::class, 'create'])->name('admin.users.create');
-    Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
-    Route::put('user/{id}/update', [UserController::class, 'update'])->name('admin.users.update');
-    Route::delete('user/{id}/delete', [UserController::class, 'delete'])->name('admin.users.delete');
-    Route::post('user/store', [UserController::class, 'store'])->name('admin.users.store');
+    // subject
+
+    Route::get('admin/subject', [SubjectController::class, 'index'])->name('admin.subject');
+    Route::get('admin/subject/create', [SubjectController::class, 'create'])->name('admin.subject.create');
+    Route::get('admin/subject/{id}/edit', [SubjectController::class, 'edit'])->name('admin.subject.edit');
+    Route::put('admin/subject/{id}/update', [SubjectController::class, 'update'])->name('admin.subject.update');
+    Route::delete('admin/subject/{id}/delete', [SubjectController::class, 'delete'])->name('admin.subject.delete');
+    Route::post('admin/subject/store', [SubjectController::class, 'store'])->name('admin.subject.store');
+
+    // setting
+
+    Route::get('admin/setting/form/{id?}', [SettingController::class, 'showForm'])->name('admin.setting.form');
+
+    Route::match(['put', 'patch'], 'admin/setting/storeOrUpdate', [SettingController::class, 'storeOrUpdate'])->name('admin.setting.storeOrUpdate');
 
 
 
-     // class
-
-     Route::get('class', [ClassnameController::class, 'index'])->name('admin.class');
-     Route::get('class/create', [ClassnameController::class, 'create'])->name('admin.class.create');
-     Route::get('class/{id}/edit', [ClassnameController::class, 'edit'])->name('admin.class.edit');
-     Route::put('class/{id}/update', [ClassnameController::class, 'update'])->name('admin.class.update');
-     Route::delete('class/{id}/delete', [ClassnameController::class, 'delete'])->name('admin.class.delete');
-     Route::post('class/store', [ClassnameController::class, 'store'])->name('admin.class.store');
- 
-     // subject
- 
-     Route::get('subject', [SubjectController::class, 'index'])->name('admin.subject');
-     Route::get('subject/create', [SubjectController::class, 'create'])->name('admin.subject.create');
-     Route::get('subject/{id}/edit', [SubjectController::class, 'edit'])->name('admin.subject.edit');
-     Route::put('subject/{id}/update', [SubjectController::class, 'update'])->name('admin.subject.update');
-     Route::delete('subject/{id}/delete', [SubjectController::class, 'delete'])->name('admin.subject.delete');
-     Route::post('subject/store', [SubjectController::class, 'store'])->name('admin.subject.store');
-
-     Route::resource('question_types', QuestionTypeController::class);
-    
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });
