@@ -7,6 +7,24 @@
 <meta name="keywords" content="academy, college, coursera, courses, education, elearning, kindergarten, lms, lynda, online course, online education, school, training, udemy, university">
 <meta name="description" content="Patthokrom">
 <meta name="CreativeLayers" content="ATFN">
+
+<style>
+
+	svg.w-5.h-5 {
+		width: 20px !important;
+	}
+	
+	svg {
+		overflow: hidden;
+		vertical-align: middle;
+		width: 20px !important;
+	}
+	.flex.justify-between.flex-1.sm\:hidden {
+    margin-bottom: 20px;
+}
+	
+	</style>
+
 <!-- css file -->
 <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
@@ -34,62 +52,7 @@
 
     @include('layouts.frontend.partials.header')
 
-	<!-- 6th Home Slider -->
-	<div class="home11-slider">
-		<div class="container maxw1500">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="main-banner-wrapper">
-					    <div class="banner-style-one owl-theme owl-carousel home11">
-					        <div class="slide slide-one home11" style="background-image: url({{ asset('frontend/images/home/1.jpg') }});">
-					            <div class="container">
-					                <div class="row">
-					                    <div class="col-lg-8 offset-lg-2 text-center">
-					                        <div class="banner-sub-title text-capitalize fw400">We Take Learning to</div>
-					                        <div class="banner-title text-capitalize fwb mb25">New Heights</div>
-					                        <div class="btn-block">
-					                            <a href="#" class="banner-btn bdrs3">FIND COURSES</a>
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
-					        </div>
-					        <div class="slide slide-one home11" style="background-image: url({{ asset('frontend/images/home/h2.jpg') }});">
-					            <div class="container">
-					                <div class="row">
-					                    <div class="col-lg-8 offset-lg-2 text-center">
-					                        <div class="banner-sub-title text-capitalize fw400">We Take Learning to</div>
-					                        <div class="banner-title text-capitalize fwb mb25">New Heights</div>
-					                        <div class="btn-block">
-					                            <a href="#" class="banner-btn bdrs3">FIND COURSES</a>
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
-					        </div>
-					        <div class="slide slide-one home11" style="background-image: url({{ asset('frontend/images/home/h3.jpg') }});">
-					            <div class="container">
-					                <div class="row">
-					                    <div class="col-lg-8 offset-lg-2 text-center">
-					                        <div class="banner-sub-title text-capitalize fw400">We Take Learning to</div>
-					                        <div class="banner-title text-capitalize fwb mb25">New Heights</div>
-					                        <div class="btn-block">
-					                            <a href="#" class="banner-btn bdrs3">FIND COURSES</a>
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
-					        </div>
-					    </div>
-					    <div class="carousel-btn-block banner-carousel-btn">
-					        <span class="carousel-btn left-btn"><i class="flaticon-back left"></i></span>
-					        <span class="carousel-btn right-btn"><i class="flaticon-right-arrow right"></i></span>
-					    </div><!-- /.carousel-btn-block banner-carousel-btn -->
-					</div><!-- /.main-banner-wrapper -->
-				</div>
-			</div>
-		</div>
-	</div>
+	
 
     @yield('frontend-content')
 

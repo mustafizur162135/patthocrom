@@ -16,9 +16,14 @@ class Setting extends Model
         'about_us',
         'about_us_image',
         'logo',
-        'banner_image',
+        'banner_images',
         'fb_link',
         'youtube_link',
-        'logo',
     ];
+
+    protected $casts = [
+        'banner_image' => 'json',
+    ];
+    
+    
 }

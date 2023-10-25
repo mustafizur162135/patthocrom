@@ -22,7 +22,7 @@
                     <i class="pe-7s-check icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>{{ isset($class) ? 'Edit' : 'Create New' }} Class</div>
+                <div>{{ isset($class) ? 'Edit' : 'Create New' }} Course</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
@@ -41,33 +41,52 @@
             <div class="main-card mb-3 card">
                 <!-- form start -->
                 <form id="classForm" role="form" method="POST"
-                    action="{{ isset($class) ? route('admin.class.update', $class->id) : route('admin.class.store') }}">
+                    action="{{ isset($class) ? route('admin.class.update', $class->id) : route('admin.class.store') }}" enctype="multipart/form-data">
                     @csrf
                     @if (isset($class))
                         @method('PUT')
                     @endif
                     <div class="card-body">
-                        <h5 class="card-title">Manage Classes</h5>
+                        <h5 class="card-title">Manage Courses</h5>
 
                         <div class="form-group">
-                            <label for="name">Class Name</label>
+                            <label for="name">Course Name</label>
                             <input type="text" class="form-control" id="class_name" name="class_name"
                                 value="{{ $class->class_name ?? '' }}" placeholder="Enter class name" required autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="name">Class Code</label>
+                            <label for="name">Course Code</label>
                             <input type="text" class="form-control" id="class_code" name="class_code"
                                 value="{{ $class->class_code ?? '' }}" placeholder="Enter class Code" required autofocus>
                         </div>
 
                         <div class="form-group">
-                            <label for="class_note">Class Note</label>
+                            <label for="class_note">Course Note</label>
                             <textarea class="form-control" cols="40" rows="5" id="class_note" name="class_note" placeholder="Enter Class Note" required>{{ $class->class_note ?? '' }}</textarea>
                         </div>
                         
 
-                        
+                        @if ($errors->has('slider_image'))
+                            <span class="text-danger">{{ $errors->first('slider_image') }}</span>
+                        @endif
+
+                        <div class="form-group">
+                            <label for="class_image">Course Image</label>
+
+                            @if(isset($class) && $class->class_image)
+                            <img src="{{ asset($class->class_image) }}" alt="course image" class="mb-2" style="max-width: 100px;">
+                            @endif
+                            
+                                <input type="file" class="form-control-file" id="class_image" name="class_image">
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <label for="class_price">Course Price</label>
+                            <input type="text" class="form-control" id="class_price" name="class_price"
+                                value="{{ $class->class_price ?? '' }}" placeholder="Enter class Price" autofocus>
+                        </div>
 
                         <button type="button" class="btn btn-danger" onClick="resetForm('classForm')">
                             <i class="fas fa-redo"></i>

@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classnames', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->string('class_name');
-            $table->string('class_code')->unique();
-            $table->longText('class_note')->nullable();
-            $table->string('class_image')->nullable();
-            $table->string('class_price')->nullable();
+            $table->string('slider_name')->nullable();
+            $table->string('slider_des')->nullable();
+            $table->string('slider_image');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classnames');
+        Schema::dropIfExists('sliders');
     }
 };

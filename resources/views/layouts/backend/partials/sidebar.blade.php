@@ -81,10 +81,14 @@
                             Settings
                         </a>
                     </li>
-
-
-                  
-
+                    <li class="app-sidebar__heading">Slider</li>
+                    <li>
+                        <a href="{{ route('sliders.index') }}" class="#">
+                            <i class="metismenu-icon pe-7s-repeat"></i>
+                            Slider
+                        </a>
+                    </li>
+                
                 </div>
             </ul>
         </div>

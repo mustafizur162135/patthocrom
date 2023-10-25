@@ -18,6 +18,8 @@ class Classname extends Model
         'class_name',
         'class_code',
         'class_note',
+        'class_image',
+        'class_price',
     ];
 
     public function subjects()

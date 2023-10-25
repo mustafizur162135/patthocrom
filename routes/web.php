@@ -13,7 +13,8 @@ use App\Http\Controllers\Frontend\{
 
 use App\Http\Controllers\Backend\{
     AdminDashboardController,
-    AdminLoginController
+    AdminLoginController,
+    SliderController
 };
 use App\Http\Controllers\Backend\role\RoleController;
 use App\Http\Controllers\Backend\class\ClassnameController;
@@ -47,7 +48,7 @@ use Illuminate\Support\Facades\Route;
 // Frontend part start
 
     Route::get('/', [HomeController::class, 'home'])->name('home');
-    Route::get('/course', [HomeController::class, 'course'])->name('course');
+    Route::get('/allCourse', [HomeController::class, 'course'])->name('allcourse');
 
 // Frontend part end
 
@@ -65,6 +66,12 @@ Route::group(['middleware' => ['auth.admin']], function () {
 
 
     //user
+    Route::get('admin/course', [ClassnameController::class, 'index'])->name('admin.class');
+    Route::get('admin/course/create', [ClassnameController::class, 'create'])->name('admin.class.create');
+    Route::get('admin/course/{id}/edit', [ClassnameController::class, 'edit'])->name('admin.class.edit');
+    Route::put('admin/course/{id}/update', [ClassnameController::class, 'update'])->name('admin.class.update');
+    Route::delete('admin/course/{id}/delete', [ClassnameController::class, 'delete'])->name('admin.class.delete');
+    Route::post('admin/course/store', [ClassnameController::class, 'store'])->name('admin.class.store');
 
     Route::get('user', [UserController::class, 'index'])->name('admin.user');
     Route::get('user/create', [UserController::class, 'create'])->name('admin.users.create');
@@ -73,7 +80,9 @@ Route::group(['middleware' => ['auth.admin']], function () {
     Route::delete('user/{id}/delete', [UserController::class, 'delete'])->name('admin.users.delete');
     Route::post('user/store', [UserController::class, 'store'])->name('admin.users.store');
 
+    // slider
 
+    Route::resource('sliders', SliderController::class);
 
      // class
 

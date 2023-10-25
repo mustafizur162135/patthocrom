@@ -3,8 +3,14 @@
         <div class="row">
             <div class="col-lg-5 col-xl-5">
                 <ul class="home4_header_top_contact style2">
+                    @if ($setting)
+                    <li class="list-inline-item"><a href="tel:{{ $setting->contact_no }}">{{ $setting->contact_no }}</a></li>
+                    <li class="list-inline-item"><a href="mailto:{{ $setting->mail }}">{{ $setting->mail }}</a></li>
+                @else
                     <li class="list-inline-item"><a href="#">(56) 123 456 789</a></li>
                     <li class="list-inline-item"><a href="#">patthokrombd@gmail.com</a></li>
+                @endif
+                
                 </ul>
             </div>
             <div class="col-lg-7 col-xl-7">
@@ -32,10 +38,15 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <a href="#" class="navbar_brand float-left dn-smd">
-                <img class="logo1 img-fluid" src="{{ asset('frontend/images/header-logo5.png') }}" alt="header-logo5.png">
-                <img class="logo2 img-fluid" src="{{ asset('frontend/images/header-logo5.png') }}" alt="header-logo5.png">
-                <span>Patthokrom</span>
+            <a href="{{ route('home') }}" class="navbar_brand float-left dn-smd">
+                @if ($setting && $setting->logo)
+                    <img class="logo1 img-fluid" src="{{ asset('images/setting/' . $setting->logo) }}" alt="{{ $setting->logo }}">
+                    {{-- <span>{{ $setting->about_us ?? 'Patthokrom' }}</span> --}}
+                @else
+                    <img class="logo1 img-fluid" src="{{ asset('frontend/images/header-logo5.png') }}" alt="header-logo5.png">
+                    {{-- <span>Patthokrom</span> --}}
+                @endif
+
             </a>
 
             {{-- <div class="home5_shop_reg_widget float-right">
@@ -123,10 +134,20 @@
 <div id="page" class="stylehome1 h0">
     <div class="mobile-menu">
         <div class="header stylehome1 home6">
-            <div class="main_logo_home2">
-                <img class="nav_logo_img img-fluid float-left mt20" src="{{ asset('frontend/images/header-logo.png') }}" alt="header-logo.png">
-                <span>Patthokrom</span>
-            </div>
+            @if ($setting)
+                <div class="main_logo_home2">
+                        @if ($setting->logo)
+                            <img class="nav_logo_img img-fluid float-left mt20" src="{{ asset('images/setting/' . $setting->logo) }}" alt="{{ $setting->logo }}">
+                        @endif
+                    {{-- <span>{{ $setting->about_us ?? 'Patthokrom' }}</span> --}}
+                </div>
+            @else
+                <div class="main_logo_home2">
+                    <img class="nav_logo_img img-fluid float-left mt20" src="{{ asset('frontend/images/header-logo.png') }}" alt="header-logo.png">
+                    {{-- <span>Patthokrom</span> --}}
+                </div>
+            @endif
+
             <ul class="menu_bar_home2">
                 <li class="list-inline-item">
                     <div class="search_overlay">

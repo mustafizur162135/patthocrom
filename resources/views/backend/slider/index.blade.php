@@ -1,6 +1,6 @@
 @extends('layouts.backend.app')
 
-@section('title','ClassName')
+@section('title','Sliders')
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
@@ -14,15 +14,15 @@
                     <i class="pe-7s-check icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>All Course</div>
+                <div>All Sliders</div>
             </div>
             <div class="page-title-actions">
                 <div class="d-inline-block dropdown">
-                    <a href="{{ route('admin.class.create') }}" class="btn-shadow btn btn-info">
+                    <a href="{{ route('sliders.create') }}" class="btn-shadow btn btn-info">
                         <span class="btn-icon-wrapper pr-2 opacity-7">
                             <i class="fas fa-plus-circle fa-w-20"></i>
                         </span>
-                        Create Course
+                        Create Slider
                     </a>
                 </div>
             </div>
@@ -36,38 +36,43 @@
                         <thead>
                         <tr>
                             <th class="text-center">#</th>
-                            <th class="text-center">Course Name</th>
-                            <th class="text-center">Course Code</th>
+                            <th class="text-center">slider Name</th>
+                            <th class="text-center">slider Image</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($classes as $key=>$class)
-                            <tr>
-                                <td class="text-center text-muted">#{{ $key + 1 }}</td>
-                                <td class="text-center">{{ $class['class_name'] }}</td>
-                                <td class="text-center">{{ $class['class_code'] }}</td>
-                                
-                                <td class="text-center">
-                                    <a class="btn btn-info btn-sm m-2" href="{{ route('admin.class.edit',$class['id']) }}"><i
-                                            class="fas fa-edit"></i>
-                                     
-                                    </a>
-                                 
-                                        <form id="delete-form-{{ $class['id'] }}"
-                                              action="{{ route('admin.class.delete',$class['id']) }}" method="POST">
+                            @if(count($sliders) > 0)
+                            @foreach($sliders as $key => $slider)
+                                <tr>
+                                    <td class="text-center text-muted">#{{ $key + 1 }}</td>
+                                    <td class="text-center">{{ $slider['slider_name'] }}</td>
+                                    <td class="text-center">
+                                        <img src="{{ asset('images/sliders/' . $slider->slider_image) }}" alt="slider image" class="mb-2" style="max-width: 100px;">
+                                    </td>
+                        
+                                    <td class="text-center">
+                                        <a class="btn btn-info btn-sm m-2" href="{{ route('sliders.edit', $slider['id']) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                        
+                                        <form id="delete-form-{{ $slider['id'] }}"
+                                              action="{{ route('sliders.destroy', $slider['id']) }}" method="POST">
                                             @csrf()
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger btn-sm"
-                                                    onclick="deleteData({{ $class['id'] }})">
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteData({{ $slider['id'] }})">
                                                 <i class="fas fa-trash-alt"></i>
-                                               
                                             </button>
                                         </form>
-                                   
-                                </td>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="text-center" colspan="4">No data found</td>
                             </tr>
-                        @endforeach
+                        @endif
+                        
                         </tbody>
                     </table>
                 </div>
