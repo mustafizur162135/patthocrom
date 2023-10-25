@@ -22,8 +22,8 @@
                         
                             <div class="top_courses home2 mb0">
                                 <div class="thumb">
-                                    {{-- <img class="img-whp" src="{{ asset('frontend/images/courses/' . $course->image) }}" alt="demo_image.jpg"> --}}
-                                    <img class="img-whp" src="{{ asset('frontend/images/courses/t1.jpg') }}" alt="t1.jpg">
+                                    <img class="img-whp" src="{{ asset($course->class_image) }}" alt="demo_image.jpg">
+                                    
                                 </div>
                                 <div class="details">
                                     <div class="tc_content">
@@ -31,7 +31,7 @@
                                         <h5>{{ $course->class_note }}</h5>
                                     </div>
                                     <div class="tc_footer">
-                                        <div class="tc_price float-right">${{ $course->class_name }}</div>
+                                        <div class="tc_price float-right">৳{{ $course->class_price }}</div>
                                     </div>
                                 </div>
                             </div>

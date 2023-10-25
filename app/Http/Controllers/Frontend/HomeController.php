@@ -21,7 +21,9 @@ class HomeController extends Controller
 
     public function course()
     {
-        return view('frontend.course.course');
+        $setting = Setting::first();
+        $courses = ClassName::paginate(9);
+        return view('frontend.course.course', compact('setting','courses'));
     }
 }
 

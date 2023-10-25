@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('class_name');
             $table->string('class_code')->unique();
-            $table->longText('class_note');
+            $table->longText('class_note')->nullable();
+            $table->string('class_image')->nullable();
+            $table->string('class_price')->nullable();
             $table->timestamps();
         });
     }

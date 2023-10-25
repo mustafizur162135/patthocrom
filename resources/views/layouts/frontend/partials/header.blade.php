@@ -38,7 +38,7 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <a href="#" class="navbar_brand float-left dn-smd">
+            <a href="{{ route('home') }}" class="navbar_brand float-left dn-smd">
                 @if ($setting && $setting->logo)
                     <img class="logo1 img-fluid" src="{{ asset('images/setting/' . $setting->logo) }}" alt="{{ $setting->logo }}">
                     {{-- <span>{{ $setting->about_us ?? 'Patthokrom' }}</span> --}}

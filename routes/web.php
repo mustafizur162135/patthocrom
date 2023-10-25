@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Route;
 // Frontend part start
 
     Route::get('/', [HomeController::class, 'home'])->name('home');
-    Route::get('/course', [HomeController::class, 'course'])->name('course');
+    Route::get('/allCourse', [HomeController::class, 'course'])->name('allcourse');
 
 // Frontend part end
 
@@ -65,12 +65,12 @@ Route::group(['middleware' => ['auth.admin']], function () {
 
     // class
 
-    Route::get('admin/class', [ClassnameController::class, 'index'])->name('admin.class');
-    Route::get('admin/class/create', [ClassnameController::class, 'create'])->name('admin.class.create');
-    Route::get('admin/class/{id}/edit', [ClassnameController::class, 'edit'])->name('admin.class.edit');
-    Route::put('admin/class/{id}/update', [ClassnameController::class, 'update'])->name('admin.class.update');
-    Route::delete('admin/class/{id}/delete', [ClassnameController::class, 'delete'])->name('admin.class.delete');
-    Route::post('admin/class/store', [ClassnameController::class, 'store'])->name('admin.class.store');
+    Route::get('admin/course', [ClassnameController::class, 'index'])->name('admin.class');
+    Route::get('admin/course/create', [ClassnameController::class, 'create'])->name('admin.class.create');
+    Route::get('admin/course/{id}/edit', [ClassnameController::class, 'edit'])->name('admin.class.edit');
+    Route::put('admin/course/{id}/update', [ClassnameController::class, 'update'])->name('admin.class.update');
+    Route::delete('admin/course/{id}/delete', [ClassnameController::class, 'delete'])->name('admin.class.delete');
+    Route::post('admin/course/store', [ClassnameController::class, 'store'])->name('admin.class.store');
 
     // subject
 

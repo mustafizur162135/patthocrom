@@ -41,7 +41,7 @@
             <div class="main-card mb-3 card">
                 <!-- form start -->
                 <form id="classForm" role="form" method="POST"
-                    action="{{ isset($class) ? route('admin.class.update', $class->id) : route('admin.class.store') }}">
+                    action="{{ isset($class) ? route('admin.class.update', $class->id) : route('admin.class.store') }}" enctype="multipart/form-data">
                     @csrf
                     @if (isset($class))
                         @method('PUT')
@@ -67,7 +67,26 @@
                         </div>
                         
 
-                        
+                        @if ($errors->has('slider_image'))
+                            <span class="text-danger">{{ $errors->first('slider_image') }}</span>
+                        @endif
+
+                        <div class="form-group">
+                            <label for="class_image">Course Image</label>
+
+                            @if(isset($class) && $class->class_image)
+                            <img src="{{ asset($class->class_image) }}" alt="course image" class="mb-2" style="max-width: 100px;">
+                            @endif
+                            
+                                <input type="file" class="form-control-file" id="class_image" name="class_image">
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <label for="class_price">Course Price</label>
+                            <input type="text" class="form-control" id="class_price" name="class_price"
+                                value="{{ $class->class_price ?? '' }}" placeholder="Enter class Price" autofocus>
+                        </div>
 
                         <button type="button" class="btn btn-danger" onClick="resetForm('classForm')">
                             <i class="fas fa-redo"></i>

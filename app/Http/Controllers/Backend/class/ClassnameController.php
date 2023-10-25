@@ -5,209 +5,120 @@ namespace App\Http\Controllers\Backend\class;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Api\ClassNamController;
 use App\Http\Requests\ClassNameRequest;
+use App\Models\Classname;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
 
 class ClassnameController extends Controller
 {
-    private $classNamApiController;
-
-    public function __construct(ClassNamController $classNamApiController)
-    {
-        $this->classNamApiController = $classNamApiController;
-    }
-
     public function index()
     {
-        // ...
-
-        try {
-            $className = $this->classNamApiController->index();
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to retrieve roles and className.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to retrieve roles and className.');
-        }
-
-        if (!($className instanceof \Illuminate\Http\JsonResponse)) {
-            // Handle the case where $className is not an instance of JsonResponse
-            return back()->with('error', 'Failed to retrieve roles and className.');
-        }
-
-
-        $responseData = $className->getData();
-    if (property_exists($responseData, 'classes')) {
-        $classes = collect($responseData->classes);
-
-        $classes = collect($className->getData()->classes);
-        $status = $className->getData()->status;
-        $message = $className->getData()->message;
-        if ($status == 404) {
-            return back()->with('error', $message);
-        }
-
-        // This is my api how to get value
-        $classes = $classes->map(function ($class) {
-            return [
-                'id' => $class->id,
-                'class_name' => $class->class_name,
-                'class_code' => $class->class_code
-            ];
-        });
-
-        return view('backend.class.index',compact('classes'));
-
-    } else {
-        // Data doesn't exist or the property is not present.
-        echo "Data not found";
-        
-    }
-       
-       
+        $classes = Classname::all(); // Assuming ClassName is your model
+        return view('backend.class.index', compact('classes'));
     }
 
-    public function create(){
-        
-        try {
-            $className = $this->classNamApiController->create();
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to retrieve className.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to retrieve className.');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Failed to retrieve className.');
-        }
-
-        if (!($className instanceof \Illuminate\Http\JsonResponse)) {
-            // Handle the case where $className is not an instance of JsonResponse
-            return back()->with('error', 'Failed to retrieve className.');
-        }
-
-         
-        $status = $className->getData()->status;
-        $message = $className->getData()->message;
-        if ($status == 404) {
-            return back()->with('error', $message);
-        } elseif ($status == 500) {
-            return back()->with('error', $message);
-        }
-
+    public function create()
+    {
         return view('backend.class.form');
     }
 
-
     public function store(Request $request)
     {
-
-        // return $request;
-        $class = new ClassNameRequest([
-            'class_name' => $request->input('class_name'),
-            'class_code' => $request->input('class_code'),
-            'class_note' => $request->input('class_note')
+        $data = $request->validate([
+            'class_name' => 'required',
+            'class_code' => 'required',
+            'class_note' => 'nullable',
+            'class_price' => 'nullable',
+            'class_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation rules for image upload
         ]);
 
-        try {
-            $apiResponse = $this->classNamApiController->store($class);
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to create className.');
-        } 
-        catch (\Exception $e) {
-            return back()->with('error', 'Failed to create className.');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Failed to create className.');
+        if ($request->hasFile('class_image')) {
+            $image = $request->file('class_image');
+            $imagePath = 'images/courses/' . time() . '_class_image.' . $image->getClientOriginalExtension();
+    
+            // Resize and store the image
+            Image::make($image)->resize(307, 200)->save(public_path($imagePath));
+    
+            $data['class_image'] = $imagePath;
         }
 
+        ClassName::create($data);
 
-        if ($apiResponse->getStatusCode() === 200) {
-            return back()->with('success', 'Class created successfully.');
-        } elseif ($apiResponse->getStatusCode() === 500) {
-            return back()->with('error', 'Failed to create className.');
-        } else {
-            return back()->with('error', 'Failed to create className.');
-        }
+        return redirect()->route('admin.class')->with('success', 'Class created successfully.');
     }
 
     public function edit($id)
     {
-
-        try {
-            $apiResponse = $this->classNamApiController->edit($id);
-           
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to retrieve className.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to retrieve className.');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Failed to retrieve className.');
-        }
-        if (!($apiResponse instanceof \Illuminate\Http\JsonResponse)) {
-            // Handle the case where $apiResponse is not an instance of JsonResponse
-            return back()->with('error', 'Failed to retrieve className.');
-        }
-
-         $class = $apiResponse->getData()->class;
-        
-        $status = $apiResponse->getData()->status;
-        $message = $apiResponse->getData()->message;
-        if ($status == 404) {
-            return back()->with('error', $message);
-        } elseif ($status == 500) {
-            return back()->with('error', $message);
-        }
+        $class = ClassName::find($id);
         return view('backend.class.form', compact('class'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        
-
-        $class = new ClassNameRequest([
-            'class_name' => $request->input('class_name'),
-            'class_code' => $request->input('class_code'),
-            'class_note' => $request->input('class_note')
+        $data = $request->validate([
+            'class_name' => 'required',
+            'class_code' => 'required',
+            'class_note' => 'nullable',
+            'class_price' => 'nullable',
+            'class_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Example validation rules for image upload
         ]);
+    
+        $class = ClassName::find($id);
+    
+        if ($request->hasFile('class_image')) {
 
+             // Get the old image file name
+             $oldImage = $class->class_image;
 
-        try {
-            $apiResponse = $this->classNamApiController->update($class,$id);
-        } catch (HttpResponseException $e) {
-            return back()->with('error', 'Failed to updateclassName.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Failed to updateclassName.');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Failed to updateclassName.');
+             // Remove the old image file if it exists
+             if (!empty($oldImage) && File::exists(public_path('images/courses/' . $oldImage))) {
+                 File::delete(public_path('images/courses/' . $oldImage));
+             }
+
+            // $previousImage = public_path('images/courses/') . $class->class_image;
+    
+            // if (file_exists($previousImage) && is_file($previousImage)) {
+            //     unlink($previousImage);
+            // }
+    
+            $image = $request->file('class_image');
+            $imagePath = 'images/courses/' . time() . '_class_image.' . $image->getClientOriginalExtension();
+    
+            // Resize and store the new image
+            Image::make($image)->resize(307, 200)->save(public_path($imagePath));
+    
+            $data['class_image'] = $imagePath;
         }
-
-
-        if ($apiResponse->getStatusCode() === 200) {
-            return back()->with('success', 'Class updated successfully.');
-        } elseif ($apiResponse->getStatusCode() === 500) {
-            return back()->with('error', 'Failed to updateclassName.');
-        } else {
-            return back()->with('error', 'Failed to updateclassName.');
-        }
+    
+        $class->update($data);
+    
+        return redirect()->route('admin.class')->with('success', 'Class updated successfully.');
     }
 
     public function delete($id)
 {
-    try {
-        $apiResponse = $this->classNamApiController->delete($id);
-        
-        $responseData = $apiResponse->getData();
-        $status = $apiResponse->getStatusCode();
+    $class = ClassName::find($id);
 
-        if ($status === 200) {
-            return back()->with('success', $responseData->message);
-        } else {
-            return back()->with('error', $responseData->message);
-        }
-    } catch (HttpResponseException $e) {
-        return back()->with('error', 'Failed to delete className.');
-    } catch (\Exception $e) {
-        return back()->with('error', 'Failed to delete className.');
-    } catch (\Throwable $th) {
-        return back()->with('error', 'Failed to delete className.');
+    if (!$class) {
+        return redirect()->route('admin.class')->with('error', 'Class not found.');
     }
+
+    // Get the image file name to be deleted
+    $imageToDelete = $class->class_image;
+
+    // Remove the image file from storage
+    if (!empty($imageToDelete) && file_exists(public_path('images/courses/' . $imageToDelete))) {
+        unlink(public_path('images/courses/' . $imageToDelete));
+    }
+
+    // Delete the class record from the database
+    $class->delete();
+
+    return redirect()->route('admin.class')->with('success', 'Class deleted successfully.');
 }
+
 
 }

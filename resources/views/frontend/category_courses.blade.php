@@ -7,7 +7,7 @@
                     <h3 class="mt0">Via School Categories Courses</h3>
                 </div>
                 <div class="col-lg-6 text-md-center text-lg-right">
-                    <a class="text-thm6" href="#">View All Course</a>
+                    <a class="text-thm6" href="{{ route('allcourse') }}">View All Course</a>
                 </div>
             </div>
         </div>

@@ -58,7 +58,7 @@
 													<div class="banner-sub-title text-capitalize fw400">{{ $slider->slider_name }}</div>
 													<div class="banner-title text-capitalize fwb mb25">{{ $slider->slider_des }}</div>
 													<div class="btn-block">
-														<a href="#" class="banner-btn bdrs3">FIND COURSES</a>
+														<a href="{{ route('allcourse') }}" class="banner-btn bdrs3">FIND COURSES</a>
 													</div>
 												</div>
 											</div>
