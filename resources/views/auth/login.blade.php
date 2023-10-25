@@ -12,7 +12,7 @@
 <body>
     <div class="login-box">
         <h2>Admin Login</h2>
-        <form method="POST" action="{{ route('admin.login') }}" id="login-form">
+        <form method="POST" action="{{ route('admin.login.submit') }}" id="login-form">
             @csrf
             <div class="user-box">
                 <input type="text" name="email" required>

@@ -10,7 +10,7 @@
 <body>
     <div class="login-box">
         <h2>Teacher Login</h2>
-        <form method="POST" action="{{ route('teacher.login') }}" id="login-form">
+        <form method="POST" action="{{ route('teacher.login.submit') }}" id="login-form">
             @csrf
             <div class="user-box">
                 <input type="text" name="email" required>
