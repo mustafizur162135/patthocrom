@@ -16,7 +16,7 @@ class ImportController extends Controller
 
     Excel::import(new QuestionBankImport, $file);
 
-    return redirect()->route('your.import.route')->with('success', 'Data imported successfully');
+    return redirect()->route('question.import.form')->with('success', 'Data imported successfully');
 }
 
 public function showForm()
