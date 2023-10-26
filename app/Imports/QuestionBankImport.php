@@ -9,6 +9,7 @@ class QuestionBankImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
+      
         return new Question_bank([
             'question_code' => $row['question_code'],
             'class_code' => $row['class_code'],
