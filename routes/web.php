@@ -17,6 +17,7 @@ use App\Http\Controllers\Backend\{
 };
 use App\Http\Controllers\Backend\role\RoleController;
 use App\Http\Controllers\Backend\class\ClassnameController;
+use App\Http\Controllers\Backend\exam\ExamController;
 use App\Http\Controllers\Backend\subject\SubjectController;
 use App\Http\Controllers\Backend\setting\SettingController;
 use App\Http\Controllers\Backend\teacher\{
@@ -90,6 +91,10 @@ Route::group(['middleware' => ['auth.admin']], function () {
     // slider
 
     Route::resource('sliders', SliderController::class);
+
+    // exam
+
+    Route::resource('exams', ExamController::class);
 
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
