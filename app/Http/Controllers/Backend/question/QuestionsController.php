@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Backend\Question;
 
 use App\Http\Controllers\Controller;
+use App\Models\Classname;
 use App\Models\Question_bank;
+use App\Models\Question_diff_level;
+use App\Models\Question_type;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -69,6 +73,13 @@ class QuestionsController extends Controller
         if (is_null($this->user) || !$this->user->can('question.create')) {
             abort(403, 'Sorry !! You are Unauthorized to view any admin !');
         }
+
+        $qc_type=Question_type::get();
+        $qc_diff_level=Question_diff_level::get();
+        $class_name=Classname::get();
+        $subject=Subject::get();
+
+        return view('backend.question.create',compact('qc_type','qc_diff_level','class_name','subject'));
     
     }
 
