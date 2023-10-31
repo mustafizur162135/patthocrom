@@ -10,7 +10,7 @@
                     <i class="pe-7s-car icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>Dashboard</div>
+                <div>Dashboard2 {{ $adminUserData['name'] }}</div>
             </div>
         </div>
     </div>

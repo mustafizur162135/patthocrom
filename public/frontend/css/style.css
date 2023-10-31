@@ -10505,7 +10505,7 @@ ul.mc_parent_list ul.mc_child_list:hover .pricing_btn{
   color: #192675; }
 
 .btn-thm3 {
-  background-color: #ff1053;
+  background-color: #07ab12;
   border: 2px solid #ff1053;
   border: none;
   color: #ffffff;
@@ -10517,9 +10517,9 @@ ul.mc_parent_list ul.mc_child_list:hover .pricing_btn{
 .btn-thm3:hover,
 .btn-thm3:active,
 .btn-thm3:focus {
-  background-color: #ffffff;
+  background-color: #07ab12;
   border-color: #ff1053;
-  color: #ff1053; }
+  color: #fff; }
 
 .btn-thm4 {
   background-color: #23ad96;

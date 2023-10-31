@@ -16,7 +16,17 @@
             <div class="col-lg-7 col-xl-7">
                 <ul class="sign_up_btn home4 style2 dn-smd text-right">
                     <li class="list-inline-item"><a href="#" class="btn btn-md"><i class="flaticon-megaphone"></i><span class="dn-md">Become an Instructor</span></a></li>
+
+                    @if ($studentUserData)
+                        
+                        <li class="list-inline-item"><a href="#" class="btn btn-md" ><i class="flaticon-user"></i> <span class="dn-md">{{ $studentUserData['name'] }}</span></a></li>
+                        <!-- Add more user information as needed -->
+                    @else
                     <li class="list-inline-item"><a href="{{ route('admin.login.form') }}" class="btn btn-md" ><i class="flaticon-user"></i> <span class="dn-md">Login</span></a></li>
+                    @endif
+
+
+                    
                     
                 </ul><!-- Button trigger modal -->
             </div>

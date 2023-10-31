@@ -18,4 +18,10 @@ class Exam extends Model
         'exam_name',
         'exam_code',
     ];
+
+    // Define the "studentPackages" relationship
+    public function studentPackages()
+    {
+        return $this->hasMany(Studentpackage::class, 'exam_id');
+    }
 }

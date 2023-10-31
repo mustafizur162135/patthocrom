@@ -29,8 +29,7 @@ use App\Http\Controllers\Backend\student\{
     StudentDashboardController,
     StudentLoginController
 };
-
-
+use App\Http\Controllers\Backend\studentpackage\StudentPackageController;
 // Rest of your code...
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +48,8 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('/allCourse', [HomeController::class, 'course'])->name('allcourse');
+    Route::get('/package/{id}', [HomeController::class, 'showSinglePackage'])->name('package.show');
+
 
 // Frontend part end
 
@@ -95,6 +96,7 @@ Route::group(['middleware' => ['auth.admin']], function () {
     // exam
 
     Route::resource('exams', ExamController::class);
+    Route::resource('studentpackages', StudentPackageController::class);
 
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
