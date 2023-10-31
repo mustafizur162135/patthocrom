@@ -34,8 +34,8 @@ class QuestionBanksExport implements FromCollection, WithHeadings
         'question_code' => 'QB001',
         'class_code' => 'C001',
         'sub_code' => 'S001',
-        'question_diff_code' => 'DIFF1',
-        'question_type_code' => 'TYPE1',
+        'question_diff_code' => 'VERYEASY',
+        'question_type_code' => 'MSA',
         'question_name' => 'Sample Question 1',
         'question_option_1' => 'Option A',
         'question_option_2' => 'Option B',
@@ -49,7 +49,7 @@ class QuestionBanksExport implements FromCollection, WithHeadings
         'question_hint' => 'This is a hint for question 1',
         'question_solution' => 'This is the solution for question 1',
         'visibility' => 'public',
-        'is_paid' => 0,
+        'is_paid' => 1,
         'status' => 1
     ];
 

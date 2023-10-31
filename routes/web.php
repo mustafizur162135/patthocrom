@@ -19,6 +19,7 @@ use App\Http\Controllers\Backend\{
 use App\Http\Controllers\Backend\role\RoleController;
 use App\Http\Controllers\Backend\class\ClassnameController;
 use App\Http\Controllers\Backend\question\ImportController;
+use App\Http\Controllers\Backend\question\QuestionsController;
 use App\Http\Controllers\Backend\subject\SubjectController;
 use App\Http\Controllers\Backend\setting\SettingController;
 use App\Http\Controllers\Backend\teacher\{
@@ -104,6 +105,7 @@ Route::group(['middleware' => ['auth.admin']], function () {
 
     //  for question
      Route::resource('question_types', QuestionTypeController::class);
+     Route::resource('questions', QuestionsController::class);
      Route::post('import', [ImportController::class, 'import'])->name('question.import.route');
      Route::get('import_form', [ImportController::class, 'showForm'])->name('question.import.form');
      Route::get('download-sample-excel', [ImportController::class, 'downloadSampleExcel'])->name('download.sample.excel');

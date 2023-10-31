@@ -69,6 +69,12 @@
                     </li>
                     <li class="app-sidebar__heading">Question</li>
                     <li>
+                        <a href="{{ route('questions.index') }}" class="#">
+                            <i class="metismenu-icon pe-7s-repeat"></i>
+                            Question 
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('question.import.form') }}" class="#">
                             <i class="metismenu-icon pe-7s-repeat"></i>
                             Import Qc.

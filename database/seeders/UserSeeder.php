@@ -37,6 +37,17 @@ class UserSeeder extends Seeder
             'question_types.edit', // Add this line
             'question_types.update', // Add this line
             'question_types.destroy', // Add this line
+            'question_import.show', // Add this line
+            'question_import.create', // Add this line
+            'question_export.downloade', // Add this line
+            'question.list', // Add this line
+            'question.view', // Add this line
+            'question.create', // Add this line
+            'question.store', // Add this line
+            'question.edit', // Add this line
+            'question.update', // Add this line
+            'question.destroy', // Add this line
+            
         ];
 
         $studentPermissions = [

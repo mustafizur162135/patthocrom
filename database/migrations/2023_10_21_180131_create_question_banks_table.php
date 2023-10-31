@@ -36,6 +36,9 @@ return new class extends Migration
             $table->tinyInteger('is_paid');
             $table->tinyInteger('status');
             $table->timestamps();
+
+            $table->foreign('question_type_code')->references('question_type_code')->on('question_types');
+            $table->foreign('question_diff_code')->references('question_diff_level_code')->on('question_diff_levels');
         });
     }
 
