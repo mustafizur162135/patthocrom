@@ -42,7 +42,8 @@ class HomeController extends Controller
     {
         $setting = Setting::first();
         $courses = ClassName::paginate(9);
-        return view('frontend.course.course', compact('setting','courses'));
+        $studentUserData = Session::get('student_user_data');
+        return view('frontend.course.course', compact('setting','courses','studentUserData'));
     }
 }
 

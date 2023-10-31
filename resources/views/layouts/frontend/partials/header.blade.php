@@ -106,6 +106,7 @@
                 <li class="last">
                     <a href="#"><span class="title">Contact</span></a>
                 </li>
+                
                
               
                 <li class="list_three">
@@ -115,7 +116,14 @@
                     </ul>
                 </li>
 
-                <li class="list_two">
+                <li class="list_three">
+                    <a href="#"><span class="title">Courses</span></a>
+                    <ul>
+                        <li><a href="{{ route('allcourse') }}">All Courses</a></li>
+                    </ul>
+                </li>
+
+                {{-- <li class="list_two">
                     <a href="#"><span class="title">Courses</span></a>
                     <!-- Level Two-->
                     <ul>
@@ -130,7 +138,7 @@
                         </li>
                        
                     </ul>
-                </li>
+                </li> --}}
                 <li class="list_one">
                     <a href="{{ route('home') }}"><span class="title">Home</span></a>
                 </li>
