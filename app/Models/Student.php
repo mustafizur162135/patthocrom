@@ -22,5 +22,8 @@ class Student extends Authenticatable
         'password',
     ];
 
-    
+    public function orders()
+    {
+        return $this->hasMany(StudentOrder::class, 'student_id');
+    }
 }

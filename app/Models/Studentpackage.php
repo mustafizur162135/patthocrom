@@ -22,4 +22,9 @@ class Studentpackage extends Model
     {
         return $this->belongsTo(Exam::class, 'exam_id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(StudentOrder::class, 'studentpackage_id');
+    }
 }

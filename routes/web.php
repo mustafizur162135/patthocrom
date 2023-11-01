@@ -4,7 +4,8 @@
 // frontend part start
 
 use App\Http\Controllers\Frontend\{
-   HomeController
+    CheckoutController,
+    HomeController
 };
 
 // frontend part end
@@ -49,6 +50,10 @@ use Illuminate\Support\Facades\Route;
     Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('/allCourse', [HomeController::class, 'course'])->name('allcourse');
     Route::get('/package/{id}', [HomeController::class, 'showSinglePackage'])->name('package.show');
+    Route::post('/studentCheckout', [CheckoutController::class, 'studentCheckout'])->name('student.checkout');
+    Route::post('/studentCheckoutProcess', [CheckoutController::class, 'studentCheckoutProcess'])->name('student.checkout.process');
+    Route::get('student/checkout/confirmation', [CheckoutController::class, 'studentCheckoutConfirmation'])->name('student.checkout.confirmation');
+
 
 
 // Frontend part end

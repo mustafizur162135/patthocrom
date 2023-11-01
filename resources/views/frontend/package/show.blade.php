@@ -60,12 +60,19 @@
 
                             @if ($studentUserData)
 
-                            <a class="btn btn-block buy_now_btn dbxshad btn-lg btn-thm3 mt20" href="#">Buy Now</a>
+							<form method="post" action="{{ route('student.checkout') }}">
+								@csrf <!-- Add a CSRF token for security -->
+								<input type="hidden" name="studentPackage_id" value="{{ $studentPackage->id }}">
+								<input type="hidden" name="studentpackage_price" value="{{ $studentPackage->studentpackage_price }}">
+								<input type="hidden" name="studentpackage_name" value="{{ $studentPackage->studentpackage_name }}">
+								<button type="submit" class="btn btn-block buy_now_btn dbxshad btn-lg btn-thm3 mt20">Buy Now</button>
+							</form>
+
+                               {{-- <a class="btn btn-block buy_now_btn dbxshad btn-lg btn-thm3 mt20" href="{{ route('student.checkout') }}">Buy Now</a> --}}
                         
-                            <!-- Add more user information as needed -->
-                        @else
-                        <a class="btn btn-block buy_now_btn dbxshad btn-lg btn-thm3 mt20" href="###">Buy Now</a>
-                        @endif
+							@else
+							    <a class="btn btn-block buy_now_btn dbxshad btn-lg btn-thm3 mt20" href="{{ route('student.login.form') }}">Buy Now</a>
+							@endif
 
 							
 							{{-- <ul class="icon-box-list mt20 mb0">
