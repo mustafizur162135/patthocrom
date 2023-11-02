@@ -110,6 +110,7 @@ Route::group(['middleware' => ['auth.admin']], function () {
      Route::get('import_form', [ImportController::class, 'showForm'])->name('question.import.form');
      Route::get('download-sample-excel', [ImportController::class, 'downloadSampleExcel'])->name('download.sample.excel');
 
+     Route::post('ckeditor/upload', [QuestionsController::class, 'upload'])->name('ckeditor.upload');
 
     
 

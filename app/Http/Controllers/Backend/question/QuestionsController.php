@@ -11,6 +11,7 @@ use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 
@@ -81,6 +82,21 @@ class QuestionsController extends Controller
 
         return view('backend.question.create',compact('qc_type','qc_diff_level','class_name','subject'));
     
+    }
+
+    public function upload(Request $request)
+    {
+       if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+
+            $request->file('upload')->storeAs('media', $fileName, 'public');
+
+            $url = Storage::url('media/' . $fileName);
+            return response()->json(['fileName' => $fileName, 'uploaded'=> 1, 'url' => $url]);
+        }
     }
 
     /**
