@@ -28,6 +28,7 @@ class CheckoutController extends Controller
 {
     //return $request->all();
 
+    
     // Retrieve 'student_id' from session data
     $studentUserData = Session::get('student_user_data');
     $student_id = $studentUserData['user_id'];
@@ -43,7 +44,26 @@ class CheckoutController extends Controller
     $studentorder_address = $request->input('studentorder_address');
     $studentorder_city = $request->input('studentorder_city');
     $studentorder_card_type = $request->input('studentorder_card_type');
-    $studentorder_tran_id = $request->input('studentorder_tran_id');
+    $nagadTranId = $request->input('nagadTranId');
+    $bkashTranId = $request->input('bkashTranId');
+
+     // Check the selected payment method
+     if ($studentorder_card_type === 'nagad') {
+        // Use the correct variable name
+        $nagadTranId = $request->input('nagadTranId');
+        $bkashTranId = null; // Set bkashTranId to null if it's not selected
+    } elseif ($studentorder_card_type === 'bkash') {
+        // Use the correct variable name
+        $bkashTranId = $request->input('bkashTranId');
+        $nagadTranId = null; // Set nagadTranId to null if it's not selected
+    } else {
+        $nagadTranId = null;
+        $bkashTranId = null;
+    }
+
+    //return $bkashTranId;
+
+    // $studentorder_tran_id = $request->input('studentorder_tran_id');
 
     // Define validation rules for the form fields
     $rules = [
@@ -81,7 +101,8 @@ class CheckoutController extends Controller
         'studentorder_code' => $uniqueOrderCode, // You can generate a unique code, e.g., using a function
         'studentorder_date' => now(), // Use the current date and time
         'studentorder_card_type' => $studentorder_card_type, // Assuming you've added 'card_type' to your form
-        'studentorder_tran_id' => $studentorder_tran_id, // Assuming you've added 'studentorder_tran_id' to your form
+        'nagadTranId' => $nagadTranId, // Assuming you've added 'studentorder_tran_id' to your form
+        'bkashTranId' => $bkashTranId, // Assuming you've added 'studentorder_tran_id' to your form
         'studentorder_status' => 1, // You can set the initial status here
     ]);
 

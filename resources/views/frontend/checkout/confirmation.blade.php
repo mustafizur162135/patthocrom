@@ -36,12 +36,14 @@
                         <!-- You can display more order details here if needed -->
                     </div>
                 </div>
+
+                <!-- Add a "Home" button to return to the home page -->
+        <div class="mt-4 text-center">
+            <a href="{{ route('home') }}" class="btn btn-primary">Home</a>
+        </div>
             </div>
         </section>
 
-        <!-- Add a "Home" button to return to the home page -->
-        <div class="mt-4">
-            <a href="{{ route('home') }}" class="btn btn-primary">Home</a>
-        </div>
+        
     </div>
 @endsection

@@ -123,6 +123,30 @@
 <!-- Custom script for all pages --> 
 <script type="text/javascript" src="{{ asset('frontend/js/script.js') }}"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var bkashTransactionField = document.getElementById("bkash_transaction");
+        var nagadTransactionField = document.getElementById("nagad_transaction");
+
+        var paymentRadioButtons = document.getElementsByName("studentorder_card_type");
+
+        for (var i = 0; i < paymentRadioButtons.length; i++) {
+            paymentRadioButtons[i].addEventListener("change", function () {
+                if (this.value === "bkash") {
+                    bkashTransactionField.style.display = "block";
+                    nagadTransactionField.style.display = "none";
+                } else if (this.value === "nagad") {
+                    nagadTransactionField.style.display = "block";
+                    bkashTransactionField.style.display = "none";
+                } else {
+                    bkashTransactionField.style.display = "none";
+                    nagadTransactionField.style.display = "none";
+                }
+            });
+        }
+    });
+</script>
+
 @stack('js')
 
 </body>

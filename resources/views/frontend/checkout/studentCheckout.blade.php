@@ -43,7 +43,7 @@
                                 <input type="hidden" name="studentpackage_id" value="{{ $studentPackage_id }}">
                                 <input type="hidden" name="studentpackage_name" value="{{ $studentpackage_name }}">
                                 <input type="hidden" name="studentpackage_price" value="{{ $studentpackage_price }}">
-                                <input type="hidden" name="studentorder_tran_id" value="1">
+                                {{-- <input type="hidden" name="studentorder_tran_id" value="1"> --}}
 
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -104,29 +104,42 @@
 							<li class="subtitle"><p>Price <span class="float-right totals color-orose">৳ {{ $studentpackage_price }}</span></p></li>
 						</ul>
 					</div>
-					<div class="payment_widget">
-						<div class="ui_kit_checkbox style2">
-
+                    <div class="payment_widget">
+                        <div class="ui_kit_checkbox style2">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="studentorder_card_type" value="bkash">Bkash
+                                    <input type="radio" class="form-check-input" name="studentorder_card_type" value="bkash">Bkash
                                 </label>
                             </div>
-							
-							<div class="form-check">
-                                <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="studentorder_card_type" value="nagad">Nagad
-                                </label>
-                            </div>
-
                             <div class="form-check">
                                 <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="studentorder_card_type" value="cash">Cash Payment
+                                    <input type="radio" class="form-check-input" name="studentorder_card_type" value="nagad">Nagad
                                 </label>
                             </div>
-							
-						</div>
-					</div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="studentorder_card_type" value="cash">Cash Payment
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="bkash_transaction" style="display: none;">
+                        <div class="form-group">
+                            <label for="bkash_transaction_id">Bkash Transaction ID</label>
+                            <input type="text" name="bkashTranId" class="form-control">
+                        </div>
+                        <p class="mobile-number-instructions">Use this <b style="color: red">01711111111</b> mobile number associated with your Bkash account for payment.</p>
+                    </div>
+                    
+                    <div id="nagad_transaction" style="display: none;">
+                        <div class="form-group">
+                            <label for="nagad_transaction_id">Nagad Transaction ID</label>
+                            <input type="text" name="nagadTranId"  class="form-control">
+                        </div>
+                        <p class="mobile-number-instructions">Use this <b style="color: red">01811111111</b> mobile number associated with your Nagad account for payment.</p>
+
+                    </div>
+                    
 					<div class="ui_kit_button payment_widget_btn">
 						<button type="submit" value="submit" name="submit" class="btn dbxshad btn-lg btn-thm3 circle btn-block">Place Order</button>
 					</div>
@@ -143,4 +156,36 @@
 		</div>
 	</section>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var bkashTransactionField = document.getElementById("bkash_transaction");
+            
+            var nagadTransactionField = document.getElementById("nagad_transaction");
+    
+            var paymentRadioButtons = document.getElementsByName("studentorder_card_type");
+    
+            for (var i = 0; i < paymentRadioButtons.length; i++) {
+                paymentRadioButtons[i].addEventListener("change", function () {
+                    if (this.value === "bkash") {
+                        bkashTransactionField.style.display = "block";
+                        nagadTransactionField.style.display = "none";
+                    } else if (this.value === "nagad") {
+                        nagadTransactionField.style.display = "block";
+                        bkashTransactionField.style.display = "none";
+                    } else {
+                        bkashTransactionField.style.display = "none";
+                        nagadTransactionField.style.display = "none";
+                    }
+                });
+            }
+        });
+    </script>
+
+@endsection
+
+@section('js')
+
+
+
+    
 @endsection
