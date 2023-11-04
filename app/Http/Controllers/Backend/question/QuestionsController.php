@@ -75,12 +75,12 @@ class QuestionsController extends Controller
             abort(403, 'Sorry !! You are Unauthorized to view any admin !');
         }
 
-        $qc_type=Question_type::get();
+        $questionTypes=Question_type::get();
         $qc_diff_level=Question_diff_level::get();
         $class_name=Classname::get();
         $subject=Subject::get();
 
-        return view('backend.question.create',compact('qc_type','qc_diff_level','class_name','subject'));
+        return view('backend.question.create',compact('questionTypes','qc_diff_level','class_name','subject'));
     
     }
 

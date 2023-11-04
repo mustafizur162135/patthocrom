@@ -59,15 +59,12 @@
                         <h5 class="card-title">Manage Question</h5>
 
                         <div class="form-group">
-
                             <label for="question_type_code">Question Type</label>
-                            <select class="form-control" id="question_type_code" name="question_type_code" required>
-                                @foreach ($qc_type as $item)
-                                    <option value="{{ $item->question_type_code }}"
-                                        @if (isset($question)) @foreach ($question->questionType as $value)
-                {{ $question->question_type_code == $value->question_type_code ? 'selected' : '' }}
-            @endforeach @endif>
-                                        {{ $item->question_type_name }}</option>
+                            <select class="form-control" id="question_type_code" name="question_type_code"
+                                onchange="showQuestionFields()" required>
+                                @foreach ($questionTypes as $type)
+                                    <option value="{{ $type['question_type_code'] }}">{{ $type['question_type_name'] }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -80,10 +77,29 @@
 
                                 </div>
 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="name">Option 1</label>
-                                    <textarea id="editor" name="question_option_1"></textarea>
+                                    <textarea id="editor1" name="question_option_1"></textarea>
 
+                                </div> --}}
+                                <div id="msaContainer" style="display: none;">
+                                    <div class="form-group" id="msa-options-container">
+                                        <button type="button" class="btn btn-success" id="msaaddOption"
+                                            onclick="addOption('msa')">
+                                            <i class="fas fa-plus"></i>
+                                            <span>Add Option</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="mmaContainer" style="display: none;">
+                                    <div class="form-group" id="mma-options-container">
+                                        <button type="button" class="btn btn-success" id="mmaaddOption"
+                                            onclick="addOption('mma')">
+                                            <i class="fas fa-plus"></i>
+                                            <span>Add Option</span>
+                                        </button>
+                                    </div>
                                 </div>
 
                             </div>
@@ -97,8 +113,8 @@
                                         @foreach ($class_name as $item)
                                             <option value="{{ $item->class_code }}"
                                                 @if (isset($question)) @foreach ($question->class_name as $value)
-                        {{ $question->class_code == $value->class_code ? 'selected' : '' }}
-                    @endforeach @endif>
+                                                    {{ $question->class_code == $value->class_code ? 'selected' : '' }}
+                                                @endforeach @endif>
                                                 {{ $item->class_name }}</option>
                                         @endforeach
                                     </select>
@@ -111,14 +127,14 @@
                                         @foreach ($subject as $item)
                                             <option value="{{ $item->sub_code }}"
                                                 @if (isset($question)) @foreach ($question->subject as $value)
-                        {{ $question->sub_code == $value->sub_code ? 'selected' : '' }}
-                    @endforeach @endif>
+                                        {{ $question->sub_code == $value->sub_code ? 'selected' : '' }}
+                                    @endforeach @endif>
                                                 {{ $item->sub_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                               
+
 
                                 <div class="form-group">
 
@@ -210,5 +226,110 @@
             .catch(error => {
                 console.error(error);
             });
+    </script>
+
+
+    <script>
+        function showQuestionFields() {
+            var selectedType = document.getElementById("question_type_code").value;
+            var msaContainer = document.getElementById("msaContainer");
+            var mmaContainer = document.getElementById("mmaContainer");
+            var option = document.getElementById("op") ?? '';
+
+            option.remove();
+
+        
+
+            if (selectedType === "MSA") {
+                msaContainer.style.display = "block"; // Show the MSA container
+                mmaContainer.style.display = "none"; // Hide the MMA container
+                optionCount = 0;
+
+            } else if (selectedType === "MMA") {
+                mmaContainer.style.display = "block"; // Show the MMA container
+                msaContainer.style.display = "none"; // Hide the MSA container
+                optionCount = 0;
+
+            } else {
+                msaContainer.style.display = "none"; // Hide both containers for other question types
+                mmaContainer.style.display = "none";
+                optionCount = 0;
+            }
+        }
+    </script>
+
+    <script>
+        var optionCount = 0; // Initialize the option count
+
+        // Function to initialize CKEditor for a new option
+        function initializeCKEditor(optionCount) {
+            ClassicEditor
+                .create(document.querySelector('#editor' + optionCount), {
+                    ckfinder: {
+                        options: {
+                            resourceType: 'Images', // Restrict to images only
+                            // Set additional minimal options here
+                        },
+                        uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+                        onInsert: function(file) {
+                            // Dynamically set image attributes here
+                            var img = new CKEDITOR.dom.element('img');
+                            img.setAttribute('src', file.url);
+                            img.setAttribute('width', '800');
+                            img.setAttribute('height', '600');
+                            // Add any other attributes you need
+                            editor.insertElement(img);
+                        },
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+       // Add Option button click event
+    function addOption(optionType) {
+        if (optionCount < 6) { // Limit the total number of options to 6
+            optionCount++;
+
+            var inputType = optionType === "msa" ? "radio" : "checkbox"; // Determine input type based on question type
+
+            var newOptionHTML = '<div class="form-group" id="op">' +
+            '<label for="name">Option ' + optionCount + '</label>' +
+            '<textarea id="editor' + optionCount + '" name="question_option_' + optionCount +
+            '"></textarea>' +
+            '<input type="' + inputType + '" name="correct_answer" value="' + optionCount + '"> Correct Answer' +
+            '</div>';
+
+            // Create a new div for the option
+            var newOptionDiv = document.createElement('div');
+            newOptionDiv.innerHTML = newOptionHTML;
+
+            // Insert the new option above the "Add Option" button
+            var optionsContainer = document.getElementById(optionType + '-options-container');
+            optionsContainer.insertBefore(newOptionDiv, document.getElementById(optionType + 'addOption'));
+
+            // Initialize CKEditor for the new option
+            initializeCKEditor(optionCount);
+
+            // If it's an "MSA" question, add a change event to clear other selected options
+            if (questionType === "msa" && inputType === "radio") {
+                var radioButtons = newOptionDiv.querySelectorAll('input[type="radio"]');
+                radioButtons.forEach(function(radioButton) {
+                    radioButton.addEventListener('change', function() {
+                        if (radioButton.checked) {
+                            radioButtons.forEach(function(otherRadioButton) {
+                                if (otherRadioButton !== radioButton) {
+                                    otherRadioButton.checked = false;
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+        } else {
+            alert('You have reached the maximum limit of 6 options.');
+        }
+    }
+
     </script>
 @endpush
