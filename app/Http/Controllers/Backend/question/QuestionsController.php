@@ -22,13 +22,13 @@ class QuestionsController extends Controller
 
     public function __construct()
     {
-        
+
         $this->middleware(function ($request, $next) {
             $this->user = Auth::guard('admin')->user();
             return $next($request);
         });
 
-        
+
     }
     /**
      * Display a listing of the resource.
@@ -43,25 +43,25 @@ class QuestionsController extends Controller
 
         if ($request->ajax()) {
             $questions = Question_bank::select('*');
-            
+
             return DataTables::of($questions)
             ->addColumn('action', function ($question) {
                 // Define the action buttons with icons
                 $editButton = '<a href="' . route('questions.edit', $question->id) . '" class="btn btn-danger"><i class="fa fa-edit"></i> </a>';
                 $showButton = '<a href="' . route('questions.show', $question->id) . '" class="btn btn-info"><i class="fa fa-eye"></i> </a>';
                 $deleteButton = '<a href="' . route('questions.destroy', $question->id) . '" class="btn btn-danger" data-method="delete" data-token="' . csrf_token() . '"><i class="fa fa-trash"></i></a>';
-        
+
                 return $editButton . ' | ' . $showButton . ' | ' . $deleteButton;
             })
             ->rawColumns(['action'])
             ->make(true);
-        
+
         }
-    
+
         return view('backend.question.index');
 
-        
-    
+
+
     }
 
     /**
@@ -81,7 +81,7 @@ class QuestionsController extends Controller
         $subject=Subject::get();
 
         return view('backend.question.create',compact('questionTypes','qc_diff_level','class_name','subject'));
-    
+
     }
 
     public function upload(Request $request)
@@ -107,10 +107,65 @@ class QuestionsController extends Controller
      */
     public function store(Request $request)
     {
+
+
         if (is_null($this->user) || !$this->user->can('question.store')) {
             abort(403, 'Sorry !! You are Unauthorized to view any admin !');
         }
-    
+
+        $request->validate([
+            'question_type_code' => 'required',
+            'question_name' => 'required',
+            'class_name' => 'required|array',
+            'subject' => 'required|array',
+            'question_diff_level_code' => 'required',
+            'question_default_marks' => 'required',
+            'question_default_time_to_solve' => 'required',
+            // Add validation rules for other fields as needed
+        ]);
+
+        return $request;
+
+        // Create a new question instance and populate it with data from the request
+        $question = new Question_bank();
+        $question->question_code = $request->input('question_code');
+        $question->question_type_code = $request->input('question_type_code');
+        $question->class_code = $request->input('class_name');
+        $question->sub_code = $request->input('subject');
+        $question->question_diff_level_code = $request->input('question_diff_level_code');
+        $question->question_name = $request->input('question_name');
+        $question->question_option_1 = $request->input('question_option_1');
+        $question->question_option_2 = $request->input('question_option_2');
+        $question->question_option_3 = $request->input('question_option_3');
+        $question->question_option_4 = $request->input('question_option_4');
+        $question->question_option_5 = $request->input('question_option_5');
+        $question->question_option_6 = $request->input('question_option_6');
+        $question->correct_answer = $request->input('correct_answer');
+        $question->question_default_marks = $request->input('question_default_marks');
+        $question->question_default_time_to_solve = $request->input('question_default_time_to_solve');
+
+        // Handle file uploads (if applicable)
+        if ($request->hasFile('file_field_name')) {
+            $file = $request->file('file_field_name');
+            $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $fileName);
+            $question->file_field_name = $fileName;
+        }
+
+        // Set other fields as needed
+
+        // Set checkbox fields
+        $question->is_paid = $request->has('is_paid') ? 1 : 0;
+        $question->status = $request->has('status') ? 1 : 0;
+
+        // Save the question to the database
+        $question->save();
+
+        return redirect()->route('questions.index')
+            ->with('success', 'Question created successfully.');
+
+
+
     }
 
     /**
@@ -124,7 +179,7 @@ class QuestionsController extends Controller
         if (is_null($this->user) || !$this->user->can('question.view')) {
             abort(403, 'Sorry !! You are Unauthorized to view any admin !');
         }
-    
+
     }
 
     /**
@@ -138,7 +193,7 @@ class QuestionsController extends Controller
         if (is_null($this->user) || !$this->user->can('question.edit')) {
             abort(403, 'Sorry !! You are Unauthorized to view any admin !');
         }
-    
+
     }
 
     /**
@@ -153,7 +208,7 @@ class QuestionsController extends Controller
         if (is_null($this->user) || !$this->user->can('question.update')) {
             abort(403, 'Sorry !! You are Unauthorized to view any admin !');
         }
-    
+
     }
 
     /**
@@ -167,6 +222,6 @@ class QuestionsController extends Controller
         if (is_null($this->user) || !$this->user->can('question.destroy')) {
             abort(403, 'Sorry !! You are Unauthorized to view any admin !');
         }
-    
+
     }
 }

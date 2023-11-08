@@ -30,9 +30,9 @@ return new class extends Migration
             $table->longText('question_correct_ans');
             $table->string('question_default_marks');
             $table->string('question_default_time_to_solve');
-            $table->string('question_hint');
-            $table->string('question_solution');
-            $table->string('visibility');
+            $table->string('question_hint')->nullable();
+            $table->string('question_solution')->nullable();
+            $table->string('visibility')->nullable();
             $table->tinyInteger('is_paid');
             $table->tinyInteger('status');
             $table->timestamps();

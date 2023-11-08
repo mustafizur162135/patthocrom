@@ -151,6 +151,43 @@
                                     </select>
                                 </div>
 
+                                {{--
+                                <div class="form-group">
+                                    <label for="name">Question Answer</label>
+                                    <textarea id="question_solution" name="question_solution"></textarea>
+
+                                </div> --}}
+
+                                <div class="form-group">
+                                    <label for="name">Question Mark</label>
+                                    <input type="text" class="form-control" id="question_default_marks"
+                                        name="question_default_marks" placeholder="Enter Question Default Marks" required
+                                        autofocus>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="name">Question Solve Time</label>
+                                    <input type="text" class="form-control" id="question_default_time_to_solve"
+                                        name="question_default_time_to_solve" placeholder="Enter Question Solve Time"
+                                        required autofocus>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="is_paid" name="is_paid"
+                                            checked>
+                                        <label class="custom-control-label" for="is_paid">Paid</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="status" name="status"
+                                            checked>
+                                        <label class="custom-control-label" for="status">Status</label>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
 
@@ -227,6 +264,30 @@
                 console.error(error);
             });
     </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#question_correct_ans'), {
+                ckfinder: {
+                    options: {
+                        resourceType: 'Images', // Restrict to images only
+                        // Set additional minimal options here
+                    },
+                    uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+                    onInsert: function(file) {
+                        // Dynamically set image attributes here
+                        var img = new CKEDITOR.dom.element('img');
+                        img.setAttribute('src', file.url);
+                        img.setAttribute('width', '800');
+                        img.setAttribute('height', '600');
+                        // Add any other attributes you need
+                        editor.insertElement(img);
+                    },
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 
 
     <script>
@@ -234,11 +295,11 @@
             var selectedType = document.getElementById("question_type_code").value;
             var msaContainer = document.getElementById("msaContainer");
             var mmaContainer = document.getElementById("mmaContainer");
-            var option = document.getElementById("op") ?? '';
+            // var option = document.getElementById("op") ?? '';
 
-            option.remove();
+            // option.remove();
 
-        
+
 
             if (selectedType === "MSA") {
                 msaContainer.style.display = "block"; // Show the MSA container
@@ -286,50 +347,49 @@
                     console.error(error);
                 });
         }
-       // Add Option button click event
-    function addOption(optionType) {
-        if (optionCount < 6) { // Limit the total number of options to 6
-            optionCount++;
+        // Add Option button click event
+        function addOption(optionType) {
+            if (optionCount < 6) { // Limit the total number of options to 6
+                optionCount++;
 
-            var inputType = optionType === "msa" ? "radio" : "checkbox"; // Determine input type based on question type
+                var inputType = optionType === "msa" ? "radio" : "checkbox"; // Determine input type based on question type
 
-            var newOptionHTML = '<div class="form-group" id="op">' +
-            '<label for="name">Option ' + optionCount + '</label>' +
-            '<textarea id="editor' + optionCount + '" name="question_option_' + optionCount +
-            '"></textarea>' +
-            '<input type="' + inputType + '" name="correct_answer" value="' + optionCount + '"> Correct Answer' +
-            '</div>';
+                var newOptionHTML = '<div class="form-group" id="op">' +
+                    '<label for="name">Option ' + optionCount + '</label>' +
+                    '<textarea id="editor' + optionCount + '" name="question_option_' + optionCount +
+                    '"></textarea>' +
+                    '<input type="' + inputType + '" name="correct_answer[]" value="' + optionCount + '"> Correct Answer' +
+                    '</div>';
 
-            // Create a new div for the option
-            var newOptionDiv = document.createElement('div');
-            newOptionDiv.innerHTML = newOptionHTML;
+                // Create a new div for the option
+                var newOptionDiv = document.createElement('div');
+                newOptionDiv.innerHTML = newOptionHTML;
 
-            // Insert the new option above the "Add Option" button
-            var optionsContainer = document.getElementById(optionType + '-options-container');
-            optionsContainer.insertBefore(newOptionDiv, document.getElementById(optionType + 'addOption'));
+                // Insert the new option above the "Add Option" button
+                var optionsContainer = document.getElementById(optionType + '-options-container');
+                optionsContainer.insertBefore(newOptionDiv, document.getElementById(optionType + 'addOption'));
 
-            // Initialize CKEditor for the new option
-            initializeCKEditor(optionCount);
+                // Initialize CKEditor for the new option
+                initializeCKEditor(optionCount);
 
-            // If it's an "MSA" question, add a change event to clear other selected options
-            if (questionType === "msa" && inputType === "radio") {
-                var radioButtons = newOptionDiv.querySelectorAll('input[type="radio"]');
-                radioButtons.forEach(function(radioButton) {
-                    radioButton.addEventListener('change', function() {
-                        if (radioButton.checked) {
-                            radioButtons.forEach(function(otherRadioButton) {
-                                if (otherRadioButton !== radioButton) {
-                                    otherRadioButton.checked = false;
-                                }
-                            });
-                        }
+                // If it's an "MSA" question, add a change event to clear other selected options
+                if (questionType === "msa" && inputType === "radio") {
+                    var radioButtons = newOptionDiv.querySelectorAll('input[type="radio"]');
+                    radioButtons.forEach(function(radioButton) {
+                        radioButton.addEventListener('change', function() {
+                            if (radioButton.checked) {
+                                radioButtons.forEach(function(otherRadioButton) {
+                                    if (otherRadioButton !== radioButton) {
+                                        otherRadioButton.checked = false;
+                                    }
+                                });
+                            }
+                        });
                     });
-                });
+                }
+            } else {
+                alert('You have reached the maximum limit of 6 options.');
             }
-        } else {
-            alert('You have reached the maximum limit of 6 options.');
         }
-    }
-
     </script>
 @endpush
