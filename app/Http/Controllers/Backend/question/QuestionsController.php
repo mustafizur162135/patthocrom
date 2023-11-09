@@ -105,34 +105,36 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
-    {
+{
+    // return $request;
 
+    if (is_null($this->user) || !$this->user->can('question.store')) {
+        abort(403, 'Sorry !! You are Unauthorized to view any admin !');
+    }
 
-        if (is_null($this->user) || !$this->user->can('question.store')) {
-            abort(403, 'Sorry !! You are Unauthorized to view any admin !');
-        }
+    $validatedData = $request->validate([
+        'question_type_code' => 'required',
+        'question_name' => 'required',
+        'class_name' => 'required|array',
+        'subject' => 'required|array',
+        'question_diff_code' => 'required',  // Fix the field name
+        'question_default_marks' => 'required',
+        'question_default_time_to_solve' => 'required',
+        // Add validation rules for other fields as needed
+    ]);
 
-        $request->validate([
-            'question_type_code' => 'required',
-            'question_name' => 'required',
-            'class_name' => 'required|array',
-            'subject' => 'required|array',
-            'question_diff_level_code' => 'required',
-            'question_default_marks' => 'required',
-            'question_default_time_to_solve' => 'required',
-            // Add validation rules for other fields as needed
-        ]);
+    try {
+        // Your existing code here
 
-        return $request;
-
-        // Create a new question instance and populate it with data from the request
         $question = new Question_bank();
-        $question->question_code = $request->input('question_code');
+        $question->question_code = uniqid();  // This will generate a unique ID
         $question->question_type_code = $request->input('question_type_code');
-        $question->class_code = $request->input('class_name');
-        $question->sub_code = $request->input('subject');
-        $question->question_diff_level_code = $request->input('question_diff_level_code');
+        $question->class_code = implode(',', $request->input('class_name'));
+        $question->sub_code = implode(',', $request->input('subject'));
+        $question->question_diff_code = $request->input('question_diff_code');
         $question->question_name = $request->input('question_name');
         $question->question_option_1 = $request->input('question_option_1');
         $question->question_option_2 = $request->input('question_option_2');
@@ -140,33 +142,27 @@ class QuestionsController extends Controller
         $question->question_option_4 = $request->input('question_option_4');
         $question->question_option_5 = $request->input('question_option_5');
         $question->question_option_6 = $request->input('question_option_6');
-        $question->correct_answer = $request->input('correct_answer');
+        $question->question_correct_ans = implode(',', $request->input('question_correct_ans'));
         $question->question_default_marks = $request->input('question_default_marks');
         $question->question_default_time_to_solve = $request->input('question_default_time_to_solve');
-
-        // Handle file uploads (if applicable)
-        if ($request->hasFile('file_field_name')) {
-            $file = $request->file('file_field_name');
-            $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads'), $fileName);
-            $question->file_field_name = $fileName;
-        }
-
-        // Set other fields as needed
-
-        // Set checkbox fields
         $question->is_paid = $request->has('is_paid') ? 1 : 0;
         $question->status = $request->has('status') ? 1 : 0;
 
         // Save the question to the database
         $question->save();
 
-        return redirect()->route('questions.index')
+        return redirect()->back()
             ->with('success', 'Question created successfully.');
 
-
-
+    } catch (QueryException $e) {
+        // Handle the query exception
+        return redirect()->back()->withInput()->withErrors('Error: ' . $e->getMessage());
+    } catch (\Exception $e) {
+        // Handle other exceptions
+        return redirect()->back()->withInput()->withErrors($e->getMessage());
     }
+}
+
 
     /**
      * Display the specified resource.
@@ -188,11 +184,18 @@ class QuestionsController extends Controller
      * @param  \App\Models\Question_bank  $question_bank
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question_bank $question_bank)
+    public function edit($id)
     {
         if (is_null($this->user) || !$this->user->can('question.edit')) {
             abort(403, 'Sorry !! You are Unauthorized to view any admin !');
         }
+        $questionTypes=Question_type::get();
+        $qc_diff_level=Question_diff_level::get();
+        $class_name=Classname::get();
+        $subject=Subject::get();
+$question=Question_bank::find($id);
+
+return view('backend.question.edit',compact('question','questionTypes','qc_diff_level','class_name','subject'));
 
     }
 

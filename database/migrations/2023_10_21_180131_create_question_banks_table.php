@@ -23,10 +23,10 @@ return new class extends Migration
             $table->longText('question_name');
             $table->longText('question_option_1');
             $table->longText('question_option_2');
-            $table->longText('question_option_3');
-            $table->longText('question_option_4');
-            $table->longText('question_option_5');
-            $table->longText('question_option_6');
+            $table->longText('question_option_3')->nullable();
+            $table->longText('question_option_4')->nullable();
+            $table->longText('question_option_5')->nullable();
+            $table->longText('question_option_6')->nullable();
             $table->longText('question_correct_ans');
             $table->string('question_default_marks');
             $table->string('question_default_time_to_solve');
