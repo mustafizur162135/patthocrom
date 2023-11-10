@@ -4,12 +4,12 @@
 // frontend part start
 
 use App\Http\Controllers\Frontend\{
+    CheckoutController,
     HomeController
- };
- 
- // frontend part end
- 
- 
+};
+
+// frontend part end
+
 
 use App\Http\Controllers\Backend\{
     AdminDashboardController,
@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\role\RoleController;
 use App\Http\Controllers\Backend\class\ClassnameController;
 use App\Http\Controllers\Backend\question\ImportController;
 use App\Http\Controllers\Backend\question\QuestionsController;
+use App\Http\Controllers\Backend\exam\ExamController;
 use App\Http\Controllers\Backend\subject\SubjectController;
 use App\Http\Controllers\Backend\setting\SettingController;
 use App\Http\Controllers\Backend\teacher\{
@@ -32,6 +33,7 @@ use App\Http\Controllers\Backend\student\{
     StudentLoginController
 };
 use App\Http\Controllers\Backend\user\UserController;
+use App\Http\Controllers\Backend\studentpackage\StudentPackageController;
 // Rest of your code...
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +52,12 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('/allCourse', [HomeController::class, 'course'])->name('allcourse');
+    Route::get('/package/{id}', [HomeController::class, 'showSinglePackage'])->name('package.show');
+    Route::post('/studentCheckout', [CheckoutController::class, 'studentCheckout'])->name('student.checkout');
+    Route::post('/studentCheckoutProcess', [CheckoutController::class, 'studentCheckoutProcess'])->name('student.checkout.process');
+    Route::get('student/checkout/confirmation', [CheckoutController::class, 'studentCheckoutConfirmation'])->name('student.checkout.confirmation');
+
+
 
 // Frontend part end
 
@@ -113,6 +121,11 @@ Route::group(['middleware' => ['auth.admin']], function () {
      Route::post('ckeditor/upload', [QuestionsController::class, 'upload'])->name('ckeditor.upload');
 
     
+    // exam
+
+    Route::resource('exams', ExamController::class);
+    Route::resource('studentpackages', StudentPackageController::class);
+
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });

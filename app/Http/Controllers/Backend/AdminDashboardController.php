@@ -23,7 +23,7 @@ class AdminDashboardController extends Controller
         // For example, you can return a view:
 
 
-        $adminUserData = Session::get('admin_user_data');
+         $adminUserData = Session::get('admin_user_data');
     
         return view('backend.dashboard', compact('adminUserData')); // Pass 'adminUserData' to the view
     }

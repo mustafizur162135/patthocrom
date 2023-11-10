@@ -16,7 +16,17 @@
             <div class="col-lg-7 col-xl-7">
                 <ul class="sign_up_btn home4 style2 dn-smd text-right">
                     <li class="list-inline-item"><a href="#" class="btn btn-md"><i class="flaticon-megaphone"></i><span class="dn-md">Become an Instructor</span></a></li>
+
+                    @if ($studentUserData)
+                        
+                        <li class="list-inline-item"><a href="#" class="btn btn-md" ><i class="flaticon-user"></i> <span class="dn-md">{{ $studentUserData['name'] }}</span></a></li>
+                        <!-- Add more user information as needed -->
+                    @else
                     <li class="list-inline-item"><a href="{{ route('admin.login.form') }}" class="btn btn-md" ><i class="flaticon-user"></i> <span class="dn-md">Login</span></a></li>
+                    @endif
+
+
+                    
                     
                 </ul><!-- Button trigger modal -->
             </div>
@@ -96,6 +106,7 @@
                 <li class="last">
                     <a href="#"><span class="title">Contact</span></a>
                 </li>
+                
                
               
                 <li class="list_three">
@@ -105,7 +116,14 @@
                     </ul>
                 </li>
 
-                <li class="list_two">
+                <li class="list_three">
+                    <a href="#"><span class="title">Courses</span></a>
+                    <ul>
+                        <li><a href="{{ route('allcourse') }}">All Courses</a></li>
+                    </ul>
+                </li>
+
+                {{-- <li class="list_two">
                     <a href="#"><span class="title">Courses</span></a>
                     <!-- Level Two-->
                     <ul>
@@ -120,7 +138,7 @@
                         </li>
                        
                     </ul>
-                </li>
+                </li> --}}
                 <li class="list_one">
                     <a href="{{ route('home') }}"><span class="title">Home</span></a>
                 </li>
