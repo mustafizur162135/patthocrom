@@ -3,6 +3,8 @@
 @section('title', 'Question')
 
 @push('css')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
 @endpush
 
 @section('content')
@@ -42,7 +44,7 @@
                                 <th>Subject Code</th>
                                 <th>Difficulty Code</th>
                                 <th>Type Code</th>
-                                <th>Name</th>
+                                {{-- <th>Name</th> --}}
                                 <th>Marks</th>
                                 <th>Visibility</th>
                                 <th>Is Paid</th>
@@ -50,13 +52,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
 
-                            <tr>
-                                
-                            </tr>
-
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -69,35 +65,36 @@
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-    $(function() {
-        $('#dataTable').DataTable({
-         
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('questions.index') }}",
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'question_code', name: 'question_code' },
-                { data: 'class_code', name: 'class_code' },
-                { data: 'sub_code', name: 'sub_code' },
-                { data: 'question_diff_code', name: 'question_diff_code' },
-                { data: 'question_type_code', name: 'question_type_code' },
-                { data: 'question_name', name: 'question_name' },
-                { data: 'question_default_marks', name: 'question_default_marks' },
-                { data: 'visibility', name: 'visibility' },
-                { data: 'is_paid', name: 'is_paid' },
-                { data: 'status', name: 'status' },
-                { data: 'action', name: 'action', orderable: false, searchable: false }
-            ]
-        });
+$(function() {
+    $('#dataTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('questions.index') }}",
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'question_code', name: 'question_code' },
+            { data: 'class_code', name: 'class_code' },
+            { data: 'sub_code', name: 'sub_code' },
+            { data: 'question_diff_code', name: 'question_diff_code' },
+            { data: 'question_type_code', name: 'question_type_code' },
+            // {
+            //     data: 'question_name',
+            //     name: 'question_name',
+            //     render: function(data, type, row) {
+            //         return type === 'display' ? data : row.question_name; // Allow HTML in display
+            //     }
+            // },
+            { data: 'question_default_marks', name: 'question_default_marks' },
+            { data: 'visibility', name: 'visibility' },
+            { data: 'is_paid', name: 'is_paid' },
+            { data: 'status', name: 'status' },
+            { data: 'action', name: 'action', orderable: false, searchable: false }
+        ]
     });
+});
+
 </script>
 
-<script>
-    $(document).ready(function() {
-        // Datatable
-        $("#datatable").DataTable();
-    });
-</script>
+
 
 @endpush

@@ -8,6 +8,9 @@
             height: 200px;
         }
     </style>
+
+
+
 @endpush
 
 @section('content')
@@ -60,48 +63,73 @@
 
                         <div class="form-group">
                             <label for="question_type_code">Question Type</label>
-                            <select class="form-control" id="question_type_code" name="question_type_code"
+                            <select disabled class="form-control" id="question_type_code" name="question_type_code"
                                 onchange="showQuestionFields()" required>
                                 @foreach ($questionTypes as $type)
-                                    <option value="{{ $type['question_type_code'] }}">{{ $type['question_type_name'] }}
+                                    <option value="{{ $type['question_type_code'] }}"
+                                        {{ isset($question) && $question->question_type_code == $type['question_type_code'] ? 'selected' : '' }}>
+                                        {{ $type['question_type_name'] }}
                                     </option>
                                 @endforeach
                             </select>
+
                         </div>
 
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="name">Question Name</label>
-                                    <textarea id="editor" name="question_name"></textarea>
+                                    <textarea id="editor" name="question_name"> {{ $question->question_name }}</textarea>
 
                                 </div>
 
-                                {{-- <div class="form-group">
-                                    <label for="name">Option 1</label>
-                                    <textarea id="editor1" name="question_option_1"></textarea>
 
-                                </div> --}}
-                                <div id="msaContainer" style="display: none;">
-                                    <div class="form-group" id="msa-options-container">
-                                        <button type="button" class="btn btn-success" id="msaaddOption"
-                                            onclick="addOption('msa')">
-                                            <i class="fas fa-plus"></i>
-                                            <span>Add Option</span>
-                                        </button>
+                                @if ($question->question_type_code == 'MSA')
+                                    @for ($optionCount = 1; $optionCount <= 6; $optionCount++)
+                                        <div class="form-group" id="op">
+                                            <label for="name">Option {{ $optionCount }}</label>
+                                            <textarea id="editor{{ $optionCount }}" name="question_option_{{ $optionCount }}">{{ isset($question) ? $question->{'question_option_' . $optionCount} : '' }}</textarea>
+
+                                            @php
+                                                $ca = isset($question) ? explode(',', $question->question_correct_ans) : [];
+                                                $checked = in_array($optionCount, $ca) ? 'checked' : '';
+                                            @endphp
+
+                                            <input type="radio" name="question_correct_ans[]" value="{{ $optionCount }}"
+                                                {{ $checked }}> Correct Answer
+                                        </div>
+                                    @endfor
+
+                                    <div id="msaContainer">
+                                        <div class="form-group" id="msa-options-container">
+                                            <button type="button" class="btn btn-success" id="msaaddOption"
+                                                onclick="addOption('msa')">
+                                                <i class="fas fa-plus"></i>
+                                                <span>Add Option</span>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div id="mmaContainer" style="display: none;">
-                                    <div class="form-group" id="mma-options-container">
-                                        <button type="button" class="btn btn-success" id="mmaaddOption"
-                                            onclick="addOption('mma')">
-                                            <i class="fas fa-plus"></i>
-                                            <span>Add Option</span>
-                                        </button>
+                                @else
+                                    <div id="mmaContainer">
+                                        @for ($optionCount = 1; $optionCount <= 6; $optionCount++)
+                                        <div class="form-group" id="op">
+                                            <label for="name">Option {{ $optionCount }}</label>
+                                            <textarea id="editor{{ $optionCount }}" name="question_option_{{ $optionCount }}">{{ isset($question) ? $question->{'question_option_' . $optionCount} : '' }}</textarea>
+                                    
+                                            @php
+                                                $ca = isset($question) ? explode(',', $question->question_correct_ans) : [];
+                                                $checked = in_array($optionCount, $ca) ? 'checked' : '';
+                                            @endphp
+                                    
+                                            <input type="checkbox" name="question_correct_ans[]" value="{{ $optionCount }}" {{ $checked }}> Correct Answer
+                                    
+                                           
+                                        </div>
+                                    @endfor
+                                    
+                                    
                                     </div>
-                                </div>
-
+                                @endif
                             </div>
                             <div class="col-md-4">
 
@@ -111,45 +139,56 @@
                                     <select multiple="multiple" class="form-control js-example-basic-multiple"
                                         id="class_name" name="class_name[]" required>
                                         @foreach ($class_name as $item)
-                                            <option value="{{ $item->class_code }}"
-                                                @if (isset($question)) @foreach ($question->class_name as $value)
-                                                    {{ $question->class_code == $value->class_code ? 'selected' : '' }}
-                                                @endforeach @endif>
-                                                {{ $item->class_name }}</option>
+                                            @php
+                                                $ca = isset($question) ? explode(',', $question->class_code) : [];
+                                                $selected = in_array($item->class_code, $ca) ? 'selected' : '';
+                                            @endphp
+
+                                            <option value="{{ $item->class_code }}" {{ $selected }}>
+                                                {{ $item->class_name }}
+                                            </option>
                                         @endforeach
                                     </select>
+
                                 </div>
                                 <div class="form-group">
 
                                     <label for="subject">Select Subject</label>
                                     <select multiple="multiple" class="form-control js-example-basic-multiple"
                                         id="subject" name="subject[]" required>
+
                                         @foreach ($subject as $item)
-                                            <option value="{{ $item->sub_code }}"
-                                                @if (isset($question)) @foreach ($question->subject as $value)
-                                        {{ $question->sub_code == $value->sub_code ? 'selected' : '' }}
-                                    @endforeach @endif>
-                                                {{ $item->sub_name }}</option>
+                                            @php
+                                                $a = isset($question) ? explode(',', $question->sub_code) : [];
+                                                $selectedSubject = in_array($item->sub_code, $a) ? 'selected' : '';
+                                            @endphp
+
+
+                                            <option value="{{ $item->sub_code }}" {{ $selectedSubject }}>
+                                                {{ $item->sub_name }}
+                                            </option>
                                         @endforeach
                                     </select>
+
                                 </div>
 
 
 
                                 <div class="form-group">
-
                                     <label for="question_diff_code">Question Diff Level</label>
-                                    <select class="form-control" id="question_diff_code"
-                                        name="question_diff_code" required>
+                                    <select class="form-control" id="question_diff_code" name="question_diff_code" required>
                                         @foreach ($qc_diff_level as $item)
                                             <option value="{{ $item->question_diff_level_code }}"
-                                                @if (isset($question)) @foreach ($question->questionDiffLevel as $value)
-                        {{ $question->question_diff_level_code == $value->question_diff_level_code ? 'selected' : '' }}
-                    @endforeach @endif>
-                                                {{ $item->question_diff_level_name }}</option>
+                                                @if ($question && isset($question->questionDiffLevel)) {{ $question->question_diff_code == $item->question_diff_level_code ? 'selected' : '' }} @endif>
+                                                {{ $item->question_diff_level_name }}
+                                            </option>
                                         @endforeach
                                     </select>
+
                                 </div>
+
+
+
 
                                 {{--
                                 <div class="form-group">
@@ -161,31 +200,34 @@
                                 <div class="form-group">
                                     <label for="name">Question Mark</label>
                                     <input type="text" class="form-control" id="question_default_marks"
-                                        name="question_default_marks" placeholder="Enter Question Default Marks" required
-                                        autofocus>
+                                        name="question_default_marks" placeholder="Enter Question Default Marks"
+                                        value="{{ $question->question_default_marks }}" required autofocus>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="name">Question Solve Time</label>
                                     <input type="text" class="form-control" id="question_default_time_to_solve"
-                                        name="question_default_time_to_solve" placeholder="Enter Question Solve Time"
-                                        required autofocus>
+                                        name="question_default_time_to_solve"
+                                        value="{{ $question->question_default_time_to_solve }}"
+                                        placeholder="Enter Question Solve Time" required autofocus>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="is_paid" name="is_paid"
-                                            checked>
+                                            {{ isset($question) && $question->is_paid ? 'checked' : '' }}>
                                         <label class="custom-control-label" for="is_paid">Paid</label>
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="status" name="status"
-                                            checked>
+                                            {{ isset($question) && $question->status ? 'checked' : '' }}>
                                         <label class="custom-control-label" for="status">Status</label>
                                     </div>
                                 </div>
+                                
 
 
                             </div>
@@ -264,9 +306,130 @@
                 console.error(error);
             });
     </script>
+
     <script>
         ClassicEditor
-            .create(document.querySelector('#question_correct_ans'), {
+            .create(document.querySelector('#editor1'), {
+                ckfinder: {
+                    options: {
+                        resourceType: 'Images', // Restrict to images only
+                        // Set additional minimal options here
+                    },
+                    uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+                    onInsert: function(file) {
+                        // Dynamically set image attributes here
+                        var img = new CKEDITOR.dom.element('img');
+                        img.setAttribute('src', file.url);
+                        img.setAttribute('width', '800');
+                        img.setAttribute('height', '600');
+                        // Add any other attributes you need
+                        editor.insertElement(img);
+                    },
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor2'), {
+                ckfinder: {
+                    options: {
+                        resourceType: 'Images', // Restrict to images only
+                        // Set additional minimal options here
+                    },
+                    uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+                    onInsert: function(file) {
+                        // Dynamically set image attributes here
+                        var img = new CKEDITOR.dom.element('img');
+                        img.setAttribute('src', file.url);
+                        img.setAttribute('width', '800');
+                        img.setAttribute('height', '600');
+                        // Add any other attributes you need
+                        editor.insertElement(img);
+                    },
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor3'), {
+                ckfinder: {
+                    options: {
+                        resourceType: 'Images', // Restrict to images only
+                        // Set additional minimal options here
+                    },
+                    uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+                    onInsert: function(file) {
+                        // Dynamically set image attributes here
+                        var img = new CKEDITOR.dom.element('img');
+                        img.setAttribute('src', file.url);
+                        img.setAttribute('width', '800');
+                        img.setAttribute('height', '600');
+                        // Add any other attributes you need
+                        editor.insertElement(img);
+                    },
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor4'), {
+                ckfinder: {
+                    options: {
+                        resourceType: 'Images', // Restrict to images only
+                        // Set additional minimal options here
+                    },
+                    uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+                    onInsert: function(file) {
+                        // Dynamically set image attributes here
+                        var img = new CKEDITOR.dom.element('img');
+                        img.setAttribute('src', file.url);
+                        img.setAttribute('width', '800');
+                        img.setAttribute('height', '600');
+                        // Add any other attributes you need
+                        editor.insertElement(img);
+                    },
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor5'), {
+                ckfinder: {
+                    options: {
+                        resourceType: 'Images', // Restrict to images only
+                        // Set additional minimal options here
+                    },
+                    uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+                    onInsert: function(file) {
+                        // Dynamically set image attributes here
+                        var img = new CKEDITOR.dom.element('img');
+                        img.setAttribute('src', file.url);
+                        img.setAttribute('width', '800');
+                        img.setAttribute('height', '600');
+                        // Add any other attributes you need
+                        editor.insertElement(img);
+                    },
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor6'), {
                 ckfinder: {
                     options: {
                         resourceType: 'Images', // Restrict to images only
@@ -289,107 +452,4 @@
             });
     </script>
 
-
-    <script>
-        function showQuestionFields() {
-            var selectedType = document.getElementById("question_type_code").value;
-            var msaContainer = document.getElementById("msaContainer");
-            var mmaContainer = document.getElementById("mmaContainer");
-            // var option = document.getElementById("op") ?? '';
-
-            // option.remove();
-
-
-
-            if (selectedType === "MSA") {
-                msaContainer.style.display = "block"; // Show the MSA container
-                mmaContainer.style.display = "none"; // Hide the MMA container
-                optionCount = 0;
-
-            } else if (selectedType === "MMA") {
-                mmaContainer.style.display = "block"; // Show the MMA container
-                msaContainer.style.display = "none"; // Hide the MSA container
-                optionCount = 0;
-
-            } else {
-                msaContainer.style.display = "none"; // Hide both containers for other question types
-                mmaContainer.style.display = "none";
-                optionCount = 0;
-            }
-        }
-    </script>
-
-    <script>
-        var optionCount = 0; // Initialize the option count
-
-        // Function to initialize CKEditor for a new option
-        function initializeCKEditor(optionCount) {
-            ClassicEditor
-                .create(document.querySelector('#editor' + optionCount), {
-                    ckfinder: {
-                        options: {
-                            resourceType: 'Images', // Restrict to images only
-                            // Set additional minimal options here
-                        },
-                        uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
-                        onInsert: function(file) {
-                            // Dynamically set image attributes here
-                            var img = new CKEDITOR.dom.element('img');
-                            img.setAttribute('src', file.url);
-                            img.setAttribute('width', '800');
-                            img.setAttribute('height', '600');
-                            // Add any other attributes you need
-                            editor.insertElement(img);
-                        },
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-        // Add Option button click event
-        function addOption(optionType) {
-            if (optionCount < 6) { // Limit the total number of options to 6
-                optionCount++;
-
-                var inputType = optionType === "msa" ? "radio" : "checkbox"; // Determine input type based on question type
-
-                var newOptionHTML = '<div class="form-group" id="op">' +
-                    '<label for="name">Option ' + optionCount + '</label>' +
-                    '<textarea id="editor' + optionCount + '" name="question_option_' + optionCount +
-                    '"></textarea>' +
-                    '<input type="' + inputType + '" name="question_correct_ans[]" value="' + optionCount + '"> Correct Answer' +
-                    '</div>';
-
-                // Create a new div for the option
-                var newOptionDiv = document.createElement('div');
-                newOptionDiv.innerHTML = newOptionHTML;
-
-                // Insert the new option above the "Add Option" button
-                var optionsContainer = document.getElementById(optionType + '-options-container');
-                optionsContainer.insertBefore(newOptionDiv, document.getElementById(optionType + 'addOption'));
-
-                // Initialize CKEditor for the new option
-                initializeCKEditor(optionCount);
-
-                // If it's an "MSA" question, add a change event to clear other selected options
-                if (questionType === "msa" && inputType === "radio") {
-                    var radioButtons = newOptionDiv.querySelectorAll('input[type="radio"]');
-                    radioButtons.forEach(function(radioButton) {
-                        radioButton.addEventListener('change', function() {
-                            if (radioButton.checked) {
-                                radioButtons.forEach(function(otherRadioButton) {
-                                    if (otherRadioButton !== radioButton) {
-                                        otherRadioButton.checked = false;
-                                    }
-                                });
-                            }
-                        });
-                    });
-                }
-            } else {
-                alert('You have reached the maximum limit of 6 options.');
-            }
-        }
-    </script>
 @endpush
