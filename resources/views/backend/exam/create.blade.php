@@ -35,17 +35,69 @@
                     
                     <div class="card-body">
                         <h5 class="card-title">Manage exams</h5>
-                        <div class="form-group">
-                            <label for="exam_name">exam Name</label>
-                            <input type="text" class="form-control" id="exam_name" name="exam_name"
-                                 placeholder="Enter exam Name" required autofocus>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="exam_name">Exam Name</label>
+                                    <input type="text" class="form-control" id="exam_name" name="exam_name"
+                                         placeholder="Enter exam Name" required autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exam_name">Exam Code</label>
+                                    <input type="text" class="form-control" id="exam_code" name="exam_code"
+                                         placeholder="Enter exam Code" required autofocus>
+                                </div>
+                                
+                               
+
+                                <div class="form-group">
+                                    <label for="exam_desc">Exam Description</label>
+                                    <textarea class="form-control" cols="40" rows="5" id="exam_desc" name="exam_desc"
+                                       ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+
+                                <div class="form-group">
+
+                                    <label for="class_code">Select Class</label>
+                                    <select multiple="multiple" class="form-control js-example-basic-multiple"
+                                        id="class_code" name="class_code[]" required>
+                                        @foreach ($class_name as $item)
+                                            <option value="{{ $item->class_code }}"
+                                                @if (isset($question)) @foreach ($question->class_name as $value)
+                                                    {{ $question->class_code == $value->class_code ? 'selected' : '' }}
+                                                @endforeach @endif>
+                                                {{ $item->class_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="sub_code">Select Subject</label>
+                                    <select multiple="multiple" class="form-control js-example-basic-multiple"
+                                        id="sub_code" name="sub_code[]" required>
+                                        @foreach ($subject as $item)
+                                            <option value="{{ $item->sub_code }}"
+                                                @if (isset($question)) @foreach ($question->subject as $value)
+                                        {{ $question->sub_code == $value->sub_code ? 'selected' : '' }}
+                                    @endforeach @endif>
+                                                {{ $item->sub_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="total_qc">Total Question</label>
+                                    <input type="number" class="form-control" id="total_qc" name="total_qc"
+                                         placeholder="Enter Total Question Number" required autofocus>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="exam_des">exam Code</label>
-                            <textarea class="form-control" cols="40" rows="5" id="exam_code" name="exam_code"
-                                placeholder="Enter exam Code"></textarea>
-                        </div>
+
                        
 
                       

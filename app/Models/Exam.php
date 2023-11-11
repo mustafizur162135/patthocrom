@@ -24,4 +24,12 @@ class Exam extends Model
     {
         return $this->hasMany(Studentpackage::class, 'exam_id');
     }
+
+    public function questions()
+    {
+        return $this->belongsToMany(Question_bank::class, 'exam_questions', 'exam_id', 'question_bank_id');
+    }
+
+
+    
 }

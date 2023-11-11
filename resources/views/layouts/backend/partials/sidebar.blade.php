@@ -80,6 +80,26 @@
                             Import Qc.
                         </a>
                     </li>
+                    <li class="app-sidebar__heading">Exam and Package</li>
+                    <li>
+                        <a href="{{ url('/exams') }}" class="#">
+                            <i class="metismenu-icon pe-7s-config"></i>
+                            Exam
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/exams') }}" class="#">
+                            <i class="metismenu-icon pe-7s-config"></i>
+                            Exam Question
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ url('/studentpackages') }}" class="#">
+                            <i class="metismenu-icon pe-7s-config"></i>
+                            Package
+                        </a>
+                    </li>
                     <li class="app-sidebar__heading">Settings</li>
                     <li>
                         <a href="{{ url('admin/setting/form/1') }}" class="#">

@@ -46,4 +46,10 @@ class Question_bank extends Model
      {
          return $this->belongsTo(Question_type::class, 'question_type_code', 'question_type_code');
      }
+
+
+     public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'exam_questions', 'question_bank_id', 'exam_id');
+    }
 }

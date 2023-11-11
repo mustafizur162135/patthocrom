@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\{
 };
 use App\Http\Controllers\Backend\role\RoleController;
 use App\Http\Controllers\Backend\class\ClassnameController;
+use App\Http\Controllers\Backend\exam\Exam_questionController;
 use App\Http\Controllers\Backend\question\ImportController;
 use App\Http\Controllers\Backend\question\QuestionsController;
 use App\Http\Controllers\Backend\exam\ExamController;
@@ -124,8 +125,8 @@ Route::group(['middleware' => ['auth.admin']], function () {
     // exam
 
     Route::resource('exams', ExamController::class);
+    Route::resource('exam_question', Exam_questionController::class);
     Route::resource('studentpackages', StudentPackageController::class);
-
 
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 });

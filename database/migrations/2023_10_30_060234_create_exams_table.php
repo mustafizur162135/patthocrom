@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('exam_name');
             $table->string('exam_code')->unique();
+            $table->longText('exam_desc')->nullable();
+            $table->string('class_code');
+            $table->string('sub_code');
+            $table->integer('total_qc');
             $table->timestamps();
         });
     }

@@ -20,6 +20,10 @@ class ExamSeeder extends Seeder
         [
             'exam_name' => 'BCS Primary Model Test',
             'exam_code' => '111',
+            'exam_desc' => 'BCS Exam',
+            'class_code' => '111',
+            'sub_code' => '111',
+            'total_qc' => '40',
         ],
         
         // Add more data as needed
