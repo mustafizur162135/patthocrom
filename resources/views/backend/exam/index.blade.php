@@ -48,13 +48,16 @@
                                     <td class="text-center text-muted">#{{ $key + 1 }}</td>
                                     <td class="text-center">{{ $exam['exam_name'] }}</td>
                                     <td class="text-center">{{ $exam['exam_code'] }}</td>
-                                   
-                        
+
+
                                     <td class="text-center">
                                         <a class="btn btn-info btn-sm m-2" href="{{ route('exams.edit', $exam['id']) }}">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                        
+                                        <a class="btn btn-info btn-sm m-2" href="{{ route('exams.show', $exam['id']) }}">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+
                                         <form id="delete-form-{{ $exam['id'] }}"
                                               action="{{ route('exams.destroy', $exam['id']) }}" method="POST">
                                             @csrf()
@@ -71,7 +74,7 @@
                                 <td class="text-center" colspan="4">No data found</td>
                             </tr>
                         @endif
-                        
+
                         </tbody>
                     </table>
                 </div>

@@ -10,8 +10,8 @@ use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Validation\ValidationException;
+use PDF;
 
 
 class ExamController extends Controller
@@ -61,7 +61,7 @@ class ExamController extends Controller
                      'sub_code' => 'required|array',
                      'total_qc' => 'required|integer|min:0',
                  ]);
-     
+
                  // Create a new exam model
                  $exam = new Exam();
                  $exam->exam_name = $request->input('exam_name');
@@ -70,41 +70,42 @@ class ExamController extends Controller
                  $exam->sub_code = implode(',', $request->input('sub_code'));
                  $exam->exam_desc = $request->input('exam_desc');
                  $exam->total_qc = $request->input('total_qc');
-     
+
                  $exam->save();
-     
+
                  // Now prepare questions
                  $classCodes = $request->input('class_code');
                  $subCodes = $request->input('sub_code');
-     
+
                  $questions = DB::table('question_banks');
-     
+
                  foreach ($classCodes as $classCode) {
                      $questions->orWhereRaw("FIND_IN_SET('$classCode', class_code)");
                  }
-     
+
                  foreach ($subCodes as $subCode) {
                      $questions->orWhereRaw("FIND_IN_SET('$subCode', sub_code)");
                  }
-     
+
                  $questions = $questions->inRandomOrder()
                      ->limit($exam->total_qc)
                      ->get();
 
-                    return $questions;
-     
+                    // return $questions;
+
                  // Check if $questions is empty and throw an exception
                  if ($questions->isEmpty()) {
                      throw new \Exception('No questions found for the given criteria.');
                  }
 
-     
+                 $questionIds = $questions->pluck('id')->toArray();
+
                  // Attach selected questions to the exam
-                 foreach ($questions as $question) {
+                 foreach ($questionIds as $question) {
                      $exam->questions()->attach($question);
                  }
             //  });
-     
+
              // Redirect or return a response
              return redirect()->route('exams.index')->with('success', 'Exam created successfully.');
         //  } catch (ValidationException $e) {
@@ -118,8 +119,8 @@ class ExamController extends Controller
         //      return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred. ' . $e->getMessage()]);
         //  }
      }
-     
-     
+
+
 
 
 
@@ -131,7 +132,13 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-        //
+        $exam = Exam::findOrFail($id);
+
+        $questions = $exam->questions; // Assuming you have a 'questions' relationship in your Exam model
+
+        $pdf = PDF::loadView('backend.exam.qc_pdf', compact('exam', 'questions'));
+
+        return $pdf->stream('backend.exam.qc_pdf'); // Use 'download' instead of 'stream' to force download
     }
 
     /**
