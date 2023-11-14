@@ -6,6 +6,9 @@
     <style>
         body {
             text-align: left;
+            width: 21cm;
+            height: 29.7cm;
+            margin: 1cm auto;
         }
 
         h1 {
@@ -30,51 +33,87 @@
 
         .mcq-option {
             margin-bottom: 5px;
+            display: inline-block;
+            margin-right: 10px;
+            /* Adjust as needed */
         }
+
+        /* Styling for circular design */
+        span.question-number,
+        span.option-number {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        span.question-number {
+            background-color: #3498db;
+            /* Adjust the color as needed */
+            color: white;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        span.option-number {
+            background-color: #eee7e7;
+            /* Adjust the color as needed */
+            color: black;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        /* Print button styling */
+        .print-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #27ae60;
+            /* Adjust the color as needed */
+            color: white;
+            cursor: pointer;
+            z-index: 999;
+            /* Ensure the button is on top */
+        }
+
+        /* Media query for print styles */
+        @media print {
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
+
+            .print-button {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 
 <body>
+    <button class="print-button" onclick="window.print()">Print</button>
+
     <h1>{{ $exam->exam_name }}</h1>
-    {{-- <p>{{ $exam->exam_desc }}</p> --}}
 
     <h2>Questions:</h2>
     <ol class="mcq-container">
         @foreach ($questions as $key => $question)
-            <li class="mcq-question">
-                <p>{!! $question->question_name !!}</p>
-                <ul class="mcq-options">
-                    @if ($question->question_option_1)
-                        <li class="mcq-option">{!! $question->question_option_1 !!}</li>
+        <li class="mcq-question">
+            <p><span class="question-number">{{ $key + 1 }}</span>{!! $question->question_name !!}</p>
+            <ul class="mcq-options">
+                @for ($i = 1; $i <= 6; $i++) @php $optionKey="question_option_" . $i; $optionValue=$question->$optionKey;
+                    @endphp
+                    @if ($optionValue)
+                    <span class="option-number">{{ $i }}</span>
+                    <li class="mcq-option">{!! $optionValue !!}</li>
                     @endif
-
-                    @if ($question->question_option_2)
-                        <li class="mcq-option">{!! $question->question_option_2 !!}</li>
-                    @endif
-
-                    @if ($question->question_option_3)
-                        <li class="mcq-option">{!! $question->question_option_3 !!}</li>
-                    @endif
-
-                    @if ($question->question_option_4)
-                        <li class="mcq-option">{!! $question->question_option_4 !!}</li>
-                    @endif
-
-                    @if ($question->question_option_5)
-                        <li class="mcq-option">{!! $question->question_option_5 !!}</li>
-                    @endif
-
-                    @if ($question->question_option_6)
-                        <li class="mcq-option">{!! $question->question_option_6 !!}</li>
-                    @endif
-                </ul>
-            </li>
-
-            {{-- Check if it's the last item or an even-indexed item --}}
-            @if ($loop->last || ($key + 1) % 2 === 0)
-                </li>
-                <li>
-            @endif
+                    @endfor
+            </ul>
+        </li>
         @endforeach
     </ol>
 </body>

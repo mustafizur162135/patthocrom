@@ -17,10 +17,14 @@ class Studentpackage extends Model
         'studentpackage_image',
     ];
 
-    // Define the "student" relationship
-    public function exam()
+    public function exams()
     {
-        return $this->belongsTo(Exam::class, 'exam_id');
+        return $this->belongsToMany(Exam::class, 'studentpackage_exam', 'studentpackage_id', 'exam_id');
+    }
+
+    public function notes()
+    {
+        return $this->belongsToMany(Note::class, 'studentpackage_note', 'studentpackage_id', 'note_id');
     }
 
     public function orders()

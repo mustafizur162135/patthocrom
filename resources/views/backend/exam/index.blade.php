@@ -54,9 +54,10 @@
                                         <a class="btn btn-info btn-sm m-2" href="{{ route('exams.edit', $exam['id']) }}">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a class="btn btn-info btn-sm m-2" href="{{ route('exams.show', $exam['id']) }}">
+                                        <a class="btn btn-info btn-sm m-2" href="{{ route('exams.show', $exam['id']) }}" target="_blank">
                                             <i class="fas fa-eye"></i>
                                         </a>
+                                        
 
                                         <form id="delete-form-{{ $exam['id'] }}"
                                               action="{{ route('exams.destroy', $exam['id']) }}" method="POST">

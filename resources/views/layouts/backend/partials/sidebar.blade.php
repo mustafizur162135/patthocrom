@@ -35,7 +35,7 @@
                 <div>
                     <li class="app-sidebar__heading">Dashboard</li>
                     <li>
-                        <a href="#" class="#">
+                        <a href="{{ url('/admin/dashboard') }}" class="#">
                             <i class="metismenu-icon pe-7s-car"></i>
                             Dashboard
                         </a>
@@ -70,36 +70,41 @@
                     <li class="app-sidebar__heading">Question</li>
                     <li>
                         <a href="{{ route('questions.index') }}" class="#">
-                            <i class="metismenu-icon pe-7s-repeat"></i>
-                            Question 
+                            <i class="metismenu-icon fas fa-question-circle"></i>
+                            Question
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('question.import.form') }}" class="#">
-                            <i class="metismenu-icon pe-7s-repeat"></i>
+                            <i class="metismenu-icon fas fa-file-import"></i>
                             Import Qc.
                         </a>
                     </li>
+
                     <li class="app-sidebar__heading">Exam and Package</li>
                     <li>
                         <a href="{{ url('/exams') }}" class="#">
-                            <i class="metismenu-icon pe-7s-config"></i>
+                            <i class="metismenu-icon fas fa-clipboard-check"></i>
                             Exam
                         </a>
                     </li>
+
                     <li>
-                        <a href="{{ url('/exams') }}" class="#">
-                            <i class="metismenu-icon pe-7s-config"></i>
-                            Exam Question
+                        <a href="{{ url('/notes') }}" class="#">
+                            <i class="metismenu-icon fas fa-sticky-note"></i>
+                            Notes
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('/studentpackages') }}" class="#">
-                            <i class="metismenu-icon pe-7s-config"></i>
+                            <i class="metismenu-icon fas fa-box"></i>
                             Package
                         </a>
                     </li>
+
+
+
                     <li class="app-sidebar__heading">Settings</li>
                     <li>
                         <a href="{{ url('admin/setting/form/1') }}" class="#">
@@ -114,7 +119,7 @@
                             Slider
                         </a>
                     </li>
-                
+
                 </div>
             </ul>
         </div>

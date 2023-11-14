@@ -20,16 +20,13 @@ class Exam extends Model
     ];
 
     // Define the "studentPackages" relationship
-    public function studentPackages()
+    public function studentpackages()
     {
-        return $this->hasMany(Studentpackage::class, 'exam_id');
+        return $this->belongsToMany(Studentpackage::class, 'studentpackage_exam', 'exam_id', 'studentpackage_id');
     }
 
     public function questions()
     {
         return $this->belongsToMany(Question_bank::class, 'exam_questions', 'exam_id', 'question_bank_id');
     }
-
-
-    
 }

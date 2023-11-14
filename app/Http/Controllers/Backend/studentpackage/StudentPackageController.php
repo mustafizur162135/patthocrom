@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\studentpackage;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\Note;
 use App\Models\Studentpackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -11,7 +12,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class StudentPackageController extends Controller
 {
-   /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -31,14 +32,14 @@ class StudentPackageController extends Controller
     public function create()
     {
         $exams = Exam::get();
+        $notes = Note::get();
 
-        return view('backend.studentpackage.create', compact('exams'));
+        return view('backend.studentpackage.create', compact('exams', 'notes'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,7 +48,8 @@ class StudentPackageController extends Controller
         $request->validate([
             'studentpackage_name' => 'required|string',
             'studentpackage_price' => 'required',
-            'exam_id' => 'required',
+            'exam_id' => 'required|array',
+            'note_id' => 'required|array',
             'studentpackage_des' => 'nullable|string',
             'studentpackage_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -55,34 +57,32 @@ class StudentPackageController extends Controller
         // Handle the image upload and resize
         if ($request->hasFile('studentpackage_image')) {
             $image = $request->file('studentpackage_image');
-            $imageName = time() . '_studentpackage.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('images/studentpackages');
-
-            // Move the image to the destination path
-            $image->move($destinationPath, $imageName);
+            $imageName = time().'_studentpackage.'.$image->getClientOriginalExtension();
+            $path = $image->storeAs('public/images/studentpackages', $imageName);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make($destinationPath . '/' . $imageName)
+            $resizedImage = Image::make(storage_path('app/'.$path))
                 ->resize(307, 200) // Adjust the dimensions as needed
                 ->save();
 
-            // Create a new studentpackage model
-            $studentpackage = new studentpackage();
-            $studentpackage->exam_id = $request->input('exam_id');
+            // Create a new Studentpackage model
+            $studentpackage = new Studentpackage();
             $studentpackage->studentpackage_name = $request->input('studentpackage_name');
             $studentpackage->studentpackage_price = $request->input('studentpackage_price');
             $studentpackage->studentpackage_des = $request->input('studentpackage_des');
             $studentpackage->studentpackage_image = $imageName; // Store the original image name
             $studentpackage->save();
 
+            // Attach related exams and notes to the student package
+            $studentpackage->exams()->attach($request->input('exam_id'));
+            $studentpackage->notes()->attach($request->input('note_id'));
+
             // Redirect or return a response
-            return redirect()->route('studentpackages.index')->with('success', 'studentpackage created successfully.');
+            return redirect()->route('studentpackages.index')->with('success', 'Student package created successfully.');
         } else {
             // Handle the case where no image was uploaded
             return redirect()->back()->with('error', 'Image upload failed.');
         }
-
-
     }
 
     /**
@@ -108,13 +108,14 @@ class StudentPackageController extends Controller
 
         $exams = Exam::get();
 
-        return view('backend.studentpackage.edit', compact('studentpackage','exams'));
+        $notes = Note::get();
+
+        return view('backend.studentpackage.edit', compact('studentpackage', 'exams', 'notes'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -132,7 +133,7 @@ class StudentPackageController extends Controller
         // Find the studentpackage by its ID
         $studentpackage = studentpackage::find($id);
 
-        if (!$studentpackage) {
+        if (! $studentpackage) {
             return redirect()->route('studentpackages.index')->with('error', 'studentpackage not found.');
         }
 
@@ -142,19 +143,19 @@ class StudentPackageController extends Controller
             $oldImage = $studentpackage->studentpackage_image;
 
             // Remove the old image file if it exists
-            if (!empty($oldImage) && File::exists(public_path('images/studentpackages/' . $oldImage))) {
-                File::delete(public_path('images/studentpackages/' . $oldImage));
+            if (! empty($oldImage) && File::exists(public_path('images/studentpackages/'.$oldImage))) {
+                File::delete(public_path('images/studentpackages/'.$oldImage));
             }
 
             $image = $request->file('studentpackage_image');
-            $imageName = time() . '_studentpackage.' . $image->getClientOriginalExtension();
+            $imageName = time().'_studentpackage.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('images/studentpackages');
 
             // Move the new image to the destination path
             $image->move($destinationPath, $imageName);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make($destinationPath . '/' . $imageName)
+            $resizedImage = Image::make($destinationPath.'/'.$imageName)
                 ->resize(307, 200) // Adjust the dimensions as needed
                 ->save();
 
@@ -183,25 +184,25 @@ class StudentPackageController extends Controller
      */
     public function destroy($id)
     {
-         // Find the studentpackage by its ID
-         $studentpackage = studentpackage::find($id);
+        // Find the studentpackage by its ID
+        $studentpackage = studentpackage::find($id);
 
-         if (!$studentpackage) {
-             return redirect()->route('studentpackages.index')->with('error', 'studentpackage not found.');
-         }
- 
-         // Get the image file name to be deleted
-         $imageToDelete = $studentpackage->studentpackage_image;
- 
-         // Remove the image file from storage
-         if (!empty($imageToDelete) && File::exists(public_path('images/studentpackages/' . $imageToDelete))) {
-             File::delete(public_path('images/studentpackages/' . $imageToDelete));
-         }
- 
-         // Delete the studentpackage record from the database
-         $studentpackage->delete();
- 
-         // Redirect or return a response
-         return redirect()->route('studentpackages.index')->with('success', 'studentpackage deleted successfully.');
+        if (! $studentpackage) {
+            return redirect()->route('studentpackages.index')->with('error', 'studentpackage not found.');
+        }
+
+        // Get the image file name to be deleted
+        $imageToDelete = $studentpackage->studentpackage_image;
+
+        // Remove the image file from storage
+        if (! empty($imageToDelete) && File::exists(public_path('images/studentpackages/'.$imageToDelete))) {
+            File::delete(public_path('images/studentpackages/'.$imageToDelete));
+        }
+
+        // Delete the studentpackage record from the database
+        $studentpackage->delete();
+
+        // Redirect or return a response
+        return redirect()->route('studentpackages.index')->with('success', 'studentpackage deleted successfully.');
     }
 }

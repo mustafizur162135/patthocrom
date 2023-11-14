@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('studentpackages', function (Blueprint $table) {
+        Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->string('studentpackage_name')->unique();
-            $table->string('studentpackage_price');
-            $table->string('studentpackage_des')->nullable();
-            $table->string('studentpackage_image')->nullable();
+            $table->string('title');
+            $table->text('description');
+            $table->string('file_path');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('studentpackages');
+        Schema::dropIfExists('notes');
     }
 };
