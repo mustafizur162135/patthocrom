@@ -128,7 +128,7 @@ class ExamController extends Controller
 
         $questions = $exam->questions; // Assuming you have a 'questions' relationship in your Exam model
 
-        // return view('backend.exam.qc_pdf', compact('exam', 'questions'));
+        return view('backend.exam.qc_pdf', compact('exam', 'questions'));
         $pdf = PDF::loadView('backend.exam.qc_pdf', compact('exam', 'questions'));
 
         return $pdf->stream('backend.exam.qc_pdf'); // Use 'download' instead of 'stream' to force download

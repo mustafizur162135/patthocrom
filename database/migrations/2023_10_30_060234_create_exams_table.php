@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('exam_name');
             $table->string('exam_code')->unique();
+            $table->string('exam_type')->default('PAID');
             $table->longText('exam_desc')->nullable();
             $table->string('class_code');
             $table->string('sub_code');

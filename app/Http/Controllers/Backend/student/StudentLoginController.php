@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 class StudentLoginController extends Controller
 {
     private $apiController;
+
     private $registerApiController;
 
     public function __construct(StudentController $apiController, RegisterController $registerApiController)
@@ -29,6 +30,7 @@ class StudentLoginController extends Controller
 
     public function studentLogin(Request $request)
     {
+
         $loginRequest = new StudentLoginRequest([
             'email' => $request->input('email'),
             'password' => $request->input('password'),
@@ -46,13 +48,12 @@ class StudentLoginController extends Controller
             $userData = json_decode($apiResponse->getContent(), true);
 
             Session::put('student_user_data', $userData);
+
             return redirect()->route('student.dashboard');
         }
 
         return back()->with('error', 'Login failed. Please check your credentials.');
     }
-
-
 
     public function registerStudent(Request $request)
     {
@@ -72,7 +73,7 @@ class StudentLoginController extends Controller
 
         try {
             $apiResponse = $this->registerApiController->registerStudent($registerRequest);
-         
+
         } catch (HttpResponseException $e) {
             return back()->with('error', 'Registration failed. ');
         } catch (\Exception $e) {
@@ -82,6 +83,7 @@ class StudentLoginController extends Controller
         if ($apiResponse->getStatusCode() === 200) {
             $userData = json_decode($apiResponse->getContent(), true);
             Session::put('student_user_data', $userData);
+
             return redirect()->route('student.dashboard');
         }
 

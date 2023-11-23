@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\setting\SettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\student\StudentDashboardController;
 use App\Http\Controllers\Backend\student\StudentLoginController;
+use App\Http\Controllers\Backend\student_exam\StudentExamController;
 use App\Http\Controllers\Backend\studentpackage\StudentPackageController;
 use App\Http\Controllers\Backend\subject\SubjectController;
 use App\Http\Controllers\Backend\teacher\TeacherDashboardController;
@@ -140,6 +141,9 @@ Route::group(['middleware' => ['auth.teacher']], function () {
 
 Route::group(['middleware' => ['auth.student']], function () {
     Route::get('/student/dashboard', StudentDashboardController::class)->name('student.dashboard');
+
+    Route::get('student_exam', [StudentExamController::class, 'index'])->name('student.student_exam');
+
 });
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login.form');

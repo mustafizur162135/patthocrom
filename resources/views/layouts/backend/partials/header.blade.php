@@ -35,20 +35,20 @@
     <div class="app-header__content">
         <div class="app-header-left">
             <div class="search-wrapper">
-                <div class="input-holder">
-                    <input type="text" class="search-input" placeholder="Type to search">
-                    <button class="search-icon"><span></span></button>
-                </div>
+
                 <button class="close"></button>
             </div>
+            @if(auth()->guard('admin')->check())
             <ul class="header-menu nav">
                 <li class="dropdown nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ url('/') }}" class="nav-link">
                         <i class="nav-link-icon pe-7s-shuffle"></i>
                         Visit Site
                     </a>
                 </li>
             </ul>
+
+            @endif
         </div>
         <div class="app-header-right">
             <div class="header-btn-lg pr-0">
@@ -57,21 +57,18 @@
                         <div class="widget-content-left">
                             <div class="btn-group">
                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                   {{-- <img width="42" class="rounded-circle" src="{{ Auth::user()->getFirstMediaUrl('avatar') != null ? Auth::user()->getFirstMediaUrl('avatar') : config('app.placeholder').'160' }}" 
+                                    {{-- <img width="42" class="rounded-circle" src="{{ Auth::user()->getFirstMediaUrl('avatar') != null ? Auth::user()->getFirstMediaUrl('avatar') : config('app.placeholder').'160' }}"
                                     alt=""> --}}
                                     <img width="42" class="rounded-circle" src="#" alt="">
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>
-                                <div tabindex="-1" role="menu" aria-hidden="true"
-                                    class="dropdown-menu dropdown-menu-right">
+                                <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                     <a tabindex="0" class="dropdown-item" href="#">Profile</a>
                                     <a tabindex="0" class="dropdown-item" href="#">Change Password</a>
                                     <a tabindex="0" class="dropdown-item" href="#">Settings</a>
                                     <div tabindex="-1" class="dropdown-divider"></div>
-                                    <button type="button" tabindex="0" class="dropdown-item"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
-                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
-                                        style="display: none;">
+                                    <button type="button" tabindex="0" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
+                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
 
@@ -88,7 +85,7 @@
                                 {{-- @if (isset($adminUserData['roles']) && is_array($adminUserData['roles']))
                                     {{ implode(', ', $adminUserData['roles']) }}
                                 @else
-                                    No roles assigned
+                                No roles assigned
                                 @endif --}}
                             </div>
                         </div>

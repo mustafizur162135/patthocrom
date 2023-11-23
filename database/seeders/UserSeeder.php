@@ -21,14 +21,14 @@ class UserSeeder extends Seeder
     {
         // Define permissions for admin, student, and teacher guards
         $adminPermissions = [
-            'admin.users.list', 
-            'admin.users.view', 
-            'admin.users.edit', 
-            'admin.users.store', 
-            'admin.users.create', 
-            'admin.users.update', 
-            'admin.users.delete', 
-            'api.role-permission.index', 
+            'admin.users.list',
+            'admin.users.view',
+            'admin.users.edit',
+            'admin.users.store',
+            'admin.users.create',
+            'admin.users.update',
+            'admin.users.delete',
+            'api.role-permission.index',
             'api.role-permission.store',
             'question_types.index', // Add this line
             'question_types.create', // Add this line
@@ -47,15 +47,15 @@ class UserSeeder extends Seeder
             'question.edit', // Add this line
             'question.update', // Add this line
             'question.destroy', // Add this line
-            
+
         ];
 
         $studentPermissions = [
-            'student.list', 'student.view', 'student.create', 'student.update', 'student.delete'
+            'student.list', 'student.view', 'student.create', 'student.update', 'student.delete', 'exam_hall.list', 'exam_hall.view', 'exam_hall.create', 'exam_hall.update', 'exam_hall.delete', 'notebook.list', 'notebook.view', 'notebook.create', 'notebook.update', 'notebook.delete', 'result.list', 'result.view', 'result.create', 'result.update', 'result.delete',
         ];
 
         $teacherPermissions = [
-            'teacher.list', 'teacher.view', 'teacher.create', 'teacher.update', 'teacher.delete'
+            'teacher.list', 'teacher.view', 'teacher.create', 'teacher.update', 'teacher.delete',
         ];
 
         // Create permissions for each guard

@@ -10,7 +10,7 @@
 <body>
     <div class="login-box">
         <h2>student Login</h2>
-        <form method="POST" action="{{ route('student.login') }}" id="login-form">
+        <form method="POST" action="{{ route('student.login.submit') }}" id="login-form">
             @csrf
             <div class="user-box">
                 <input type="text" name="email" required>
@@ -27,7 +27,7 @@
     <div class="register-box" style="display:none;">
         <h2>student Register</h2>
 
-        <form method="POST" action="{{ route('register.student') }}" id="register-form" >
+        <form method="POST" action="{{ route('register.student') }}" id="register-form">
             @csrf
             <div class="user-box">
                 <input type="text" name="name" required>
@@ -47,33 +47,20 @@
             </div>
             <button class="submit-button" type="submit">Register</button>
             <button class="submit-button" onclick="showLoginForm()">login</button>
-            
+
         </form>
     </div>
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
     @endif
-    
+
     @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
     @endif
-    <script>
-        function showRegisterForm() {
-            const loginBox = document.querySelector('.login-box');
-            const registerBox = document.querySelector('.register-box');
-            loginBox.style.display = 'none';
-            registerBox.style.display = 'block';
-        }
-        function showLoginForm() {
-            const loginBox = document.querySelector('.login-box');
-            const registerBox = document.querySelector('.register-box');
-            loginBox.style.display = 'block';
-            registerBox.style.display = 'none';
-        }
-    </script>
+
 </body>
 </html>

@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -30,7 +29,13 @@
     <div id="app" class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         @include('layouts.backend.partials.header')
         <div class="app-main">
+            @if(auth()->guard('admin')->check())
             @include('layouts.backend.partials.sidebar')
+            @elseif(auth()->guard('student')->check())
+            @include('layouts.backend.partials.sidebar_student')
+            @elseif(auth()->guard('teacher')->check())
+            @include('layouts.backend.partials.sidebar_teacher')
+            @endif
             <div class="app-main__outer">
                 <div class="app-main__inner">
                     @yield('content')
