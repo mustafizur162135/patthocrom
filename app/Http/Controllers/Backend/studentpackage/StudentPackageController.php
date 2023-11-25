@@ -121,6 +121,7 @@ class StudentPackageController extends Controller
      */
     public function update(Request $request, $id)
     {
+        return $request;
         // Validate the request data
         $request->validate([
             'studentpackage_name' => 'required|string',

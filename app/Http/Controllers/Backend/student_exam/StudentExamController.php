@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\Student;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class StudentExamController extends Controller
 {
@@ -19,8 +20,11 @@ class StudentExamController extends Controller
         $student = Student::with('orders')->where('id', $userID)->first();
 
         $studentPackage = $student->orders;
-        if ($studentPackage) {
-            $exams = Exam::where('exam_type', 'FREE')->get();
+        if (!empty($studentPackage)) {
+           return $studentPackage->studentPackage;
+        }else{
+
+             $exams = Exam::where('exam_type', 'FREE')->get();
         }
 
         return view('backend.student_exam.index', compact('exams'));
