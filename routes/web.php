@@ -143,6 +143,10 @@ Route::group(['middleware' => ['auth.student']], function () {
     Route::get('/student/dashboard', StudentDashboardController::class)->name('student.dashboard');
 
     Route::get('student_exam', [StudentExamController::class, 'index'])->name('student.student_exam');
+    Route::get('student_exam_question/{id}', [StudentExamController::class, 'student_exam_question'])->name('student.student_exam_question');
+    Route::post('submit_answers', [StudentExamController::class, 'submit_answers'])->name('submit.answers');
+
+    Route::get('/get-question/{examId}/{questionIndex}', [StudentExamController::class, 'getQuestion']);
 
 });
 

@@ -35,9 +35,9 @@
                         @foreach($exams as $key => $exam)
                         <tr>
                             <td class="text-center text-muted">#{{ $key + 1 }}</td>
-                            <td class="text-center">{{ $exam['exam_name'] }}</td>
+                            <td class="text-center">{{ $exam->exam_name }}</td>
                             <td class="text-center">
-                                <a class="btn btn-info btn-sm m-2" href="{{ route('exams.show', $exam['id']) }}">
+                                <a class="btn btn-info btn-sm m-2" href="{{ route('student.student_exam_question', $exam->id) }}">
                                     <i class="fas fa-eye"></i> Participate This Exam
                                 </a>
                             </td>
@@ -45,11 +45,23 @@
                         @endforeach
                         @else
                         <tr>
-                            <td class="text-center" colspan="4">No data found</td>
+                            <td class="text-center" colspan="3">No data found</td>
                         </tr>
                         @endif
-
                     </tbody>
+
+                    @if($exams->hasPages())
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">
+                                <div class="d-flex justify-content-center">
+                                    {{ $exams->links() }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                    @endif
+
                 </table>
             </div>
         </div>
