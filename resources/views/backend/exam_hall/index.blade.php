@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Exam PDF</title>
+    <title>Exam Hall</title>
     <style>
         body {
             text-align: left;
@@ -103,6 +103,8 @@
     <h2>Questions:</h2>
     <form method="post" action="{{ route('submit.answers') }}" id="examForm">
         @csrf
+
+        <input type="hidden" name="exam_id" value="{{ $exam->id }}">
         <ol class="mcq-container" id="questionContainer">
             @foreach ($questions as $key => $question)
             <li class="mcq-question" data-question-number="{{ $key + 1 }}">
