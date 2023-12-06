@@ -51,14 +51,14 @@
 
 
                     <li>
-                        <a href="{{ url('/notes') }}" class="#">
+                        <a href="{{ url('/student_note') }}" class="#">
                             <i class="metismenu-icon fas fa-sticky-note"></i>
                             Notes
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ url('/studentpackages') }}" class="#">
+                        <a href="{{ url('/student/buy-package-list') }}" class="#">
                             <i class="metismenu-icon fas fa-box"></i>
                             Package
                         </a>

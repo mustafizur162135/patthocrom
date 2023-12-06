@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\student_exam;
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\Question_bank;
+use App\Models\Studentpackage;
 use App\Models\Result;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -21,9 +22,18 @@ class StudentExamController extends Controller
 
         $student = Student::with('orders')->where('id', $userID)->first();
 
-        $studentPackage = $student->orders;
-        if (empty($studentPackage)) {
-            return $studentPackage->studentPackage;
+          $studentOrder = $student->orders;
+
+        if (!empty($studentOrder)) {
+            $packageIds = $studentOrder->pluck('studentpackage_id')->all();
+
+            $packages = Studentpackage::whereIn('id', $packageIds)->get();
+
+            //  each package has exams relationship
+            $exams = $packages->flatMap->exams;
+
+
+
         } else {
 
             $exams = Exam::where('exam_type', 'FREE')->paginate(10)->withQueryString();

@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\Note;
 use App\Models\Studentpackage;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Session;
+
 
 class StudentPackageController extends Controller
 {
@@ -206,4 +209,23 @@ class StudentPackageController extends Controller
         // Redirect or return a response
         return redirect()->route('studentpackages.index')->with('success', 'studentpackage deleted successfully.');
     }
+
+
+    public function studentBuyPackageList(){
+
+        $adminUserData = Session::get('student_user_data');
+        $userID = $adminUserData['user_id'];
+
+        $student = Student::with('orders')->where('id', $userID)->first();
+        $studentOrder = $student->orders;
+
+        // Get all package IDs the user has bought
+        $boughtPackageIds = $studentOrder->pluck('studentpackage_id')->all();
+
+        // Get packages that the user has not bought
+        $studentPackages = Studentpackage::whereNotIn('id', $boughtPackageIds)->get();
+
+       return view('backend.studentBuyPackage.index',compact('studentPackages'));
+    }
+
 }

@@ -24,7 +24,9 @@ return new class extends Migration
             $table->string('studentpackage_name');
             $table->string('studentpackage_price');
             $table->string('studentorder_card_type');
-            $table->string('studentorder_tran_id');
+            // $table->string('studentorder_tran_id');
+            $table->string('nagadTranId')->default(null);
+            $table->string('bkashTranId')->default(null);
             $table->string('studentorder_name');
             $table->string('studentorder_phone');
             $table->string('studentorder_email');

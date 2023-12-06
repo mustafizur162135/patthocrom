@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\class\ClassnameController;
 use App\Http\Controllers\Backend\exam\Exam_questionController;
 use App\Http\Controllers\Backend\exam\ExamController;
 use App\Http\Controllers\Backend\note\NoteController;
+use App\Http\Controllers\Backend\note\StudentNoteController;
 use App\Http\Controllers\Backend\question\ImportController;
 use App\Http\Controllers\Backend\question\QuestionsController;
 use App\Http\Controllers\Backend\role\RoleController;
@@ -147,6 +148,11 @@ Route::group(['middleware' => ['auth.student']], function () {
     Route::post('submit_answers', [StudentExamController::class, 'submit_answers'])->name('submit.answers');
 
     Route::get('/get-question/{examId}/{questionIndex}', [StudentExamController::class, 'getQuestion']);
+
+    Route::get('student_note', [StudentNoteController::class, 'index'])->name('student.student_note');
+
+    Route::get('/student/buy-package-list', [StudentPackageController::class, 'studentBuyPackageList'])->name('student.buy-package-list');
+
 
 });
 
