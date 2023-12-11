@@ -35,7 +35,7 @@
                 <div>
                     <li class="app-sidebar__heading">Dashboard</li>
                     <li>
-                        <a href="{{ url('/student/dashboard') }}" class="#">
+                        <a href="{{ url('/teacher/dashboard') }}" class="#">
                             <i class="metismenu-icon pe-7s-car"></i>
                             Dashboard
                         </a>
@@ -45,24 +45,19 @@
                     <li>
                         <a href="{{ route('question.import.form') }}" class="#">
                             <i class="metismenu-icon fas fa-file-import"></i>
-                            Import Qc.
+                            Print Question
                         </a>
                     </li>
 
 
-                    <li>
-                        <a href="{{ url('/notes') }}" class="#">
-                            <i class="metismenu-icon fas fa-sticky-note"></i>
-                            Notes
-                        </a>
-                    </li>
 
                     <li>
-                        <a href="{{ url('/studentpackages') }}" class="#">
+                        <a href="{{ url('/teacher/buy-package-list') }}" class="#">
                             <i class="metismenu-icon fas fa-box"></i>
                             Package
                         </a>
                     </li>
+
 
 
 

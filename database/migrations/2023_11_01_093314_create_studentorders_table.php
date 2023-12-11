@@ -15,18 +15,17 @@ return new class extends Migration
     {
         Schema::create('studentorders', function (Blueprint $table) {
             $table->id();
+            $table->string('guard')->default('admin');
             $table->unsignedBigInteger('student_id');
-            $table->foreign('student_id')->references('id')->on('students');
             $table->unsignedBigInteger('studentpackage_id');
-            $table->foreign('studentpackage_id')->references('id')->on('studentpackages');
             $table->string('studentorder_date');
             $table->string('studentorder_code')->unique();
             $table->string('studentpackage_name');
             $table->string('studentpackage_price');
             $table->string('studentorder_card_type');
             // $table->string('studentorder_tran_id');
-            $table->string('nagadTranId')->default(null);
-            $table->string('bkashTranId')->default(null);
+            $table->string('nagadTranId')->nullable();
+            $table->string('bkashTranId')->nullable();            
             $table->string('studentorder_name');
             $table->string('studentorder_phone');
             $table->string('studentorder_email');

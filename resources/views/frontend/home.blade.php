@@ -89,8 +89,9 @@
 	<!-- Testimonials -->
 
 	@include('frontend.studentpackage')
+	@include('frontend.teacherpackage')
 	
-    @include('frontend.teacher')
+    {{-- @include('frontend.teacher') --}}
 
    
 

@@ -50,7 +50,11 @@
                         </div>
                        
 
-                      
+                        <div class="form-group">
+                            <label for="duration_minutes">Exam Time Duration In Minute</label>
+                            <input type="text" class="form-control" id="duration_minutes" name="duration_minutes"
+                                 placeholder="Enter exam DUration" value="{{ $exam->duration_minutes }}"  required autofocus>
+                        </div>
                        
                         <button type="button" class="btn btn-danger" onclick="resetForm('settingForm')">
                             <i class="fas fa-redo"></i>

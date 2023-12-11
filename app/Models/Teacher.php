@@ -21,4 +21,17 @@ class Teacher extends Authenticatable
         'email',
         'password',
     ];
+
+
+    
+    public function orders()
+    {
+        return $this->hasMany(StudentOrder::class, 'student_id')->where('guard', 'teacher');
+    }
+
+    public function exams()
+    {
+        return $this->hasMany(TeacherExam::class, 'teacher_id', 'id');
+    }
+
 }

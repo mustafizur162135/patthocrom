@@ -11,6 +11,7 @@ class Studentorder extends Model
 
     protected $fillable = [
         'student_id',
+        'guard',
         'studentpackage_id',
         'studentorder_date',
         'studentorder_card_type',
@@ -31,6 +32,10 @@ class Studentorder extends Model
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');
+    }
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'student_id');
     }
 
     public function studentPackage()

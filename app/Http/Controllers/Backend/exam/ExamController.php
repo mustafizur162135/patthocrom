@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use App\Http\Helpers\Helper;
 use PDF;
 
 class ExamController extends Controller
@@ -21,7 +22,7 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $exams = Exam::get();
+        $exams = Exam::where('guard','admin')->get();
 
         return view('backend.exam.index', compact('exams'));
     }
@@ -60,7 +61,9 @@ class ExamController extends Controller
 
         // Create a new exam model
         $exam = new Exam();
+        $exam->guard = Helper::activeGuard();
         $exam->exam_name = $request->input('exam_name');
+        $exam->duration_minutes = $request->input('duration_minutes');
         $exam->exam_code = $request->input('exam_code');
         $exam->class_code = implode(',', $request->input('class_code'));
         $exam->sub_code = implode(',', $request->input('sub_code'));
@@ -170,6 +173,7 @@ class ExamController extends Controller
 
         // Update other fields
         $exam->exam_name = $request->input('exam_name');
+        $exam->duration_minutes = $request->input('duration_minutes');
         $exam->exam_code = $request->input('exam_code');
 
         // Save the updated exam

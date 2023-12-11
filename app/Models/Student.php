@@ -24,6 +24,6 @@ class Student extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(StudentOrder::class, 'student_id');
+        return $this->hasMany(StudentOrder::class, 'student_id')->where('guard', 'student');
     }
 }

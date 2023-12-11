@@ -99,7 +99,13 @@
                     <li>
                         <a href="{{ url('/studentpackages') }}" class="#">
                             <i class="metismenu-icon fas fa-box"></i>
-                            Package
+                            Student Package
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/teacherpackages') }}" class="#">
+                            <i class="metismenu-icon fas fa-box"></i>
+                            Teacher Package
                         </a>
                     </li>
 

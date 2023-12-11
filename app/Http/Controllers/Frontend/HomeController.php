@@ -7,6 +7,7 @@ use App\Models\Classname;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Studentpackage;
+use App\Models\TeacherPackage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
@@ -18,10 +19,13 @@ class HomeController extends Controller
         $sliders = Slider::get();
         $courses = Classname::take(8)->get();
         $studentpackages = Studentpackage::take(6)->get();
+        $teacherpackages = TeacherPackage::take(6)->get();
         $studentUserData = Session::get('student_user_data');
-
-        return view('frontend.home', compact('setting','sliders','courses','studentUserData','studentpackages'));
+        $teacherUserData = Session::get('teacher_user_data');
+    
+        return view('frontend.home', compact('setting','sliders','courses','studentUserData','studentpackages','teacherpackages','teacherUserData'));
     }
+    
   
 
     public function showSinglePackage($id)

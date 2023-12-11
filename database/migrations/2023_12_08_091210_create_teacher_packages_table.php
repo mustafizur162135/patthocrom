@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('studentpackages', function (Blueprint $table) {
+        Schema::create('teacher_packages', function (Blueprint $table) {
             $table->id();
-            $table->string('guard')->default('admin');
-            $table->string('studentpackage_name')->unique();
-            $table->string('studentpackage_price');
-            $table->string('studentpackage_des')->nullable();
-            $table->string('studentpackage_image')->nullable();
+            $table->string('teacherpackage_name')->unique();
+            $table->string('teacherpackage_price');
+            $table->string('teacherpackage_des')->nullable();
+            $table->string('teacherpackage_image')->nullable();
+            $table->string('no_of_question_print')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('studentpackages');
+        Schema::dropIfExists('teacher_packages');
     }
 };

@@ -24,6 +24,8 @@ use App\Http\Controllers\Backend\studentpackage\StudentPackageController;
 use App\Http\Controllers\Backend\subject\SubjectController;
 use App\Http\Controllers\Backend\teacher\TeacherDashboardController;
 use App\Http\Controllers\Backend\teacher\TeacherLoginController;
+use App\Http\Controllers\Backend\teacherPackage\TeacherPackageController;
+use App\Http\Controllers\Backend\teacherQuestion\TeacherQuestionController;
 use App\Http\Controllers\Backend\user\UserController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -115,6 +117,7 @@ Route::group(['middleware' => ['auth.admin']], function () {
     Route::resource('exams', ExamController::class);
     Route::resource('exam_question', Exam_questionController::class);
     Route::resource('studentpackages', StudentPackageController::class);
+    Route::resource('teacherpackages', TeacherPackageController::class);
 
     //note
 
@@ -138,6 +141,9 @@ Route::group(['middleware' => ['auth.admin']], function () {
 
 Route::group(['middleware' => ['auth.teacher']], function () {
     Route::get('/teacher/dashboard', TeacherDashboardController::class)->name('teacher.dashboard');
+    Route::get('/teacher/exam', TeacherQuestionController::class)->name('teacher.dashboard');
+    Route::get('/teacher/buy-package-list', [StudentPackageController::class, 'studentBuyPackageList'])->name('student.buy-package-list');
+
 });
 
 Route::group(['middleware' => ['auth.student']], function () {

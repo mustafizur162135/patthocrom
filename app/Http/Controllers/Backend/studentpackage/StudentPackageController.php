@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Session;
-
+use App\Http\Helpers\Helper;
 
 class StudentPackageController extends Controller
 {
@@ -70,6 +70,7 @@ class StudentPackageController extends Controller
 
             // Create a new Studentpackage model
             $studentpackage = new Studentpackage();
+            $studentpackage->guard = Helper::activeGuard();
             $studentpackage->studentpackage_name = $request->input('studentpackage_name');
             $studentpackage->studentpackage_price = $request->input('studentpackage_price');
             $studentpackage->studentpackage_des = $request->input('studentpackage_des');
@@ -168,6 +169,7 @@ class StudentPackageController extends Controller
         }
 
         // Update other fields
+        $studentpackage->guard = Helper::activeGuard();
         $studentpackage->exam_id = $request->input('exam_id');
         $studentpackage->studentpackage_name = $request->input('studentpackage_name');
         $studentpackage->studentpackage_price = $request->input('studentpackage_price');
@@ -213,8 +215,15 @@ class StudentPackageController extends Controller
 
     public function studentBuyPackageList(){
 
-        $adminUserData = Session::get('student_user_data');
-        $userID = $adminUserData['user_id'];
+        if (Helper::activeGuard()=="student") {
+            $adminUserData = Session::get('student_user_data');
+            $userID = $adminUserData['user_id'];
+        }else{
+            $adminUserData = Session::get('teacher_user_data');
+
+            $userID = $adminUserData['user_id'];
+        }
+      
 
         $student = Student::with('orders')->where('id', $userID)->first();
         $studentOrder = $student->orders;

@@ -48,7 +48,11 @@
                                          placeholder="Enter exam Code" required autofocus>
                                 </div>
                                 
-                               
+                                <div class="form-group">
+                                    <label for="duration_minutes">Exam Time Duration In Minute</label>
+                                    <input type="text" class="form-control" id="duration_minutes" name="duration_minutes"
+                                         placeholder="Enter exam DUration" required autofocus>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="exam_desc">Exam Description</label>
