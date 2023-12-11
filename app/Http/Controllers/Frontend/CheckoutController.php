@@ -143,6 +143,7 @@ class CheckoutController extends Controller
 
             // Assuming you have these fields in the Teacher model
             $teacher->total_buy_question += $studentPackage->no_of_question_print;
+            $teacher->due_to_print += $studentPackage->no_of_question_print;
 
             $teacher->save();
 

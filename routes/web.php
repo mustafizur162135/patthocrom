@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\exam\Exam_questionController;
 use App\Http\Controllers\Backend\exam\ExamController;
 use App\Http\Controllers\Backend\note\NoteController;
 use App\Http\Controllers\Backend\note\StudentNoteController;
+use App\Http\Controllers\Backend\order\OrderController;
 use App\Http\Controllers\Backend\question\ImportController;
 use App\Http\Controllers\Backend\question\QuestionsController;
 use App\Http\Controllers\Backend\role\RoleController;
@@ -129,6 +130,10 @@ Route::group(['middleware' => ['auth.admin']], function () {
     Route::get('/notes/{id}/edit', [NoteController::class, 'edit'])->name('notes.edit');
     Route::put('/notes/{id}', [NoteController::class, 'update'])->name('notes.update');
     Route::delete('/notes/{id}', [NoteController::class, 'destroy'])->name('notes.destroy');
+
+    //order
+
+    Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 
     //setting
 

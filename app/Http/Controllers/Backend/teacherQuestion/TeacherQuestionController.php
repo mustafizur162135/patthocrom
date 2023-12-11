@@ -156,6 +156,22 @@ class TeacherQuestionController extends Controller
                     'total_qc' => 'required|integer|min:0',
                 ]);
 
+                // Check if total_qc is sufficient
+                if ($request->input('total_qc') <= 0) {
+                    throw new \Exception('Insufficient balance to create the exam.');
+                }
+
+                $userData = Session::get('teacher_user_data');
+                $teacherID = $userData['user_id'];
+
+                $teacher = Teacher::find($teacherID);
+
+                // Check if teacher has sufficient balance
+                if ($teacher->total_buy_question < $request->input('total_qc')) {
+
+                    return
+                    throw new \Exception('Insufficient Question balance to create the exam.');
+                }
                 // Create a new exam model
                 $exam = new Exam();
                 $exam->guard = Helper::activeGuard();
@@ -168,20 +184,7 @@ class TeacherQuestionController extends Controller
                 $exam->total_qc = $request->input('total_qc');
                 $exam->save();
 
-                // Check if total_qc is sufficient
-                if ($exam->total_qc <= 0) {
-                    throw new \Exception('Insufficient balance to create the exam.');
-                }
 
-                $userData = Session::get('teacher_user_data');
-                $teacherID = $userData['user_id'];
-
-                $teacher = Teacher::find($teacherID);
-
-                // Check if teacher has sufficient balance
-                if ($teacher->total_buy_question < $exam->total_qc) {
-                    throw new \Exception('Insufficient Question balance to create the exam.');
-                }
 
 
 
@@ -218,9 +221,9 @@ class TeacherQuestionController extends Controller
                 }
 
                 // Update the Teacher model fields
-                $teacher->total_buy_question -= $exam->total_qc;
+                 $teacher->due_to_print -= $exam->total_qc;
                 $teacher->total_print_question += $exam->total_qc;
-                $teacher->due_to_print = max(0, $teacher->total_buy_question - $teacher->total_print_question);
+                // $teacher->due_to_print = max(0, $teacher->due_to_print - $exam->total_qc);
 
                 $teacher->save();
             });

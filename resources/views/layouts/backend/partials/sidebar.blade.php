@@ -81,6 +81,13 @@
                         </a>
                     </li>
 
+                    <li class="app-sidebar__heading">Order</li>
+                    <li>
+                        <a href="{{ url('/order') }}" class="#">
+                            <i class="metismenu-icon fas fa-clipboard-check"></i>
+                            Order
+                        </a>
+                    </li>
                     <li class="app-sidebar__heading">Exam and Package</li>
                     <li>
                         <a href="{{ url('/exams') }}" class="#">
