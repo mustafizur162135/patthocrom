@@ -43,7 +43,7 @@
 
 
                     <li>
-                        <a href="{{ route('question.import.form') }}" class="#">
+                        <a href="{{ route('teacher.qc_print') }}" class="#">
                             <i class="metismenu-icon fas fa-file-import"></i>
                             Print Question
                         </a>

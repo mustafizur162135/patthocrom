@@ -7,6 +7,8 @@ use App\Models\Exam;
 use App\Models\Note;
 use App\Models\Studentpackage;
 use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\TeacherPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -60,11 +62,11 @@ class StudentPackageController extends Controller
         // Handle the image upload and resize
         if ($request->hasFile('studentpackage_image')) {
             $image = $request->file('studentpackage_image');
-            $imageName = time().'_studentpackage.'.$image->getClientOriginalExtension();
+            $imageName = time() . '_studentpackage.' . $image->getClientOriginalExtension();
             $path = $image->storeAs('public/images/studentpackages', $imageName);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make(storage_path('app/'.$path))
+            $resizedImage = Image::make(storage_path('app/' . $path))
                 ->resize(307, 200) // Adjust the dimensions as needed
                 ->save();
 
@@ -138,7 +140,7 @@ class StudentPackageController extends Controller
         // Find the studentpackage by its ID
         $studentpackage = studentpackage::find($id);
 
-        if (! $studentpackage) {
+        if (!$studentpackage) {
             return redirect()->route('studentpackages.index')->with('error', 'studentpackage not found.');
         }
 
@@ -148,19 +150,19 @@ class StudentPackageController extends Controller
             $oldImage = $studentpackage->studentpackage_image;
 
             // Remove the old image file if it exists
-            if (! empty($oldImage) && File::exists(public_path('images/studentpackages/'.$oldImage))) {
-                File::delete(public_path('images/studentpackages/'.$oldImage));
+            if (!empty($oldImage) && File::exists(public_path('images/studentpackages/' . $oldImage))) {
+                File::delete(public_path('images/studentpackages/' . $oldImage));
             }
 
             $image = $request->file('studentpackage_image');
-            $imageName = time().'_studentpackage.'.$image->getClientOriginalExtension();
+            $imageName = time() . '_studentpackage.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('images/studentpackages');
 
             // Move the new image to the destination path
             $image->move($destinationPath, $imageName);
 
             // Resize the image using Intervention Image
-            $resizedImage = Image::make($destinationPath.'/'.$imageName)
+            $resizedImage = Image::make($destinationPath . '/' . $imageName)
                 ->resize(307, 200) // Adjust the dimensions as needed
                 ->save();
 
@@ -193,7 +195,7 @@ class StudentPackageController extends Controller
         // Find the studentpackage by its ID
         $studentpackage = studentpackage::find($id);
 
-        if (! $studentpackage) {
+        if (!$studentpackage) {
             return redirect()->route('studentpackages.index')->with('error', 'studentpackage not found.');
         }
 
@@ -201,8 +203,8 @@ class StudentPackageController extends Controller
         $imageToDelete = $studentpackage->studentpackage_image;
 
         // Remove the image file from storage
-        if (! empty($imageToDelete) && File::exists(public_path('images/studentpackages/'.$imageToDelete))) {
-            File::delete(public_path('images/studentpackages/'.$imageToDelete));
+        if (!empty($imageToDelete) && File::exists(public_path('images/studentpackages/' . $imageToDelete))) {
+            File::delete(public_path('images/studentpackages/' . $imageToDelete));
         }
 
         // Delete the studentpackage record from the database
@@ -213,28 +215,43 @@ class StudentPackageController extends Controller
     }
 
 
-    public function studentBuyPackageList(){
+    public function studentBuyPackageList()
+    {
 
-        if (Helper::activeGuard()=="student") {
+        if (Helper::activeGuard() == "student") {
             $adminUserData = Session::get('student_user_data');
             $userID = $adminUserData['user_id'];
-        }else{
+            $student = Student::with('orders')->where('id', $userID)->first();
+            $studentOrder = $student->orders;
+
+            // Get all package IDs the user has bought
+            $boughtPackageIds = $studentOrder->pluck('studentpackage_id')->all();
+
+            // Get packages that the user has not bought
+            $studentPackages = Studentpackage::whereNotIn('id', $boughtPackageIds)->get();
+
+            return view('backend.studentBuyPackage.index', compact('studentPackages'));
+        } else {
             $adminUserData = Session::get('teacher_user_data');
 
             $userID = $adminUserData['user_id'];
+
+            $student = Teacher::with('orders')->where('id', $userID)->first();
+            $studentOrder = $student->orders;
+
+            // Get all package IDs the user has bought
+            $boughtPackageIds = $studentOrder->pluck('studentpackage_id')->all();
+
+            // Get packages that the user has not bought
+            $teacherPackages = TeacherPackage::whereNotIn('id', $boughtPackageIds)->get();
+
+            return view('backend.studentBuyPackage.teacher', compact('teacherPackages'));
         }
-      
 
-        $student = Student::with('orders')->where('id', $userID)->first();
-        $studentOrder = $student->orders;
 
-        // Get all package IDs the user has bought
-        $boughtPackageIds = $studentOrder->pluck('studentpackage_id')->all();
 
-        // Get packages that the user has not bought
-        $studentPackages = Studentpackage::whereNotIn('id', $boughtPackageIds)->get();
 
-       return view('backend.studentBuyPackage.index',compact('studentPackages'));
+
     }
 
 }

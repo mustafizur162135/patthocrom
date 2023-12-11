@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Models\Studentorder;
 use App\Models\Studentpackage;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Helpers\Helper;
@@ -137,6 +138,16 @@ class CheckoutController extends Controller
             // Fetch additional data for the confirmation page
             $studentPackage = TeacherPackage::find($studentpackageId);
             $studentpackage_name = $studentPackage->teacherpackage_name;
+
+            $teacher = Teacher::find($student_id);
+
+            // Assuming you have these fields in the Teacher model
+            $teacher->total_buy_question += $studentPackage->no_of_question_print;
+
+            $teacher->save();
+
+
+
         }
 
         // Redirect the user to the confirmation page with the necessary data

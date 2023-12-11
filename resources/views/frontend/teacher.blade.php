@@ -17,10 +17,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/1.png') }}" alt="1.png">
+                                <img class="img-fluid img-rounded-circle" src="{{ asset('/images/teacherpackages/') }}"
+                                    alt="1.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Kathelen Monero</h4>
                                 <p>Teacher</p>
                             </div>
@@ -29,10 +30,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
                             </div>
                             <div class="details">
-                                
+
                                 <h4 class="text-thm5">Anna Richard</h4>
                                 <p>Teacher</p>
                             </div>
@@ -41,10 +43,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
                             </div>
                             <div class="details">
-                                
+
                                 <h4 class="text-thm5">Ali Tufan</h4>
                                 <p>Teacher</p>
                             </div>
@@ -53,10 +56,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
                             </div>
                             <div class="details">
-                                
+
                                 <h4 class="text-thm5">Jack Wilson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -65,10 +69,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Jessie Handerson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -77,10 +82,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/1.png') }}" alt="1.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/1.png') }}" alt="1.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Kathelen Monero</h4>
                                 <p>Teacher</p>
                             </div>
@@ -89,10 +95,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
                             </div>
                             <div class="details">
-                                
+
                                 <h4 class="text-thm5">Anna Richard</h4>
                                 <p>Teacher</p>
                             </div>
@@ -101,10 +108,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Ali Tufan</h4>
                                 <p>Teacher</p>
                             </div>
@@ -113,10 +121,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
                             </div>
                             <div class="details">
-                                
+
                                 <h4 class="text-thm5">Jack Wilson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -125,10 +134,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
                             </div>
                             <div class="details">
-                                
+
                                 <h4 class="text-thm5">Jessie Handerson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -137,10 +147,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/1.png') }}" alt="1.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/1.png') }}" alt="1.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Kathelen Monero</h4>
                                 <p>Teacher</p>
                             </div>
@@ -149,10 +160,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/2.png') }}" alt="2.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Anna Richard</h4>
                                 <p>Teacher</p>
                             </div>
@@ -161,10 +173,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/3.png') }}" alt="3.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Ali Tufan</h4>
                                 <p>Teacher</p>
                             </div>
@@ -173,10 +186,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/4.png') }}" alt="4.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Jack Wilson</h4>
                                 <p>Teacher</p>
                             </div>
@@ -185,10 +199,11 @@
                     <div class="item">
                         <div class="instructor_col">
                             <div class="thumb">
-                                <img class="img-fluid img-rounded-circle" src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
+                                <img class="img-fluid img-rounded-circle"
+                                    src="{{ asset('frontend/images/team/5.png') }}" alt="5.png">
                             </div>
                             <div class="details">
-                               
+
                                 <h4 class="text-thm5">Jessie Handerson</h4>
                                 <p>Teacher</p>
                             </div>

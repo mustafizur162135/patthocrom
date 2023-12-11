@@ -22,7 +22,7 @@ class ExamController extends Controller
      */
     public function index()
     {
-        $exams = Exam::where('guard','admin')->get();
+        $exams = Exam::where('guard', 'admin')->get();
 
         return view('backend.exam.index', compact('exams'));
     }
@@ -47,76 +47,76 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        //  try {
-        //  DB::transaction(function () use ($request) {
-        // Validate the request data
-        $request->validate([
-            'exam_name' => 'required|string|max:255',
-            'exam_code' => 'required|string|unique:exams,exam_code|max:255',
-            'exam_desc' => 'nullable|string',
-            'class_code' => 'required|array',
-            'sub_code' => 'required|array',
-            'total_qc' => 'required|integer|min:0',
-        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                // Validate the request data
+                $request->validate([
+                    'exam_name' => 'required|string|max:255',
+                    'exam_code' => 'required|string|unique:exams,exam_code|max:255',
+                    'exam_desc' => 'nullable|string',
+                    'class_code' => 'required|array',
+                    'sub_code' => 'required|array',
+                    'total_qc' => 'required|integer|min:0',
+                ]);
 
-        // Create a new exam model
-        $exam = new Exam();
-        $exam->guard = Helper::activeGuard();
-        $exam->exam_name = $request->input('exam_name');
-        $exam->duration_minutes = $request->input('duration_minutes');
-        $exam->exam_code = $request->input('exam_code');
-        $exam->class_code = implode(',', $request->input('class_code'));
-        $exam->sub_code = implode(',', $request->input('sub_code'));
-        $exam->exam_desc = $request->input('exam_desc');
-        $exam->total_qc = $request->input('total_qc');
+                // Create a new exam model
+                $exam = new Exam();
+                $exam->guard = Helper::activeGuard();
+                $exam->exam_name = $request->input('exam_name');
+                $exam->duration_minutes = $request->input('duration_minutes');
+                $exam->exam_code = $request->input('exam_code');
+                $exam->class_code = implode(',', $request->input('class_code'));
+                $exam->sub_code = implode(',', $request->input('sub_code'));
+                $exam->exam_desc = $request->input('exam_desc');
+                $exam->total_qc = $request->input('total_qc');
 
-        $exam->save();
+                $exam->save();
 
-        // Now prepare questions
-        $classCodes = $request->input('class_code');
-        $subCodes = $request->input('sub_code');
+                // Now prepare questions
+                $classCodes = $request->input('class_code');
+                $subCodes = $request->input('sub_code');
 
-        $questions = DB::table('question_banks');
+                $questions = DB::table('question_banks');
 
-        foreach ($classCodes as $classCode) {
-            $questions->orWhereRaw("FIND_IN_SET('$classCode', class_code)");
+                foreach ($classCodes as $classCode) {
+                    $questions->orWhereRaw("FIND_IN_SET('$classCode', class_code)");
+                }
+
+                foreach ($subCodes as $subCode) {
+                    $questions->orWhereRaw("FIND_IN_SET('$subCode', sub_code)");
+                }
+
+                $questions = $questions->inRandomOrder()
+                    ->limit($exam->total_qc)
+                    ->get();
+
+                // return $questions;
+
+                // Check if $questions is empty and throw an exception
+                if ($questions->isEmpty()) {
+                    throw new \Exception('No questions found for the given criteria.');
+                }
+
+                $questionIds = $questions->pluck('id')->toArray();
+
+                // Attach selected questions to the exam
+                foreach ($questionIds as $question) {
+                    $exam->questions()->attach($question);
+                }
+            });
+
+            // Redirect or return a response
+            return redirect()->route('exams.index')->with('success', 'Exam created successfully.');
+        } catch (ValidationException $e) {
+            // Handle validation errors
+            return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred. ' . $e->errors()]);
+        } catch (QueryException $e) {
+            // Handle Query errors
+            return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred. ' . $e->getMessage()]);
+        } catch (\Exception $e) {
+            // Handle other exceptions
+            return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred. ' . $e->getMessage()]);
         }
-
-        foreach ($subCodes as $subCode) {
-            $questions->orWhereRaw("FIND_IN_SET('$subCode', sub_code)");
-        }
-
-        $questions = $questions->inRandomOrder()
-            ->limit($exam->total_qc)
-            ->get();
-
-        // return $questions;
-
-        // Check if $questions is empty and throw an exception
-        if ($questions->isEmpty()) {
-            throw new \Exception('No questions found for the given criteria.');
-        }
-
-        $questionIds = $questions->pluck('id')->toArray();
-
-        // Attach selected questions to the exam
-        foreach ($questionIds as $question) {
-            $exam->questions()->attach($question);
-        }
-        //  });
-
-        // Redirect or return a response
-        return redirect()->route('exams.index')->with('success', 'Exam created successfully.');
-        //  } catch (ValidationException $e) {
-        //      // Handle validation errors
-        //      return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred. ' . $e->errors()]);
-        //  } catch (QueryException $e) {
-        //      // Handle Query errors
-        //      return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred. ' . $e->getMessage()]);
-        //  } catch (\Exception $e) {
-        //      // Handle other exceptions
-        //      return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred. ' . $e->getMessage()]);
-        //  }
     }
 
     /**
@@ -167,7 +167,7 @@ class ExamController extends Controller
         // Find the exam by its ID
         $exam = exam::find($id);
 
-        if (! $exam) {
+        if (!$exam) {
             return redirect()->route('exams.index')->with('error', 'exam not found.');
         }
 
@@ -194,7 +194,7 @@ class ExamController extends Controller
         // Find the exam by its ID
         $exam = exam::find($id);
 
-        if (! $exam) {
+        if (!$exam) {
             return redirect()->route('exams.index')->with('error', 'exam not found.');
         }
 

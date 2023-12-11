@@ -15,7 +15,7 @@ class Teacher extends Authenticatable
 
 
     protected $guard = 'teacher';
-    
+
     protected $fillable = [
         'name',
         'email',
@@ -23,15 +23,18 @@ class Teacher extends Authenticatable
     ];
 
 
-    
+
     public function orders()
     {
-        return $this->hasMany(StudentOrder::class, 'student_id')->where('guard', 'teacher');
+        return $this->hasMany(StudentOrder::class, 'student_id')
+            ->where('guard', 'teacher')
+            ->where('studentorder_status', 1);
     }
+
 
     public function exams()
     {
-        return $this->hasMany(TeacherExam::class, 'teacher_id', 'id');
+        return $this->belongsToMany(Exam::class, 'teacher_exams', 'teacher_id', 'exam_id');
     }
 
 }

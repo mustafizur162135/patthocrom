@@ -32,6 +32,6 @@ class Exam extends Model
 
     public function teachers()
     {
-        return $this->hasMany(TeacherExam::class, 'exam_id', 'id');
+        return $this->belongsToMany(Teacher::class, 'teacher_exams', 'exam_id', 'teacher_id');
     }
 }

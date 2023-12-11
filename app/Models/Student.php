@@ -15,7 +15,7 @@ class Student extends Authenticatable
 
 
     protected $guard = 'student';
-    
+
     protected $fillable = [
         'name',
         'email',
@@ -24,6 +24,6 @@ class Student extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(StudentOrder::class, 'student_id')->where('guard', 'student');
+        return $this->hasMany(StudentOrder::class, 'student_id')->where('guard', 'student')->where('studentorder_status', 1);
     }
 }

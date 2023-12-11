@@ -9,14 +9,16 @@ class TeacherExam extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['exam_id', 'teacher_id'];
+
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
+        return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
     public function exam()
     {
-        return $this->belongsTo(Exam::class, 'exam_id', 'id');
-    } 
-    
+        return $this->belongsTo(Exam::class, 'exam_id');
+    }
+
 }

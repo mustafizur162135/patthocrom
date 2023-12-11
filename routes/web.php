@@ -141,8 +141,12 @@ Route::group(['middleware' => ['auth.admin']], function () {
 
 Route::group(['middleware' => ['auth.teacher']], function () {
     Route::get('/teacher/dashboard', TeacherDashboardController::class)->name('teacher.dashboard');
-    Route::get('/teacher/exam', TeacherQuestionController::class)->name('teacher.dashboard');
     Route::get('/teacher/buy-package-list', [StudentPackageController::class, 'studentBuyPackageList'])->name('student.buy-package-list');
+    Route::get('/teacher/exam', [TeacherQuestionController::class, 'index'])->name('teacher.qc_print');
+    Route::get('/teacher/create', [TeacherQuestionController::class, 'create'])->name('teacher.exam.create');
+    Route::get('/teacher/exams//show/{id}', [TeacherQuestionController::class, 'show'])->name('teacher.exam.show');
+    Route::post('/teacher/create', [TeacherQuestionController::class, 'store'])->name('teacher.exam.store');
+
 
 });
 
