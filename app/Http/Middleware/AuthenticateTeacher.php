@@ -16,6 +16,12 @@ class AuthenticateTeacher
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+         // Check if the 'admin_user_data' session variable exists, indicating admin authentication.
+         if (Session::has('teacher_user_data')) {
+            return $next($request);
+        }
+
+        // If the session variable does not exist, redirect to the admin login form.
+        return redirect()->route('teacher.login.form')->with('error', 'Authentication required.');
     }
 }

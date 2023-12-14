@@ -2,7 +2,7 @@
     <div class="app-header__logo">
         {{-- <div class="logo-src"></div> --}}
         <div class="navbar-brand">
-            {{-- {{ setting('site_title','LaraStarter') }} --}}
+            <b>Patthokrom</b>
         </div>
         <div class="header__pane ml-auto">
             <div>
@@ -38,16 +38,15 @@
 
                 <button class="close"></button>
             </div>
-            @if(auth()->guard('admin')->check())
-            <ul class="header-menu nav">
-                <li class="dropdown nav-item">
-                    <a href="{{ url('/') }}" class="nav-link">
-                        <i class="nav-link-icon pe-7s-shuffle"></i>
-                        Visit Site
-                    </a>
-                </li>
-            </ul>
-
+            @if (auth()->guard('admin')->check())
+                <ul class="header-menu nav">
+                    <li class="dropdown nav-item">
+                        <a href="{{ url('/') }}" class="nav-link">
+                            <i class="nav-link-icon pe-7s-shuffle"></i>
+                            Visit Site
+                        </a>
+                    </li>
+                </ul>
             @endif
         </div>
         <div class="app-header-right">
@@ -59,16 +58,18 @@
                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
                                     {{-- <img width="42" class="rounded-circle" src="{{ Auth::user()->getFirstMediaUrl('avatar') != null ? Auth::user()->getFirstMediaUrl('avatar') : config('app.placeholder').'160' }}"
                                     alt=""> --}}
-                                    <img width="42" class="rounded-circle" src="#" alt="">
+                                    <img width="42" class="rounded-circle" src="{{ asset('backend/user.png') }}"
+                                        alt="{{ asset('backend/user.png') }}">
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>
-                                <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                    <a tabindex="0" class="dropdown-item" href="#">Profile</a>
-                                    <a tabindex="0" class="dropdown-item" href="#">Change Password</a>
+                                <div tabindex="-1" role="menu" aria-hidden="true"
+                                    class="dropdown-menu dropdown-menu-right">
                                     <a tabindex="0" class="dropdown-item" href="#">Settings</a>
                                     <div tabindex="-1" class="dropdown-divider"></div>
-                                    <button type="button" tabindex="0" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
-                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                                    <button type="button" tabindex="0" class="dropdown-item"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</button>
+                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                     </form>
 

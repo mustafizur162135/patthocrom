@@ -1,4 +1,3 @@
-
 <?php
 
 // frontend part start
@@ -134,6 +133,10 @@ Route::group(['middleware' => ['auth.admin']], function () {
     //order
 
     Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::put('/orders/{order}', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+
 
     //setting
 

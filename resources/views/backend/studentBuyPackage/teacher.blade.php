@@ -46,7 +46,7 @@
                     <i class="pe-7s-check icon-gradient bg-mean-fruit">
                     </i>
                 </div>
-                <div>All Student Packages</div>
+                <div>All Teacher Packages</div>
             </div>
         </div>
     </div>

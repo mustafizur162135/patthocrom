@@ -10,6 +10,8 @@ use App\Http\Requests\TeacherRegisterRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+
 
 class AdminLoginController extends Controller
 {
@@ -78,10 +80,21 @@ class AdminLoginController extends Controller
 
     public function logout()
     {
-        Session::forget('admin_user_data');
-        return redirect()->route('admin.login.form');
+        
+        try {
+
+            Auth::logout();
+            // Your existing logout logic
+            Session::forget('admin_user_data');
+            
+            // Redirect to the login page
+            return redirect()->route('admin.login.form');
+        } catch (\Exception $e) {
+            // Log the error (you can customize this based on your logging setup)
+            \Log::error('Logout error: ' . $e->getMessage());
+    
+            // You can customize the error response based on your needs
+            return redirect()->back()->with('error', 'An error occurred during logout. Please try again.');
+        }
     }
 }
-
-
-

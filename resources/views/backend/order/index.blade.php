@@ -27,20 +27,41 @@
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                <th class="text-center">Title</th>
-                                <th class="text-center">PDF</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Phone</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Order Date</th>
+                                <th class="text-center">Package Name</th>
+                                <th class="text-center">Package Price</th>
+                                <th class="text-center">Payment Type</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Action</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($notes as $key => $note)
+                            @foreach ($orders as $key => $order)
                                 <tr>
                                     <td class="text-center text-muted">#{{ $key + 1 }}</td>
-                                    <td class="text-center">{{ $note->title }}</td>
+                                    <td class="text-center">{{ $order->studentorder_name }}</td>
+                                    <td class="text-center">{{ $order->studentorder_phone }}</td>
+                                    <td class="text-center">{{ $order->studentorder_email }}</td>
+                                    <td class="text-center">{{ $order->studentorder_date }}</td>
+                                    <td class="text-center">{{ $order->studentpackage_name }}</td>
+                                    <td class="text-center">{{ $order->studentpackage_price }}</td>
+                                    <td class="text-center">{{ $order->studentorder_card_type }}</td>
                                     <td class="text-center">
-                                        <a href="{{ asset('storage/' . $note->file_path) }}" target="_blank">
-                                            <i class="fas fa-file-pdf"></i> View PDF
-                                        </a>
+                                        <span
+                                            class="badge {{ $order->studentorder_status == 1 ? 'badge-success' : 'badge-danger' }}">
+                                            {{ $order->studentorder_status == 1 ? 'Paid' : 'Unpaid' }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <a href="{{ route('orders.show', $order->id) }}"
+                                            class="btn btn-primary m-2">View</a>
+
+                                        <a href="#" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             @endforeach
